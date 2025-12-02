@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Diagnostic Test</title>
+    <script src="config.js"></script>
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #status {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Google Maps Diagnostic Test</h1>
+    <div id="status">Initializing...</div>
+    <div id="map"></div>
+
+    <script>
+        console.log('Test page loaded');
+        console.log('CONFIG:', CONFIG);
+        console.log('API Key:', CONFIG.GOOGLE_MAPS_API_KEY);
+
+        window.initMap = function() {
+            console.log('initMap called successfully!');
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'success';
+            statusDiv.textContent = '✓ Google Maps API loaded successfully! Map is initializing...';
+
+            try {
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: { lat: 25.0, lng: 76.0 },
+                    mapTypeId: 'roadmap'
+                });
+
+                // Add a test marker
+                new google.maps.Marker({
+                    position: { lat: 25.0, lng: 76.0 },
+                    map: map,
+                    title: 'Test Marker - Rajasthan'
+                });
+
+                statusDiv.textContent = '✓ SUCCESS! Map loaded and marker added.';
+            } catch (error) {
+                console.error('Error initializing map:', error);
+                statusDiv.className = 'error';
+                statusDiv.textContent = '✗ Error creating map: ' + error.message;
+            }
+        }
+
+        window.gm_authFailure = function() {
+            console.error('Google Maps authentication failed!');
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'error';
+            statusDiv.textContent = '✗ Google Maps API authentication failed. Check your API key.';
+        }
+
+        // Load Google Maps
+        (function() {
+            console.log('Loading Google Maps script...');
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
+            script.defer = true;
+            script.onerror = function() {
+                console.error('Failed to load Google Maps script');
+                const statusDiv = document.getElementById('status');
+                statusDiv.className = 'error';
+                statusDiv.textContent = '✗ Failed to load Google Maps script';
+            };
+            document.head.appendChild(script);
+            console.log('Script tag added to page');
+        })();
+    </script>
+</body>
+</html>
