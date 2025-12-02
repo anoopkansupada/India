@@ -520,12 +520,22 @@
         function renderCharts() {
             const ctx = document.getElementById('balanceChart').getContext('2d');
             
-            // Calculate rough hours based on event types (simplified logic)
-            // Culture, Dining, Leisure, Logistics
+            // Dynamically calculate event counts by type
+            let cultureCounts = 0, diningCounts = 0, leisureCounts = 0, logisticsCounts = 0;
+
+            tripData.forEach(day => {
+                day.events.forEach(event => {
+                    if (event.type === 'culture') cultureCounts++;
+                    else if (event.type === 'dining') diningCounts++;
+                    else if (event.type === 'leisure') leisureCounts++;
+                    else if (event.type === 'logistics') logisticsCounts++;
+                });
+            });
+
             const data = {
                 labels: ['Culture & Sightseeing', 'Dining & Social', 'Leisure & Relax', 'Logistics & Travel'],
                 datasets: [{
-                    data: [30, 25, 25, 20], // Estimated percentages based on itinerary
+                    data: [cultureCounts, diningCounts, leisureCounts, logisticsCounts],
                     backgroundColor: [
                         '#be123c', // Culture (Rose 700)
                         '#f59e0b', // Dining (Amber 500)
