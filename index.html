@@ -8,8 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Google Maps JavaScript API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSRrd-sjbtPbT8BSd4f4icQJTWQNJHpwE&callback=initMap&libraries=places&v=weekly" defer></script>
+    <!-- Configuration (contains API keys) -->
+    <script src="config.js"></script>
+
+    <!-- Google Maps JavaScript API (key loaded from config.js) -->
+    <script>
+        // Dynamically load Google Maps with API key from config
+        (function() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
+            script.defer = true;
+            document.head.appendChild(script);
+        })();
+    </script>
 
     <!-- Chosen Palette: Royal Rajasthan -->
     <!-- 
@@ -115,6 +126,256 @@
         .gm-style .gm-style-iw-d {
             font-family: 'Lato', sans-serif;
         }
+
+        /* Map Controls Overlay */
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            padding: 8px;
+        }
+        .map-controls button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            text-align: left;
+        }
+        .map-controls button:last-child {
+            margin-bottom: 0;
+        }
+        .map-controls button.active {
+            background: #ec4899;
+            color: white;
+            border-color: #ec4899;
+        }
+        .map-controls button:hover:not(.active) {
+            background: #f3f4f6;
+        }
+        .map-controls .dropdown {
+            position: relative;
+        }
+        .map-controls .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 8px;
+            min-width: 220px;
+            margin-top: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .map-controls .dropdown-menu.open {
+            display: block;
+        }
+        .map-controls .dropdown-menu label {
+            display: flex;
+            align-items: center;
+            padding: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .map-controls .dropdown-menu label:hover {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        .map-controls .dropdown-menu input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        .map-controls .dropdown-menu hr {
+            margin: 8px 0;
+            border: none;
+            border-top: 1px solid #e5e7eb;
+        }
+        .map-controls .dropdown-menu .action-buttons {
+            display: flex;
+            gap: 4px;
+        }
+        .map-controls .dropdown-menu .action-buttons button {
+            flex: 1;
+            margin: 0;
+            padding: 6px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* Boutique Sidebar Cards */
+        .boutique-card {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .boutique-card:hover {
+            background: #fef3f2;
+        }
+        .boutique-card.highlighted {
+            background: #dbeafe;
+            border-left: 3px solid #2563eb;
+            padding-left: 3px;
+        }
+        .boutique-card a {
+            text-decoration: none;
+        }
+        .boutique-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive map controls */
+        @media (max-width: 640px) {
+            .map-controls {
+                top: 5px;
+                right: 5px;
+                padding: 6px;
+            }
+            .map-controls button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .map-controls .dropdown-menu {
+                min-width: 200px;
+            }
+        }
+
+        /* Restaurant Selection Styles */
+        .restaurant-choice-toggle {
+            margin-top: 0.75rem;
+        }
+        .restaurant-choice-toggle button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #FEF3C7; /* Amber 100 */
+            border: 1px solid #FCD34D; /* Amber 300 */
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #78350F; /* Amber 900 */
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .restaurant-choice-toggle button:hover {
+            background-color: #FDE68A; /* Amber 200 */
+        }
+        .restaurant-options-container {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .restaurant-option-card {
+            padding: 1rem;
+            border: 2px solid #E5E7EB; /* Gray 200 */
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .restaurant-option-card:hover {
+            border-color: #FB923C; /* Amber 400 */
+            background-color: #FFFBEB; /* Amber 50 */
+        }
+        .restaurant-option-card.selected {
+            border-color: #9F1239; /* Mughal Red */
+            background-color: #FEF2F2; /* Rose 50 */
+        }
+        .cuisine-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background-color: #FEF3C7; /* Amber 100 */
+            color: #92400E; /* Amber 800 */
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .restaurant-highlights {
+            font-size: 0.75rem;
+            color: #6B7280; /* Gray 500 */
+            margin-top: 0.5rem;
+        }
+        .restaurant-highlights span {
+            margin-right: 0.5rem;
+        }
+        .selected-restaurant {
+            padding: 0.75rem;
+            background-color: #FEF2F2; /* Rose 50 */
+            border-left: 4px solid #9F1239; /* Mughal Red */
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .selected-restaurant h4 {
+            color: #881337; /* Rose 900 */
+        }
+        .all-inclusive-badge {
+            padding: 0.75rem;
+            background-color: #ECFDF5; /* Green 50 */
+            border: 1px solid #A7F3D0; /* Green 200 */
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .all-inclusive-badge-header {
+            display: flex;
+            align-items: center;
+            color: #065F46; /* Green 800 */
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+        .all-inclusive-badge-text {
+            color: #047857; /* Green 700 */
+            font-size: 0.75rem;
+        }
+        /* Animation */
+        .slide-down {
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from {
+                max-height: 0;
+                opacity: 0;
+            }
+            to {
+                max-height: 1000px;
+                opacity: 1;
+            }
+        }
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background-color: #10B981; /* Green 500 */
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease-out;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -179,7 +440,50 @@
         <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             <h2 class="text-xl font-bold serif-font text-gray-800 mb-2">🗺️ Interactive Journey Map</h2>
             <p class="text-gray-600 text-sm mb-4">Complete itinerary with all restaurants, attractions, and activities. Click markers for details!</p>
-            <div id="map"></div>
+            <div style="position: relative;">
+                <div id="map"></div>
+
+                <!-- Map Controls Overlay -->
+                <div class="map-controls">
+                    <div class="dropdown">
+                        <button id="shopping-toggle" class="active">🛍️ Shopping</button>
+                        <div class="dropdown-menu" id="shopping-dropdown">
+                            <label>
+                                <input type="checkbox" checked data-category="jewelry"> 💍 Jewelry <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="fashion"> 👗 Fashion <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="menswear"> 👔 Menswear <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="home"> 🪴 Home Decor <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="perfume"> 🌸 Perfume <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="shopping"> 🏪 Markets <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="handicrafts"> 🎨 Handicrafts <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="accessories"> 👜 Accessories <span class="count">(0)</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" checked data-category="lifestyle"> ✨ Lifestyle <span class="count">(0)</span>
+                            </label>
+                            <hr>
+                            <div class="action-buttons">
+                                <button id="show-all-shopping">Show All</button>
+                                <button id="hide-all-shopping">Hide All</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mt-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
                 <div class="flex items-center">
                     <div class="w-3 h-3 bg-emerald-600 rounded-full mr-2"></div>
@@ -233,6 +537,22 @@
                     <div class="chart-container flex justify-center">
                         <canvas id="balanceChart"></canvas>
                     </div>
+                </div>
+
+                <!-- Shopping in City Sidebar -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100" id="shopping-sidebar">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold serif-font text-gray-900">
+                            🛍️ Shopping in <span id="shopping-city-name">Udaipur</span>
+                        </h3>
+                        <span class="text-xs text-gray-500" id="shopping-count">0 boutiques</span>
+                    </div>
+                    <div class="space-y-3" id="shopping-sidebar-list">
+                        <!-- Populated by JS -->
+                    </div>
+                    <a href="fashion.html" id="shopping-view-all" class="block mt-4 text-sm text-rose-700 font-semibold hover:text-rose-800">
+                        View All Shopping →
+                    </a>
                 </div>
 
                 <!-- Dining Highlights -->
@@ -323,7 +643,20 @@
                     { time: "12:30 PM", title: "Lunch: Ambrai Restaurant", type: "dining", detail: "Lakeside seating with City Palace views. 10 people, high chair. *Casual to Smart Casual.*", url: "https://www.ambrai.com/" },
                     { time: "04:00 PM", title: "Miniature Painting Workshop", type: "culture", detail: "Shyam Arts (complimentary via hotel)." },
                     { time: "05:00 PM", title: "Glass Inlay Art (Thekri)", type: "culture", detail: "Traditional craft workshop (complimentary via hotel)." },
-                    { time: "06:00 PM", title: "Dinner at Hotel", type: "dining", detail: "Beautiful ambiance with Western & kid-friendly options. High chair. *Smart Casual.*", url: OBEROI_UDAIVILAS_URL }
+                    {
+                        time: "06:00 PM",
+                        title: "Dinner: Chandni",
+                        type: "dining",
+                        detail: "High chair confirmed. *Smart Casual.*",
+                        url: OBEROI_UDAIVILAS_URL,
+                        restaurantInfo: {
+                            name: "Chandni",
+                            cuisine: "Pan-Asian",
+                            description: "Lakeside restaurant featuring Pan-Asian cuisine with Lake Pichola views. Specializes in sushi, dim sum, and Thai dishes.",
+                            dressCode: "Smart Casual",
+                            highlights: ["Lakeside seating", "Sushi bar", "Thai specialties", "Vegetarian options"]
+                        }
+                    }
                 ]
             },
             {
@@ -339,7 +672,64 @@
                     { time: "12:00 PM", title: "Lunch Stop in Delhi", type: "dining", detail: "Family-friendly restaurant en route. TBD with Mitesh recommendations." },
                     { time: "01:30 PM", title: "Drive: DEL to Agra", type: "logistics", detail: "Yamuna Expressway (~3.5 hours). One vehicle from Mitesh." },
                     { time: "05:00 PM", title: "Check-in: Amarvilas", type: "logistics", detail: "Rooms ready by 5:00 PM. All rooms have Taj Mahal views. NOTE: Request 5:30 PM snack for Zane from concierge." },
-                    { time: "06:00 PM", title: "Dinner at Hotel", type: "dining", detail: "Taj views if possible. Western/kid-friendly menu. High chair. *Smart Casual.*", url: OBEROI_AMARVILAS_URL }
+                    {
+                        time: "06:00 PM",
+                        title: "Dinner at Hotel",
+                        type: "dining",
+                        detail: "Choose your preferred restaurant. High chair confirmed. *Smart Casual.*",
+                        url: OBEROI_AMARVILAS_URL,
+                        hasMultipleOptions: true,
+                        restaurantOptions: [
+                            {
+                                id: "daawat-e-nawab",
+                                name: "Daawat-E-Nawab",
+                                cuisine: "Mughlai & North Indian",
+                                description: "Traditional Mughlai cuisine with royal recipes. Known for kebabs, biryanis, and rich curries.",
+                                dressCode: "Smart Casual",
+                                highlights: ["Authentic Mughlai", "Royal recipes", "Kebab specialties"]
+                            },
+                            {
+                                id: "pinch-of-spice",
+                                name: "Pinch of Spice",
+                                cuisine: "Contemporary Indian",
+                                description: "Modern Indian cuisine with creative presentations. Popular family-friendly restaurant.",
+                                dressCode: "Casual to Smart Casual",
+                                highlights: ["Contemporary style", "Kid-friendly", "Creative menu"]
+                            },
+                            {
+                                id: "taj-bano",
+                                name: "Taj Bano",
+                                cuisine: "Mughlai",
+                                description: "Classic Mughlai restaurant offering traditional dishes in an elegant setting.",
+                                dressCode: "Smart Casual",
+                                highlights: ["Traditional recipes", "Elegant ambiance", "Local favorite"]
+                            },
+                            {
+                                id: "tease-me",
+                                name: "Tea'se Me",
+                                cuisine: "Multi-Cuisine Café",
+                                description: "Casual café-style dining with diverse menu options including Western favorites.",
+                                dressCode: "Casual",
+                                highlights: ["Western options", "Casual atmosphere", "Family-friendly"]
+                            },
+                            {
+                                id: "peshawri",
+                                name: "Peshawri",
+                                cuisine: "Northwest Frontier",
+                                description: "Renowned restaurant specializing in robust Northwest Frontier cuisine cooked in clay ovens.",
+                                dressCode: "Smart Casual to Elegant",
+                                highlights: ["Tandoor specialties", "Premium dining", "Award-winning"]
+                            },
+                            {
+                                id: "qairo",
+                                name: "Qairo",
+                                cuisine: "Mediterranean & Middle Eastern",
+                                description: "Mediterranean and Middle Eastern cuisine with fresh ingredients and aromatic flavors.",
+                                dressCode: "Smart Casual",
+                                highlights: ["Mediterranean", "Fresh ingredients", "Unique flavors"]
+                            }
+                        ]
+                    }
                 ]
             },
             {
@@ -355,7 +745,17 @@
                     { time: "11:00 AM", title: "Drive to Ranthambore", type: "logistics", detail: "~5 hours drive from Agra to Ranthambore. Fatehpur Sikri - ask Mitesh if worth it with kids." },
                     { time: "01:00 PM", title: "Packed Lunch En Route", type: "dining", detail: "Packed lunches from Oberoi Amarvilas (hotel said no restaurant recommendations available). Request packed lunch boxes for 10 people from hotel." },
                     { time: "05:00 PM", title: "Check-in: Vanyavilas", type: "logistics", detail: "Luxury Tents. Early arrival, rooms ready. NOTE: Request 5:30 PM snack for Zane from concierge." },
-                    { time: "06:00 PM", title: "Dinner at Hotel (Included)", type: "dining", detail: "Arrival night. All meals included at Vanyavilas. High chair. *Casual Resort Wear.*", url: OBEROI_VANYAVILAS_URL }
+                    {
+                        time: "06:00 PM",
+                        title: "Dinner at Hotel (All-Inclusive)",
+                        type: "dining",
+                        detail: "High chair available. *Casual Resort Wear.*",
+                        url: OBEROI_VANYAVILAS_URL,
+                        allInclusive: true,
+                        restaurantInfo: {
+                            note: "All meals included at Vanyavilas. Hotel assigns dining locations based on availability."
+                        }
+                    }
                 ]
             },
             {
@@ -371,7 +771,17 @@
                     { time: "02:00 PM", title: "Spa: Couples Treatment", type: "leisure", detail: "Anoop & Lauren, 2:00-4:30 PM post-safari treatment. Check availability for other adults." },
                     { time: "04:00 PM", title: "Block Printing for Kids", type: "culture", detail: "If hotel can arrange. Check with concierge. NOTE: Request 5:30 PM snack for Zane." },
                     { time: "Evening", title: "Optional Activities", type: "leisure", detail: "Stargazing (if hotel offers) OR Camel cart ride (if available)." },
-                    { time: "06:00 PM", title: "Dinner at Hotel (Included)", type: "dining", detail: "Regular restaurant OR bush dinner (ask hotel for best option). All meals included. High chair. *Casual Resort Wear.*", url: OBEROI_VANYAVILAS_URL }
+                    {
+                        time: "06:00 PM",
+                        title: "Dinner at Hotel (All-Inclusive)",
+                        type: "dining",
+                        detail: "Regular restaurant OR bush dinner (ask hotel for best option). High chair available. *Casual Resort Wear.*",
+                        url: OBEROI_VANYAVILAS_URL,
+                        allInclusive: true,
+                        restaurantInfo: {
+                            note: "All meals included at Vanyavilas. Hotel assigns dining locations based on availability."
+                        }
+                    }
                 ]
             },
             {
@@ -441,6 +851,7 @@
         const diningHighlights = [
             { name: "Taj Lake Palace", loc: "Udaipur", note: "Boat Access", dress: "Smart Casual to Elegant", url: "https://www.tajhotels.com/en-in/taj/taj-lake-palace-udaipur/dining/" },
             { name: "Ambrai", loc: "Udaipur", note: "Lakeside • City Palace Views", dress: "Casual to Smart Casual", url: "https://www.ambrai.com/" },
+            { name: "Chandni", loc: "Udaivilas, Udaipur", note: "Dec 18 Dinner • Pan-Asian", dress: "Smart Casual", url: OBEROI_UDAIVILAS_URL },
             { name: "Giardino", loc: "Jai Mahal Palace, Jaipur", note: "Dec 22 Dinner", dress: "Smart Casual", url: "https://www.tajhotels.com/en-in/jai-mahal-palace-jaipur/restaurants/giardino/" },
             { name: "The Verandah", loc: "Rambagh Palace, Jaipur", note: "Dec 23 Lunch", dress: "Smart Casual to Elegant", url: "https://www.tajhotels.com/en-in/taj/rambagh-palace-jaipur/restaurants/the-verandah/" },
             { name: "Wink", loc: "The Lalit Jaipur", note: "Dec 23 Dinner • Contemporary", dress: "Smart Casual", url: "https://www.thelalit.com/the-lalit-jaipur/restaurants-bars/wink/" },
@@ -448,7 +859,337 @@
             { name: "Surya Mahal", loc: "Rajvilas, Jaipur", note: "Dec 24 Birthday Dinner • Festive Menu", dress: "Resort Elegant to Formal", url: OBEROI_RAJVILAS_URL }
         ];
 
+        // Boutiques data - complete list for all trip cities
+        const boutiquesData = [
+            // MUMBAI
+            { name: 'Lune', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Cult jewelry, celestial designs • Hours: Mon-Sat 11am–7:30pm, Sun closed • 📍 Shop 1 & 2, Labbaik House, 39, Chimbai Road, Bandra West, 400050', url: "shoplune.com" },
+            { name: 'Two Extra Lives', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'fashion', category: 'Vintage/Concept', icon: '👗', color: '#ec4899', details: 'Upcycled, vintage, conscious fashion • Hours: Daily 11am–8pm • 📍 Bungalow 111, 562 Dr Ambedkar Road, Pali Village, Bandra West, 400050', url: "twoextralives.com" },
+            { name: 'Call of the Valley', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'perfume', category: 'Perfume/Lifestyle', icon: '🌸', color: '#a855f7', details: 'Artisanal Indian perfume oils • 📍 Shop 3, Aruna Niwas, Pali Village, Bandra West, 400050', url: "callofthevalley.com" },
+            { name: 'Good Earth', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Lifestyle', icon: '🪴', color: '#10b981', details: 'Handcrafted luxury homeware, Indian crafts • 📍 11-12 Raghuvanshi Mills Compound, Senapati Bapat Marg, Lower Parel', url: "goodearth.in" },
+            { name: 'Hatsu', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Design', icon: '🪴', color: '#10b981', details: 'Modern lighting, furniture, quirky décor • 📍 25, Laxmi Mill Compound, Shakti Mills Lane, Mahalakshmi', url: "hatsu.in" },
+            { name: 'James Ferreira', city: 'Mumbai', position: { lat: 18.951, lng: 72.8144 }, type: 'fashion', category: 'Fashion', icon: '👗', color: '#ec4899', details: 'Contemporary clothing from heritage bungalow • 📍 Studio 47-G Khotachiwadi Trail, 1st Lane, Khotachiwadi, Girgaon', url: "jamesferreira.in" },
+            { name: 'Nicobar', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'lifestyle', category: 'Lifestyle', icon: '✨', color: '#ec4899', details: 'Tropical-accented homeware, bohemian clothing • 📍 10 Ropewalk Lane, Above Kala Ghoda Café, Kala Ghoda, Fort', url: "nicobar.com" },
+            { name: 'Ogaan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Indian designer clothing (men\'s and women\'s) • 📍 6/8, Navbharat House, Burjorji S Bharucha Marg, Kala Ghoda', url: "ogaan.com" },
+            { name: 'Sabyasachi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Couture/Wedding', icon: '👰', color: '#f472b6', details: 'Bridalwear flagship/living museum • 📍 IGP Fort, Veer Nariman Road, near Horniman Circle, Fort', url: "sabyasachiofficial.com" },
+            { name: 'Valliyan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Statement jewelry, retro-futurist designs • 📍 First Floor, Rhythm House Building, 59 Forbes Street, Fort', url: "valliyan.com" },
+            { name: 'Moonray', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Womenswear', icon: '👗', color: '#ec4899', details: 'Sophisticated tailored womenswear & accessories • 📍 Ground floor, Mittal Avenue, Kala Ghoda, Fort', url: "moonray.in" },
+            { name: 'Jodi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Menswear/Womenswear', icon: '👗', color: '#ec4899', details: 'Hand-block print, colorful menswear • 📍 Shop no. 1, Lentin Chambers, Dalal Street, Fort', url: "thejodilife.com" },
+            { name: 'Obataimu', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'menswear', category: 'Concept/Menswear', icon: '👔', color: '#3b82f6', details: 'Limited-edition, innovative contemporary clothing • 📍 Ground Floor, Machinery House, 3, S Bharucha Marg, Kala Ghoda, Fort', url: "obataimu.com" },
+            { name: 'Nappa Dori', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'accessories', category: 'Accessories', icon: '👜', color: '#f59e0b', details: 'Luggage and leather accessories • 📍 2, Sunny House, Mereweather Road, Colaba', url: "nappadori.com" },
+            { name: 'Le Mill', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'luxury', category: 'Luxury Fashion', icon: '💎', color: '#8b5cf6', details: 'Global luxury brands, top international labels • 📍 1st Floor, Pheroze Building, Chhatrapati Shivaji Maharaj Marg, Colaba', url: "lemillindia.com" },
+            { name: 'Pernia\'s Pop-Up Studio (Bandra)', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Bandra', url: "perniaspopupshop.com" },
+            { name: 'Pernia\'s Pop-Up Studio (Juhu)', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Juhu', url: "perniaspopupshop.com" },
+            { name: 'Raymond', city: 'Mumbai', position: { lat: 19.1355, lng: 72.8262 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Andheri West', url: "myraymond.com" },
+            { name: 'Curato', city: 'Mumbai', position: { lat: 19.0708, lng: 72.8357 }, type: 'menswear', category: 'Menswear', icon: '👔', color: '#3b82f6', details: 'Leading Indian designer brands • 📍 Khar, Kala Ghoda', url: "curato.in" },
+            { name: 'Masculine', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Tailoring', icon: '👔', color: '#3b82f6', details: 'Bespoke tailoring, established 1987 • 📍 Juhu', url: null },
+            { name: 'Abstract Mens', city: 'Mumbai', position: { lat: 19.2307, lng: 72.8567 }, type: 'menswear', category: 'Streetwear', icon: '🧢', color: '#6366f1', details: 'Modern oversized, hype street fashion • 📍 Borivali West', url: null },
+            { name: 'Paak Pehnawa', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Pure, premium ethnicwear for men • 📍 Mumbai', url: null },
+            { name: 'Acros Ethnic', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Traditional, Indo-western, trending • 📍 Mumbai', url: null },
+            { name: 'Linking Road', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Trendy street fashion, accessible prices • 📍 Bandra West', url: null },
+            { name: 'Colaba Causeway', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Eclectic finds, vintage-inspired • 📍 Colaba', url: null },
+            { name: 'Oberoi Mall', city: 'Mumbai', position: { lat: 19.1653, lng: 72.8494 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'High-street fashion, multi-brand • 📍 Goregaon', url: null },
+            { name: 'Phoenix Palladium', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'Luxury brands, flagship stores • 📍 Lower Parel', url: null },
+            { name: 'R City Mall', city: 'Mumbai', position: { lat: 19.0866, lng: 72.9081 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'New brand launches, trendy casuals • 📍 Ghatkopar West', url: null },
+            { name: 'Bhavya Ramesh', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Alternative, edgy, celestial-inspired • 📍 Kala Ghoda', url: "bhavyaramesh.com" },
+            { name: 'ISHARYA', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern Indian statement jewelry • 📍 Mumbai', url: "isharya.com" },
+            { name: 'Tanzire', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Handmade demi-fine jewelry • 📍 Mumbai', url: "tanzire.com" },
+            { name: 'Moksh', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern, contemporary, luxury jewelry • 📍 Mumbai', url: "mokshjewellery.com" },
+            { name: 'Bodements', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'fashion', category: 'Fashion/Vintage', icon: '👗', color: '#ec4899', details: 'Curated vintage/upcycled clothing • 📍 Mumbai/Paris', url: "bodements.com" },
+            { name: 'Timeless Vintage Studios', city: 'Mumbai', position: { lat: 19.2042, lng: 72.8546 }, type: 'fashion', category: 'Vintage/Thrift', icon: '👗', color: '#ec4899', details: 'Thrift, collectibles, vintage, pop-ups • 📍 Kandivali', url: null },
+            { name: 'Teatro Dhora', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Art-fashion, multi-designer, experiential • 📍 Bandra', url: "teatrodhora.com" },
+            { name: 'Yusuf Bhai Perfumery', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Heritage Bombay-style perfume • 📍 Mumbai', url: null },
+            { name: 'Boond Fragrances', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Pure, natural, artisanal Indian fragrances • 📍 Mumbai/Kannauj', url: "boondfragrances.com" },
+            { name: 'BoConcept India', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Furniture', icon: '🪴', color: '#10b981', details: 'Modern Danish design, premium • 📍 Lower Parel', url: "boconcept.in" },
+            { name: 'The Pure Concept Home', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'home', category: 'Home/Interiors', icon: '🪴', color: '#10b981', details: 'Luxe fabrics, home consultancy • 📍 Kala Ghoda', url: "shop.thepureconcepthome.com" },
+            { name: 'Maison Sia', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Decor', icon: '🪴', color: '#10b981', details: 'International, curated luxury • 📍 Raghuvanshi Mills', url: "maisonsia.com" },
+
+            // JAIPUR
+            { name: 'Togs Jaipur', city: 'Jaipur', position: { lat: 26.8871, lng: 75.8076 }, type: 'menswear', category: 'Custom Menswear', icon: '👔', color: '#3b82f6', details: 'Designer half jackets to tuxedos, Kurta to Sherwanis • 📍 B14c, near MFG mall, C Scheme, Ashok Nagar, Jaipur', url: null },
+            { name: 'Raymond Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Jawaharlal Nehru Marg, Malviya Nagar, Jaipur', url: "myraymond.com" },
+            { name: 'Park Avenue Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Business suits, formal wear, casual wear • 📍 Malviya Nagar, Jaipur', url: "parkavenue.in" },
+            { name: 'Cityvibes Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Kurta pajamas, sherwanis, Indo-Western • 📍 Malviya Nagar, Vaishali Nagar, Jaipur', url: "cityvibes.in" },
+            { name: 'ANOKHI', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'fashion', category: 'Concept/Fashion', icon: '👗', color: '#ec4899', details: 'Block-printed clothing, eco-conscious, 50+ years heritage • 📍 C-Scheme & Amer, Jaipur', url: "anokhi.com" },
+            { name: 'Jaipur Modern', city: 'Jaipur', position: { lat: 26.9124, lng: 75.7873 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Contemporary, minimalist locally-made silk & cotton • 📍 Jaipur', url: null },
+            { name: 'Nila House', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'textile', category: 'Textile/Lifestyle', icon: '🧵', color: '#10b981', details: 'Natural dyeing, modern Rajasthani tradition • 📍 C-86, Prithviraj Road, C Scheme, Jaipur', url: "nilahouse.com" },
+            { name: 'Anokhi Museum', city: 'Jaipur', position: { lat: 26.9855, lng: 75.8513 }, type: 'museum', category: 'Museum/Textile', icon: '🏛️', color: '#6366f1', details: 'Hand-block printing heritage techniques • 📍 Kheri Gate, Amer, Jaipur', url: "anokhi.com" },
+            { name: 'Johri Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Oldest pink market, jewelry, textiles, lehariya • 📍 Johri Bazaar, Jaipur', url: null },
+            { name: 'Bapu Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Men\'s suits, boots, ethnic wear • 📍 Bapu Bazaar, Jaipur', url: null },
+            { name: 'Kishanpole Bazar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Bandhani sarees, tie-dye fabrics • 📍 Kishanpole Bazar, Jaipur', url: null },
+
+            // UDAIPUR
+            { name: 'Cityvibes Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Wedding wear, kurta pajamas, sherwanis • 📍 Udaipur, Rajasthan', url: "cityvibes.in" },
+            { name: 'Saptapadi Luxury Store', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Wedding Menswear', icon: '👔', color: '#3b82f6', details: 'Bespoke sartorial products, luxury wedding wear • 📍 Udaipur Flagship', url: "saptapadistore.com" },
+            { name: 'Manyavar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, Indo-Western, Modi Kurta • 📍 Bapu Bazar, Bhuwana, Udaipur', url: "manyavar.com" },
+            { name: 'Jade Blue', city: 'Udaipur', position: { lat: 24.5858, lng: 73.6854 }, type: 'menswear', category: 'Ethnic & Western', icon: '👔', color: '#3b82f6', details: 'Evening shirts, blazers, Modi Kurta • 📍 Court Chowaraha, Udaipur', url: "jadeblue.com" },
+            { name: 'Raymond Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.6872 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Premium suits, tailoring • 📍 Panchwati, Near Sukhadia Circle, Udaipur', url: "myraymond.com" },
+            { name: 'Bapu Bazaar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Bandhani sarees, embroidered textiles • 📍 Bapu Bazaar, Udaipur', url: null },
+            { name: 'Jagdish Chowk', city: 'Udaipur', position: { lat: 24.5794, lng: 73.6833 }, type: 'shopping', category: 'Heritage Market', icon: '🏛️', color: '#ef4444', details: 'Antique jewelry, hand-carved items • 📍 Jagdish Chowk, Udaipur', url: null },
+            { name: 'Hathi Pol Bazaar', city: 'Udaipur', position: { lat: 24.5794, lng: 73.6833 }, type: 'shopping', category: 'Antiques Market', icon: '⚱️', color: '#92400e', details: 'Vintage jewelry, Rajput weaponry, antiques • 📍 Hathi Pol Bazaar, Udaipur', url: null },
+            { name: 'City Palace Boutiques', city: 'Udaipur', position: { lat: 24.576, lng: 73.6832 }, type: 'handicrafts', category: 'Royal Crafts', icon: '👑', color: '#9333ea', details: 'High-quality Mewar handicrafts • 📍 City Palace Complex, Udaipur', url: null },
+            { name: 'Umang Boutique', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Latest Indian designer patterns, ethnic wear • 📍 Udaipur', url: null },
+
+            // AGRA
+            { name: 'Dimple Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Men\'s ethnic wear, kurtas, sherwanis • 📍 E-21, Bypass Road, Kamla Nagar, Agra', url: "dimplecollection.in" },
+            { name: 'Riti Riwaaz Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, blazers, Indo-Western • 📍 E-90, Kamla Nagar, Agra', url: null },
+            { name: 'Raymond Agra', city: 'Agra', position: { lat: 27.2152, lng: 77.9753 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Sulabh Puram Colony, Sikandra, Agra', url: "myraymond.com" },
+            { name: 'Blackberrys Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Premium formal and casual menswear • 📍 MG Road, Sanjay Place, Agra', url: "blackberrys.com" },
+            { name: 'Lifestyle Stores Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Multi-brand', icon: '🛍️', color: '#64748b', details: 'Contemporary fashion, multi-brand mall store • 📍 Ashok Cosmos Mall, Sanjay Place, Agra', url: "lifestylestores.com" },
+            { name: 'Sadar Bazaar', city: 'Agra', position: { lat: 27.1903, lng: 78.0022 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Traditional shopping, textiles • 📍 Sadar Bazaar, Agra', url: null },
+            { name: 'Kinari Bazaar', city: 'Agra', position: { lat: 27.1751, lng: 78.0421 }, type: 'shopping', category: 'Textile Market', icon: '🧵', color: '#10b981', details: 'Textiles, embroidery, traditional crafts • 📍 Kinari Bazaar, Agra', url: null },
+            { name: 'Sanjay Place', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Shopping District', icon: '🏬', color: '#64748b', details: 'Modern retail, malls, branded stores • 📍 Sanjay Place, Agra', url: null },
+
+            // RANTHAMBORE
+            { name: 'Dastkar Ranthambore', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Handicrafts/Textiles', icon: '🎨', color: '#8b5cf6', details: 'Community coop, handmade textiles, village crafts • 📍 Sawai Madhopur, near Ranthambore', url: "dastkar.org" },
+            { name: 'Village Women Craft', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Community Crafts', icon: '🎨', color: '#8b5cf6', details: 'Hand-carved items, paintings, textiles • 📍 Sawai Madhopur', url: null },
+            { name: 'Ranthambore School of Arts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Traditional Crafts', icon: '🎨', color: '#8b5cf6', details: 'Batik, tie-dye, silver jewelry, Rajasthani items • 📍 Sawai Madhopur', url: null },
+            { name: 'The Tiger Shop', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'souvenirs', category: 'Souvenirs', icon: '🎁', color: '#f59e0b', details: 'Tiger-print shirts, superfine Taj cotton fabric • 📍 Sawai Madhopur', url: "thetigershop.in" },
+            { name: 'Ranthambhore Maharani Handicrafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Local Handicrafts', icon: '🎨', color: '#8b5cf6', details: 'Quality local handicrafts, textiles • 📍 Sawai Madhopur', url: null },
+            { name: 'Dhonk Crafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Eco Crafts', icon: '🌿', color: '#10b981', details: 'Eco-conscious, conservation-focused products • 📍 Sawai Madhopur', url: null },
+        ];
+
+        // City to day mapping for smart sidebar
+        const dayToCityMap = {
+            1: 'Udaipur', 2: 'Udaipur',
+            3: 'Agra', 4: 'Agra',
+            5: 'Ranthambore', 6: 'Ranthambore',
+            7: 'Jaipur', 8: 'Jaipur', 9: 'Jaipur'
+        };
+
+        // Global boutique markers array
+        let boutiqueMarkers = [];
+        let currentCity = 'Udaipur';
+
+        // --- RESTAURANT SELECTION STORAGE ---
+        const STORAGE_KEY = 'trip_restaurant_selections';
+
+        function generateEventId(dayIndex, eventIndex) {
+            return `day${dayIndex}-event${eventIndex}`;
+        }
+
+        function getRestaurantSelection(eventId) {
+            try {
+                const selections = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                return selections[eventId] || null;
+            } catch (e) {
+                console.error('Error reading restaurant selections:', e);
+                return null;
+            }
+        }
+
+        function saveRestaurantSelection(eventId, restaurantId) {
+            try {
+                const selections = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                selections[eventId] = restaurantId;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                return true;
+            } catch (e) {
+                console.error('Error saving restaurant selection:', e);
+                return false;
+            }
+        }
+
+        function clearRestaurantSelection(eventId) {
+            try {
+                const selections = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                delete selections[eventId];
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+            } catch (e) {
+                console.error('Error clearing restaurant selection:', e);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        function toggleRestaurantChoices(eventId) {
+            const choicesDiv = document.getElementById(`choices-${eventId}`);
+            const button = document.querySelector(`[data-toggle="${eventId}"]`);
+
+            if (choicesDiv.classList.contains('hidden')) {
+                choicesDiv.classList.remove('hidden');
+                choicesDiv.classList.add('slide-down');
+                if (button) button.textContent = button.textContent.replace('🔽', '🔼');
+            } else {
+                choicesDiv.classList.add('hidden');
+                if (button) button.textContent = button.textContent.replace('🔼', '🔽');
+            }
+        }
+
+        function selectRestaurant(eventId, restaurantId, dayIndex, eventIndex) {
+            if (saveRestaurantSelection(eventId, restaurantId)) {
+                showToast('✓ Restaurant saved!');
+
+                setTimeout(() => {
+                    renderTimeline('all');
+                }, 1000);
+            }
+        }
+
         // --- RENDER FUNCTIONS ---
+
+        function renderStandardEvent(event) {
+            let titleHTML = event.title;
+            if (event.url) {
+                titleHTML = `<a href="${event.url}" target="_blank" class="restaurant-link">${event.title}</a>`;
+            }
+
+            return `
+                <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML}</h4>
+                <p class="text-sm text-gray-600 mt-1 break-words">${event.detail}</p>
+            `;
+        }
+
+        function renderEnhancedRestaurantEvent(event) {
+            const info = event.restaurantInfo;
+            let titleHTML = event.title;
+            if (event.url) {
+                titleHTML = `<a href="${event.url}" target="_blank" class="restaurant-link">${event.title}</a>`;
+            }
+
+            return `
+                <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML}</h4>
+                <div class="mt-2">
+                    <span class="cuisine-tag">${info.cuisine}</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">${info.description}</p>
+                ${info.highlights ? `
+                    <div class="restaurant-highlights mt-2">
+                        ${info.highlights.map(h => `<span>• ${h}</span>`).join(' ')}
+                    </div>
+                ` : ''}
+                <p class="text-xs text-gray-500 italic mt-2">${info.dressCode}</p>
+                <p class="text-sm text-gray-600 mt-2">${event.detail}</p>
+            `;
+        }
+
+        function renderAllInclusiveEvent(event) {
+            let titleHTML = event.title;
+            if (event.url) {
+                titleHTML = `<a href="${event.url}" target="_blank" class="restaurant-link">${event.title}</a>`;
+            }
+
+            return `
+                <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML}</h4>
+                <div class="all-inclusive-badge">
+                    <div class="all-inclusive-badge-header">
+                        <span class="mr-2">✓</span> All-Inclusive Package
+                    </div>
+                    <p class="all-inclusive-badge-text">
+                        ${event.restaurantInfo?.note || 'All meals managed by hotel'}
+                    </p>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">${event.detail}</p>
+            `;
+        }
+
+        function renderMultipleChoiceEvent(event, eventId, dayIndex, eventIndex) {
+            const savedSelection = getRestaurantSelection(eventId);
+            const selectedRestaurant = savedSelection
+                ? event.restaurantOptions.find(r => r.id === savedSelection)
+                : null;
+
+            if (selectedRestaurant) {
+                // SELECTED STATE
+                let titleHTML = `Dinner: ${selectedRestaurant.name}`;
+                if (selectedRestaurant.url) {
+                    titleHTML = `<a href="${selectedRestaurant.url}" target="_blank" class="restaurant-link">Dinner: ${selectedRestaurant.name}</a>`;
+                }
+
+                return `
+                    <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML} ✓</h4>
+                    <div class="selected-restaurant">
+                        <div class="text-sm text-rose-900 font-medium mb-1">
+                            ${selectedRestaurant.cuisine} • ${selectedRestaurant.dressCode}
+                        </div>
+                        <p class="text-sm text-gray-600">${event.detail}</p>
+                        <button
+                            onclick="toggleRestaurantChoices('${eventId}')"
+                            class="mt-2 text-sm text-rose-700 hover:text-rose-900 font-medium underline"
+                        >
+                            Change Restaurant
+                        </button>
+                    </div>
+                    <div id="choices-${eventId}" class="hidden restaurant-options-container">
+                        ${event.restaurantOptions.map(restaurant => `
+                            <label class="restaurant-option-card ${restaurant.id === savedSelection ? 'selected' : ''}">
+                                <div class="flex items-start">
+                                    <input
+                                        type="radio"
+                                        name="restaurant-${eventId}"
+                                        value="${restaurant.id}"
+                                        ${restaurant.id === savedSelection ? 'checked' : ''}
+                                        onchange="selectRestaurant('${eventId}', '${restaurant.id}', ${dayIndex}, ${eventIndex})"
+                                        class="mt-1 mr-3"
+                                    />
+                                    <div class="flex-1">
+                                        <div class="font-bold text-gray-900 text-base mb-1">${restaurant.name}</div>
+                                        <div class="cuisine-tag">${restaurant.cuisine}</div>
+                                        <p class="text-sm text-gray-600 mt-2">${restaurant.description}</p>
+                                        ${restaurant.highlights ? `
+                                            <div class="restaurant-highlights">
+                                                ${restaurant.highlights.map(h => `<span>• ${h}</span>`).join(' ')}
+                                            </div>
+                                        ` : ''}
+                                        <p class="text-xs text-gray-500 italic mt-2">${restaurant.dressCode}</p>
+                                    </div>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // COLLAPSED STATE (No Selection)
+                let titleHTML = event.title;
+                if (event.url) {
+                    titleHTML = `<a href="${event.url}" target="_blank" class="restaurant-link">${event.title}</a>`;
+                }
+
+                return `
+                    <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML}</h4>
+                    <div class="restaurant-choice-toggle">
+                        <button onclick="toggleRestaurantChoices('${eventId}')" data-toggle="${eventId}">
+                            <span>🔽 Choose Restaurant (${event.restaurantOptions.length} options)</span>
+                        </button>
+                    </div>
+                    <div id="choices-${eventId}" class="hidden restaurant-options-container">
+                        ${event.restaurantOptions.map(restaurant => `
+                            <label class="restaurant-option-card">
+                                <div class="flex items-start">
+                                    <input
+                                        type="radio"
+                                        name="restaurant-${eventId}"
+                                        value="${restaurant.id}"
+                                        onchange="selectRestaurant('${eventId}', '${restaurant.id}', ${dayIndex}, ${eventIndex})"
+                                        class="mt-1 mr-3"
+                                    />
+                                    <div class="flex-1">
+                                        <div class="font-bold text-gray-900 text-base mb-1">${restaurant.name}</div>
+                                        <div class="cuisine-tag">${restaurant.cuisine}</div>
+                                        <p class="text-sm text-gray-600 mt-2">${restaurant.description}</p>
+                                        ${restaurant.highlights ? `
+                                            <div class="restaurant-highlights">
+                                                ${restaurant.highlights.map(h => `<span>• ${h}</span>`).join(' ')}
+                                            </div>
+                                        ` : ''}
+                                        <p class="text-xs text-gray-500 italic mt-2">${restaurant.dressCode}</p>
+                                    </div>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">${event.detail}</p>
+                `;
+            }
+        }
 
         function renderTimeline(filter) {
             const container = document.getElementById('timeline-container');
@@ -488,9 +1229,11 @@
                 
                 let visibleEvents = 0;
 
-                day.events.forEach(event => {
+                day.events.forEach((event, eventIndex) => {
                     if (filter !== 'all' && event.type !== filter) return;
                     visibleEvents++;
+
+                    const eventId = generateEventId(index, eventIndex);
 
                     // Icon Selection
                     let icon = '📍';
@@ -500,25 +1243,37 @@
                     if (event.type === 'culture') { icon = '📷'; bgClass = 'bg-white border-l-4 border-rose-700'; }
                     if (event.type === 'leisure') { icon = '🍹'; bgClass = 'bg-blue-50 border-l-4 border-blue-400'; }
 
-                    // Link logic
-                    let titleHTML = event.title;
-                    if (event.url) {
-                        titleHTML = `<a href="${event.url}" target="_blank" class="restaurant-link">${event.title}</a>`;
-                    }
-
                     const eventCard = document.createElement('div');
                     eventCard.className = `luxury-card p-4 rounded shadow-sm ${bgClass}`;
+
+                    // Determine rendering mode
+                    let contentHTML = '';
+
+                    if (event.hasMultipleOptions && event.restaurantOptions) {
+                        // MULTIPLE CHOICE MODE
+                        contentHTML = renderMultipleChoiceEvent(event, eventId, index, eventIndex);
+                    } else if (event.allInclusive) {
+                        // ALL-INCLUSIVE MODE
+                        contentHTML = renderAllInclusiveEvent(event);
+                    } else if (event.restaurantInfo) {
+                        // SINGLE ENHANCED MODE
+                        contentHTML = renderEnhancedRestaurantEvent(event);
+                    } else {
+                        // STANDARD MODE
+                        contentHTML = renderStandardEvent(event);
+                    }
+
                     eventCard.innerHTML = `
                         <div class="flex justify-between items-start">
                             <div class="flex-1">
                                 <div class="flex items-center text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">
                                     <span class="mr-2 text-base">${icon}</span> ${event.time}
                                 </div>
-                                <h4 class="font-bold text-gray-900 text-lg break-words">${titleHTML}</h4>
-                                <p class="text-sm text-gray-600 mt-1 break-words">${event.detail}</p>
+                                ${contentHTML}
                             </div>
                         </div>
                     `;
+
                     eventList.appendChild(eventCard);
                 });
 
@@ -700,6 +1455,106 @@
             activeBtn.classList.add('bg-gray-200', 'font-medium', 'text-gray-700');
 
             renderTimeline(type);
+        }
+
+        // --- BOUTIQUES FUNCTIONS ---
+
+        // Get boutiques for a specific city
+        function getCityBoutiques(city, maxCount = 5) {
+            const cityBoutiques = boutiquesData.filter(b => b.city === city);
+            // Prioritize boutiques with URLs
+            return cityBoutiques
+                .sort((a, b) => {
+                    if (a.url && !b.url) return -1;
+                    if (!a.url && b.url) return 1;
+                    return 0;
+                })
+                .slice(0, maxCount);
+        }
+
+        // Render shopping sidebar
+        function renderShoppingSidebar(city, boutiques) {
+            const cityNameEl = document.getElementById('shopping-city-name');
+            const countEl = document.getElementById('shopping-count');
+            const listEl = document.getElementById('shopping-sidebar-list');
+
+            if (!boutiques || boutiques.length === 0) {
+                listEl.innerHTML = '<p class="text-sm text-gray-500 italic">No boutiques listed for this city</p>';
+                cityNameEl.textContent = city;
+                countEl.textContent = '0 boutiques';
+                return;
+            }
+
+            cityNameEl.textContent = city;
+            countEl.textContent = `${boutiques.length} boutiques`;
+
+            listEl.innerHTML = '';
+            boutiques.forEach(boutique => {
+                const card = document.createElement('div');
+                card.className = 'boutique-card border-b border-gray-100 pb-3 last:border-0';
+                card.setAttribute('data-boutique-name', boutique.name);
+
+                const nameLink = boutique.url
+                    ? `<a href="https://${boutique.url}" target="_blank" class="font-bold text-gray-800 hover:text-rose-700">${boutique.name}</a>`
+                    : `<span class="font-bold text-gray-800">${boutique.name}</span>`;
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">${boutique.icon}</span>
+                                ${nameLink}
+                            </div>
+                            <div class="text-xs text-gray-500">${boutique.category}</div>
+                            <div class="text-xs text-gray-400 italic">${boutique.details.split(' • ')[0]}</div>
+                        </div>
+                        <button class="show-on-map-btn text-xs text-blue-600 hover:underline whitespace-nowrap ml-2">
+                            Show on Map
+                        </button>
+                    </div>
+                `;
+
+                // Add click handler for "Show on Map"
+                card.querySelector('.show-on-map-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const marker = boutiqueMarkers.find(m => m.title === boutique.name);
+                    if (marker && marker.map) {
+                        marker.map.panTo(marker.getPosition());
+                        marker.map.setZoom(15);
+                        marker.infoWindow.open(marker.map, marker);
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                        setTimeout(() => marker.setAnimation(null), 2000);
+                    }
+                });
+
+                listEl.appendChild(card);
+            });
+        }
+
+        // Update category counts in dropdown
+        function updateCategoryCounts() {
+            const counts = {};
+            boutiquesData.forEach(b => {
+                counts[b.type] = (counts[b.type] || 0) + 1;
+            });
+
+            document.querySelectorAll('#shopping-dropdown input[type="checkbox"]').forEach(checkbox => {
+                const category = checkbox.getAttribute('data-category');
+                const label = checkbox.parentElement;
+                const countSpan = label.querySelector('.count');
+                if (countSpan && counts[category]) {
+                    countSpan.textContent = `(${counts[category]})`;
+                }
+            });
+        }
+
+        // Toggle boutique markers visibility
+        function toggleBoutiqueMarkers(category, show) {
+            boutiqueMarkers.forEach(marker => {
+                if (marker.boutiqueType === category) {
+                    marker.setVisible(show);
+                }
+            });
         }
 
         // --- MAP INITIALIZATION ---
@@ -1129,6 +1984,127 @@
             });
             const info6 = createRouteInfoWindow('✈️ <strong>DAY 9:</strong> Flight Departure<br>Jaipur (JAI) → Mumbai (BOM)<br>Dec 25, 7:55 PM');
             route6.addListener('click', (e) => { info6.setPosition(e.latLng); info6.open(map); });
+
+            // Add Boutique Markers
+            boutiquesData.forEach(boutique => {
+                const marker = new google.maps.Marker({
+                    position: boutique.position,
+                    map: map,
+                    title: boutique.name,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: boutique.color,
+                        fillOpacity: 0.85,
+                        strokeColor: 'white',
+                        strokeWeight: 2
+                    },
+                    label: {
+                        text: boutique.icon,
+                        color: 'white',
+                        fontSize: '9px'
+                    }
+                });
+
+                // Store boutique type for filtering
+                marker.boutiqueType = boutique.type;
+
+                // Build info window content
+                let infoContent = `
+                    <div style="font-family: 'Lato', sans-serif; max-width: 300px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 20px; margin-right: 8px;">${boutique.icon}</span>
+                            <h3 style="margin: 0; font-size: 15px; font-weight: bold; color: #1f2937;">${boutique.name}</h3>
+                        </div>
+                        <p style="margin: 0 0 4px 0; font-size: 12px; color: ${boutique.color}; font-weight: 600; text-transform: uppercase;">${boutique.category} • ${boutique.city}</p>
+                        <p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${boutique.details}</p>
+                `;
+
+                if (boutique.url) {
+                    const fullUrl = boutique.url.startsWith('http') ? boutique.url : `https://${boutique.url}`;
+                    infoContent += `<a href="${fullUrl}" target="_blank" style="display: inline-block; margin-top: 8px; font-size: 12px; color: #2563eb; text-decoration: none; font-weight: 600;">Visit Website →</a>`;
+                }
+
+                infoContent += `</div>`;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                marker.infoWindow = infoWindow;
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                // Highlight sidebar card on marker hover
+                marker.addListener('mouseover', () => {
+                    const card = document.querySelector(`[data-boutique-name="${boutique.name}"]`);
+                    if (card) {
+                        card.classList.add('highlighted');
+                    }
+                });
+
+                marker.addListener('mouseout', () => {
+                    const card = document.querySelector(`[data-boutique-name="${boutique.name}"]`);
+                    if (card) {
+                        card.classList.remove('highlighted');
+                    }
+                });
+
+                boutiqueMarkers.push(marker);
+                bounds.extend(boutique.position);
+            });
+
+            // Setup map controls
+            const shoppingToggle = document.getElementById('shopping-toggle');
+            const shoppingDropdown = document.getElementById('shopping-dropdown');
+
+            // Toggle dropdown
+            shoppingToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                shoppingDropdown.classList.toggle('open');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!shoppingDropdown.contains(e.target) && e.target !== shoppingToggle) {
+                    shoppingDropdown.classList.remove('open');
+                }
+            });
+
+            // Category checkboxes
+            document.querySelectorAll('#shopping-dropdown input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const category = e.target.getAttribute('data-category');
+                    const show = e.target.checked;
+                    toggleBoutiqueMarkers(category, show);
+                });
+            });
+
+            // Show All / Hide All buttons
+            document.getElementById('show-all-shopping').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('#shopping-dropdown input[type="checkbox"]').forEach(cb => {
+                    cb.checked = true;
+                    toggleBoutiqueMarkers(cb.getAttribute('data-category'), true);
+                });
+            });
+
+            document.getElementById('hide-all-shopping').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('#shopping-dropdown input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                    toggleBoutiqueMarkers(cb.getAttribute('data-category'), false);
+                });
+            });
+
+            // Update category counts
+            updateCategoryCounts();
+
+            // Initial sidebar render
+            const initialBoutiques = getCityBoutiques(currentCity);
+            renderShoppingSidebar(currentCity, initialBoutiques);
 
             // Fit map to show all locations
             map.fitBounds(bounds);
