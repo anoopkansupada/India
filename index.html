@@ -177,8 +177,8 @@
 
         <!-- INTERACTIVE MAP -->
         <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h2 class="text-xl font-bold serif-font text-gray-800 mb-2">🗺️ Journey Map</h2>
-            <p class="text-gray-600 text-sm mb-4">Complete itinerary: Mumbai → Udaipur → Delhi → Agra → Ranthambore → Jaipur → Mumbai (Round trip)</p>
+            <h2 class="text-xl font-bold serif-font text-gray-800 mb-2">🗺️ Interactive Journey Map</h2>
+            <p class="text-gray-600 text-sm mb-4">Complete itinerary with all restaurants, attractions, and activities. Click markers for details!</p>
             <div id="map"></div>
             <div class="mt-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
                 <div class="flex items-center">
@@ -788,6 +788,111 @@
                 }
             ];
 
+            // Points of Interest - Restaurants, Attractions, Shopping
+            const pointsOfInterest = [
+                // UDAIPUR
+                {
+                    name: 'Taj Lake Palace',
+                    position: { lat: 24.5760, lng: 73.6803 },
+                    type: 'restaurant',
+                    icon: '🍽️',
+                    color: '#f59e0b',
+                    details: 'Dec 17 Dinner • ₹10,500/person • Boat access from hotel • Smart Casual to Elegant',
+                    url: 'https://www.tajhotels.com/en-in/taj/taj-lake-palace-udaipur/dining/'
+                },
+                {
+                    name: 'City Palace Udaipur',
+                    position: { lat: 24.5760, lng: 73.6832 },
+                    type: 'attraction',
+                    icon: '🏰',
+                    color: '#dc2626',
+                    details: 'Dec 18, 10:00 AM tour • Kid-friendly guide • Lakeside palace complex'
+                },
+                {
+                    name: 'Ambrai Restaurant',
+                    position: { lat: 24.5772, lng: 73.6826 },
+                    type: 'restaurant',
+                    icon: '🍽️',
+                    color: '#f59e0b',
+                    details: 'Dec 18 Lunch, 12:30 PM • Lakeside seating • City Palace views • 10 people, high chair'
+                },
+                {
+                    name: 'Shyam Arts (Miniature Painting)',
+                    position: { lat: 24.5800, lng: 73.6850 },
+                    type: 'activity',
+                    icon: '🎨',
+                    color: '#8b5cf6',
+                    details: 'Dec 18, ~4:00 PM • Miniature painting workshop • Complimentary via hotel'
+                },
+                // AGRA
+                {
+                    name: 'Taj Mahal',
+                    position: { lat: 27.1751, lng: 78.0421 },
+                    type: 'attraction',
+                    icon: '🕌',
+                    color: '#dc2626',
+                    details: 'Dec 20, 6:00 AM sunrise tour • Private guide • Kids breakfast boxes ready at 6:00 AM'
+                },
+                // JAIPUR
+                {
+                    name: 'Giardino at Jai Mahal Palace',
+                    position: { lat: 26.9158, lng: 75.7890 },
+                    type: 'restaurant',
+                    icon: '🍽️',
+                    color: '#f59e0b',
+                    details: 'Dec 22 Dinner, 6:00 PM • 10 people, high chair • Smart Casual'
+                },
+                {
+                    name: 'Elefantastic',
+                    position: { lat: 26.9850, lng: 75.8250 },
+                    type: 'attraction',
+                    icon: '🐘',
+                    color: '#dc2626',
+                    details: "Dec 23, 9:30 AM • THE anchor experience • Zane's birthday gift • ALL 10 people • ₹49,500",
+                    url: 'https://www.elefantastic.in/'
+                },
+                {
+                    name: 'The Verandah at Rambagh Palace',
+                    position: { lat: 26.8986, lng: 75.7891 },
+                    type: 'restaurant',
+                    icon: '🍽️',
+                    color: '#f59e0b',
+                    details: 'Dec 23 Lunch, ~1:30 PM • ₹3,500/person • 10 people, high chair • Smart Casual to Elegant'
+                },
+                {
+                    name: 'Wink at The Lalit Jaipur',
+                    position: { lat: 26.9203, lng: 75.8024 },
+                    type: 'restaurant',
+                    icon: '🍽️',
+                    color: '#f59e0b',
+                    details: 'Dec 23 Dinner, 6:00 PM • Contemporary dining • 10 people, high chair • Smart Casual'
+                },
+                {
+                    name: 'Amber Fort',
+                    position: { lat: 26.9855, lng: 75.8513 },
+                    type: 'attraction',
+                    icon: '🏰',
+                    color: '#dc2626',
+                    details: 'Dec 24, 9:00 AM • Jeep ascent • Kid-friendly guide'
+                },
+                {
+                    name: 'Steam (Pizza) at Rambagh Palace',
+                    position: { lat: 26.8986, lng: 75.7891 },
+                    type: 'restaurant',
+                    icon: '🍕',
+                    color: '#f59e0b',
+                    details: "🎂 Dec 24 Birthday Lunch, 2:00 PM • Zane's 3rd Birthday! • Train pizza • 10 people, high chair"
+                },
+                {
+                    name: 'Gem Palace Jaipur',
+                    position: { lat: 26.9258, lng: 75.8236 },
+                    type: 'shopping',
+                    icon: '💎',
+                    color: '#06b6d4',
+                    details: 'Shopping • Jewelry & textiles • Arrange transportation with hotel'
+                }
+            ];
+
             // Bounds for auto-fitting the map
             const bounds = new google.maps.LatLngBounds();
 
@@ -874,6 +979,55 @@
                 });
 
                 bounds.extend(airport.position);
+            });
+
+            // Add Points of Interest (Restaurants, Attractions, Shopping)
+            pointsOfInterest.forEach(poi => {
+                const marker = new google.maps.Marker({
+                    position: poi.position,
+                    map: map,
+                    title: poi.name,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: poi.color,
+                        fillOpacity: 0.9,
+                        strokeColor: 'white',
+                        strokeWeight: 2
+                    },
+                    label: {
+                        text: poi.icon,
+                        color: 'white',
+                        fontSize: '10px'
+                    }
+                });
+
+                // Build info content with optional link
+                let infoContent = `
+                    <div style="font-family: 'Lato', sans-serif; max-width: 280px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 20px; margin-right: 8px;">${poi.icon}</span>
+                            <h3 style="margin: 0; font-size: 15px; font-weight: bold; color: #1f2937;">${poi.name}</h3>
+                        </div>
+                        <p style="margin: 0 0 4px 0; font-size: 12px; color: ${poi.color}; font-weight: 600; text-transform: uppercase;">${poi.type}</p>
+                        <p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${poi.details}</p>
+                `;
+
+                if (poi.url) {
+                    infoContent += `<a href="${poi.url}" target="_blank" style="display: inline-block; margin-top: 8px; font-size: 12px; color: #2563eb; text-decoration: none; font-weight: 600;">View Details →</a>`;
+                }
+
+                infoContent += `</div>`;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                bounds.extend(poi.position);
             });
 
             // Helper function to create info window for routes
