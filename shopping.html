@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Guide - India Trip 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #FDFBF7;
+            color: #1F2937;
+        }
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .boutique-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .boutique-card:hover {
+            transform: translateY(-2px);
+            border-left: 4px solid #ec4899;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .filter-btn {
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: #ec4899;
+            color: white;
+            border-color: #ec4899;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation / Hero -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <span class="text-3xl text-rose-800 mr-3">🛍️</span>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 serif-font tracking-wide">Shopping Guide</h1>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest">79 Curated Boutiques Across India</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="hidden md:flex items-center bg-rose-900 hover:bg-rose-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
+                        <span>← Back to Itinerary</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- INTRO -->
+        <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold serif-font text-gray-800 mb-2">🛍️ Curated Shopping Across India</h2>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                From Mumbai's cult jewelry boutiques to Jaipur's heritage markets, discover the best shopping destinations
+                along your journey. Filter by city or category to find exactly what you're looking for.
+            </p>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="mb-6 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <h3 class="font-bold text-gray-800 mb-4">Filter Boutiques</h3>
+
+            <!-- City Filters -->
+            <div class="mb-4">
+                <div class="text-sm font-semibold text-gray-600 mb-2">By City:</div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterByCity('all')" class="filter-btn active px-4 py-2 border rounded-md text-sm">All Cities</button>
+                    <button onclick="filterByCity('Mumbai')" class="filter-btn px-4 py-2 border rounded-md text-sm">Mumbai (43)</button>
+                    <button onclick="filterByCity('Jaipur')" class="filter-btn px-4 py-2 border rounded-md text-sm">Jaipur (11)</button>
+                    <button onclick="filterByCity('Udaipur')" class="filter-btn px-4 py-2 border rounded-md text-sm">Udaipur (10)</button>
+                    <button onclick="filterByCity('Agra')" class="filter-btn px-4 py-2 border rounded-md text-sm">Agra (9)</button>
+                    <button onclick="filterByCity('Ranthambore')" class="filter-btn px-4 py-2 border rounded-md text-sm">Ranthambore (6)</button>
+                </div>
+            </div>
+
+            <!-- Category Filters -->
+            <div>
+                <div class="text-sm font-semibold text-gray-600 mb-2">By Category:</div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterByCategory('all')" class="filter-btn px-3 py-2 border rounded-md text-sm">All</button>
+                    <button onclick="filterByCategory('jewelry')" class="filter-btn px-3 py-2 border rounded-md text-sm">💍 Jewelry</button>
+                    <button onclick="filterByCategory('fashion')" class="filter-btn px-3 py-2 border rounded-md text-sm">👗 Fashion</button>
+                    <button onclick="filterByCategory('menswear')" class="filter-btn px-3 py-2 border rounded-md text-sm">👔 Menswear</button>
+                    <button onclick="filterByCategory('home')" class="filter-btn px-3 py-2 border rounded-md text-sm">🪴 Home Decor</button>
+                    <button onclick="filterByCategory('perfume')" class="filter-btn px-3 py-2 border rounded-md text-sm">🌸 Perfume</button>
+                    <button onclick="filterByCategory('shopping')" class="filter-btn px-3 py-2 border rounded-md text-sm">🏪 Markets</button>
+                    <button onclick="filterByCategory('handicrafts')" class="filter-btn px-3 py-2 border rounded-md text-sm">🎨 Handicrafts</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOUTIQUES LIST -->
+        <div id="boutiques-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- NO RESULTS -->
+        <div id="no-results" class="hidden text-center py-12">
+            <div class="text-6xl mb-4">🔍</div>
+            <p class="text-gray-500 text-lg">No boutiques found matching your filters.</p>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="serif-font text-xl mb-2">The Oberoi Experience</p>
+            <p class="text-gray-400 text-sm">Curated for the Kansupada Family • Dec 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Boutiques data - will be loaded from the same source as index.html
+        const boutiquesData = [
+            // MUMBAI
+            { name: 'Lune', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Cult jewelry, celestial designs • Hours: Mon-Sat 11am–7:30pm, Sun closed • 📍 Shop 1 & 2, Labbaik House, 39, Chimbai Road, Bandra West, 400050', url: "shoplune.com" },
+            { name: 'Two Extra Lives', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'fashion', category: 'Vintage/Concept', icon: '👗', color: '#ec4899', details: 'Upcycled, vintage, conscious fashion • Hours: Daily 11am–8pm • 📍 Bungalow 111, 562 Dr Ambedkar Road, Pali Village, Bandra West, 400050', url: "twoextralives.com" },
+            { name: 'Call of the Valley', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'perfume', category: 'Perfume/Lifestyle', icon: '🌸', color: '#a855f7', details: 'Artisanal Indian perfume oils • 📍 Shop 3, Aruna Niwas, Pali Village, Bandra West, 400050', url: "callofthevalley.com" },
+            { name: 'Good Earth', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Lifestyle', icon: '🪴', color: '#10b981', details: 'Handcrafted luxury homeware, Indian crafts • 📍 11-12 Raghuvanshi Mills Compound, Senapati Bapat Marg, Lower Parel', url: "goodearth.in" },
+            { name: 'Hatsu', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Design', icon: '🪴', color: '#10b981', details: 'Modern lighting, furniture, quirky décor • 📍 25, Laxmi Mill Compound, Shakti Mills Lane, Mahalakshmi', url: "hatsu.in" },
+            { name: 'James Ferreira', city: 'Mumbai', position: { lat: 18.951, lng: 72.8144 }, type: 'fashion', category: 'Fashion', icon: '👗', color: '#ec4899', details: 'Contemporary clothing from heritage bungalow • 📍 Studio 47-G Khotachiwadi Trail, 1st Lane, Khotachiwadi, Girgaon', url: "jamesferreira.in" },
+            { name: 'Nicobar', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'lifestyle', category: 'Lifestyle', icon: '✨', color: '#ec4899', details: 'Tropical-accented homeware, bohemian clothing • 📍 10 Ropewalk Lane, Above Kala Ghoda Café, Kala Ghoda, Fort', url: "nicobar.com" },
+            { name: 'Ogaan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Indian designer clothing (men\'s and women\'s) • 📍 6/8, Navbharat House, Burjorji S Bharucha Marg, Kala Ghoda', url: "ogaan.com" },
+            { name: 'Sabyasachi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Couture/Wedding', icon: '👰', color: '#f472b6', details: 'Bridalwear flagship/living museum • 📍 IGP Fort, Veer Nariman Road, near Horniman Circle, Fort', url: "sabyasachiofficial.com" },
+            { name: 'Valliyan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Statement jewelry, retro-futurist designs • 📍 First Floor, Rhythm House Building, 59 Forbes Street, Fort', url: "valliyan.com" },
+            { name: 'Moonray', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Womenswear', icon: '👗', color: '#ec4899', details: 'Sophisticated tailored womenswear & accessories • 📍 Ground floor, Mittal Avenue, Kala Ghoda, Fort', url: "moonray.in" },
+            { name: 'Jodi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Menswear/Womenswear', icon: '👗', color: '#ec4899', details: 'Hand-block print, colorful menswear • 📍 Shop no. 1, Lentin Chambers, Dalal Street, Fort', url: "thejodilife.com" },
+            { name: 'Obataimu', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'menswear', category: 'Concept/Menswear', icon: '👔', color: '#3b82f6', details: 'Limited-edition, innovative contemporary clothing • 📍 Ground Floor, Machinery House, 3, S Bharucha Marg, Kala Ghoda, Fort', url: "obataimu.com" },
+            { name: 'Nappa Dori', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'accessories', category: 'Accessories', icon: '👜', color: '#f59e0b', details: 'Luggage and leather accessories • 📍 2, Sunny House, Mereweather Road, Colaba', url: "nappadori.com" },
+            { name: 'Le Mill', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'luxury', category: 'Luxury Fashion', icon: '💎', color: '#8b5cf6', details: 'Global luxury brands, top international labels • 📍 1st Floor, Pheroze Building, Chhatrapati Shivaji Maharaj Marg, Colaba', url: "lemillindia.com" },
+            { name: 'Pernia\'s Pop-Up Studio (Bandra)', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Bandra', url: "perniaspopupshop.com" },
+            { name: 'Pernia\'s Pop-Up Studio (Juhu)', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Juhu', url: "perniaspopupshop.com" },
+            { name: 'Raymond', city: 'Mumbai', position: { lat: 19.1355, lng: 72.8262 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Andheri West', url: "myraymond.com" },
+            { name: 'Curato', city: 'Mumbai', position: { lat: 19.0708, lng: 72.8357 }, type: 'menswear', category: 'Menswear', icon: '👔', color: '#3b82f6', details: 'Leading Indian designer brands • 📍 Khar, Kala Ghoda', url: "curato.in" },
+            { name: 'Masculine', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Tailoring', icon: '👔', color: '#3b82f6', details: 'Bespoke tailoring, established 1987 • 📍 Juhu', url: null },
+            { name: 'Abstract Mens', city: 'Mumbai', position: { lat: 19.2307, lng: 72.8567 }, type: 'menswear', category: 'Streetwear', icon: '🧢', color: '#6366f1', details: 'Modern oversized, hype street fashion • 📍 Borivali West', url: null },
+            { name: 'Paak Pehnawa', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Pure, premium ethnicwear for men • 📍 Mumbai', url: null },
+            { name: 'Acros Ethnic', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Traditional, Indo-western, trending • 📍 Mumbai', url: null },
+            { name: 'Linking Road', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Trendy street fashion, accessible prices • 📍 Bandra West', url: null },
+            { name: 'Colaba Causeway', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Eclectic finds, vintage-inspired • 📍 Colaba', url: null },
+            { name: 'Oberoi Mall', city: 'Mumbai', position: { lat: 19.1653, lng: 72.8494 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'High-street fashion, multi-brand • 📍 Goregaon', url: null },
+            { name: 'Phoenix Palladium', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'Luxury brands, flagship stores • 📍 Lower Parel', url: null },
+            { name: 'R City Mall', city: 'Mumbai', position: { lat: 19.0866, lng: 72.9081 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'New brand launches, trendy casuals • 📍 Ghatkopar West', url: null },
+            { name: 'Bhavya Ramesh', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Alternative, edgy, celestial-inspired • 📍 Kala Ghoda', url: "bhavyaramesh.com" },
+            { name: 'ISHARYA', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern Indian statement jewelry • 📍 Mumbai', url: "isharya.com" },
+            { name: 'Tanzire', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Handmade demi-fine jewelry • 📍 Mumbai', url: "tanzire.com" },
+            { name: 'Moksh', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern, contemporary, luxury jewelry • 📍 Mumbai', url: "mokshjewellery.com" },
+            { name: 'Bodements', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'fashion', category: 'Fashion/Vintage', icon: '👗', color: '#ec4899', details: 'Curated vintage/upcycled clothing • 📍 Mumbai/Paris', url: "bodements.com" },
+            { name: 'Timeless Vintage Studios', city: 'Mumbai', position: { lat: 19.2042, lng: 72.8546 }, type: 'fashion', category: 'Vintage/Thrift', icon: '👗', color: '#ec4899', details: 'Thrift, collectibles, vintage, pop-ups • 📍 Kandivali', url: null },
+            { name: 'Teatro Dhora', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Art-fashion, multi-designer, experiential • 📍 Bandra', url: "teatrodhora.com" },
+            { name: 'Yusuf Bhai Perfumery', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Heritage Bombay-style perfume • 📍 Mumbai', url: null },
+            { name: 'Boond Fragrances', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Pure, natural, artisanal Indian fragrances • 📍 Mumbai/Kannauj', url: "boondfragrances.com" },
+            { name: 'BoConcept India', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Furniture', icon: '🪴', color: '#10b981', details: 'Modern Danish design, premium • 📍 Lower Parel', url: "boconcept.in" },
+            { name: 'The Pure Concept Home', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'home', category: 'Home/Interiors', icon: '🪴', color: '#10b981', details: 'Luxe fabrics, home consultancy • 📍 Kala Ghoda', url: "shop.thepureconcepthome.com" },
+            { name: 'Maison Sia', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Decor', icon: '🪴', color: '#10b981', details: 'International, curated luxury • 📍 Raghuvanshi Mills', url: "maisonsia.com" },
+
+            // JAIPUR
+            { name: 'Togs Jaipur', city: 'Jaipur', position: { lat: 26.8871, lng: 75.8076 }, type: 'menswear', category: 'Custom Menswear', icon: '👔', color: '#3b82f6', details: 'Designer half jackets to tuxedos, Kurta to Sherwanis • 📍 B14c, near MFG mall, C Scheme, Ashok Nagar, Jaipur', url: null },
+            { name: 'Raymond Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Jawaharlal Nehru Marg, Malviya Nagar, Jaipur', url: "myraymond.com" },
+            { name: 'Park Avenue Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Business suits, formal wear, casual wear • 📍 Malviya Nagar, Jaipur', url: "parkavenue.in" },
+            { name: 'Cityvibes Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Kurta pajamas, sherwanis, Indo-Western • 📍 Malviya Nagar, Vaishali Nagar, Jaipur', url: "cityvibes.in" },
+            { name: 'ANOKHI', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'fashion', category: 'Concept/Fashion', icon: '👗', color: '#ec4899', details: 'Block-printed clothing, eco-conscious, 50+ years heritage • 📍 C-Scheme & Amer, Jaipur', url: "anokhi.com" },
+            { name: 'Jaipur Modern', city: 'Jaipur', position: { lat: 26.9124, lng: 75.7873 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Contemporary, minimalist locally-made silk & cotton • 📍 Jaipur', url: null },
+            { name: 'Nila House', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'textile', category: 'Textile/Lifestyle', icon: '🧵', color: '#10b981', details: 'Natural dyeing, modern Rajasthani tradition • 📍 C-86, Prithviraj Road, C Scheme, Jaipur', url: "nilahouse.com" },
+            { name: 'Anokhi Museum', city: 'Jaipur', position: { lat: 26.9855, lng: 75.8513 }, type: 'museum', category: 'Museum/Textile', icon: '🏛️', color: '#6366f1', details: 'Hand-block printing heritage techniques • 📍 Kheri Gate, Amer, Jaipur', url: "anokhi.com" },
+            { name: 'Johri Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Oldest pink market, jewelry, textiles, lehariya • 📍 Johri Bazaar, Jaipur', url: null },
+            { name: 'Bapu Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Men\'s suits, boots, ethnic wear • 📍 Bapu Bazaar, Jaipur', url: null },
+            { name: 'Kishanpole Bazar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Bandhani sarees, tie-dye fabrics • 📍 Kishanpole Bazar, Jaipur', url: null },
+
+            // UDAIPUR
+            { name: 'Cityvibes Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Wedding wear, kurta pajamas, sherwanis • 📍 Udaipur, Rajasthan', url: "cityvibes.in" },
+            { name: 'Saptapadi Luxury Store', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Wedding Menswear', icon: '👔', color: '#3b82f6', details: 'Bespoke sartorial products, luxury wedding wear • 📍 Udaipur Flagship', url: "saptapadistore.com" },
+            { name: 'Manyavar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, Indo-Western, Modi Kurta • 📍 Bapu Bazar, Bhuwana, Udaipur', url: "manyavar.com" },
+            { name: 'Jade Blue', city: 'Udaipur', position: { lat: 24.5858, lng: 73.6854 }, type: 'menswear', category: 'Ethnic & Western', icon: '👔', color: '#3b82f6', details: 'Evening shirts, blazers, Modi Kurta • 📍 Court Chowaraha, Udaipur', url: "jadeblue.com" },
+            { name: 'Raymond Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.6872 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Premium suits, tailoring • 📍 Panchwati, Near Sukhadia Circle, Udaipur', url: "myraymond.com" },
+            { name: 'Bapu Bazaar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Bandhani sarees, embroidered textiles • 📍 Bapu Bazaar, Udaipur', url: null },
+            { name: 'Jagdish Chowk', city: 'Udaipur', position: { lat: 24.5794, lng: 73.6833 }, type: 'shopping', category: 'Heritage Market', icon: '🏛️', color: '#ef4444', details: 'Antique jewelry, hand-carved items • 📍 Jagdish Chowk, Udaipur', url: null },
+            { name: 'Hathi Pol Bazaar', city: 'Udaipur', position: { lat: 24.5794, lng: 73.6833 }, type: 'shopping', category: 'Antiques Market', icon: '⚱️', color: '#92400e', details: 'Vintage jewelry, Rajput weaponry, antiques • 📍 Hathi Pol Bazaar, Udaipur', url: null },
+            { name: 'City Palace Boutiques', city: 'Udaipur', position: { lat: 24.576, lng: 73.6832 }, type: 'handicrafts', category: 'Royal Crafts', icon: '👑', color: '#9333ea', details: 'High-quality Mewar handicrafts • 📍 City Palace Complex, Udaipur', url: null },
+            { name: 'Umang Boutique', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Latest Indian designer patterns, ethnic wear • 📍 Udaipur', url: null },
+
+            // AGRA
+            { name: 'Dimple Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Men\'s ethnic wear, kurtas, sherwanis • 📍 E-21, Bypass Road, Kamla Nagar, Agra', url: "dimplecollection.in" },
+            { name: 'Riti Riwaaz Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, blazers, Indo-Western • 📍 E-90, Kamla Nagar, Agra', url: null },
+            { name: 'Raymond Agra', city: 'Agra', position: { lat: 27.2152, lng: 77.9753 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Sulabh Puram Colony, Sikandra, Agra', url: "myraymond.com" },
+            { name: 'Blackberrys Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Premium formal and casual menswear • 📍 MG Road, Sanjay Place, Agra', url: "blackberrys.com" },
+            { name: 'Lifestyle Stores Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Multi-brand', icon: '🛍️', color: '#64748b', details: 'Contemporary fashion, multi-brand mall store • 📍 Ashok Cosmos Mall, Sanjay Place, Agra', url: "lifestylestores.com" },
+            { name: 'Sadar Bazaar', city: 'Agra', position: { lat: 27.1903, lng: 78.0022 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Traditional shopping, textiles • 📍 Sadar Bazaar, Agra', url: null },
+            { name: 'Kinari Bazaar', city: 'Agra', position: { lat: 27.1751, lng: 78.0421 }, type: 'shopping', category: 'Textile Market', icon: '🧵', color: '#10b981', details: 'Textiles, embroidery, traditional crafts • 📍 Kinari Bazaar, Agra', url: null },
+            { name: 'Sanjay Place', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Shopping District', icon: '🏬', color: '#64748b', details: 'Modern retail, malls, branded stores • 📍 Sanjay Place, Agra', url: null },
+
+            // RANTHAMBORE
+            { name: 'Dastkar Ranthambore', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Handicrafts/Textiles', icon: '🎨', color: '#8b5cf6', details: 'Community coop, handmade textiles, village crafts • 📍 Sawai Madhopur, near Ranthambore', url: "dastkar.org" },
+            { name: 'Village Women Craft', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Community Crafts', icon: '🎨', color: '#8b5cf6', details: 'Hand-carved items, paintings, textiles • 📍 Sawai Madhopur', url: null },
+            { name: 'Ranthambore School of Arts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Traditional Crafts', icon: '🎨', color: '#8b5cf6', details: 'Batik, tie-dye, silver jewelry, Rajasthani items • 📍 Sawai Madhopur', url: null },
+            { name: 'The Tiger Shop', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'souvenirs', category: 'Souvenirs', icon: '🎁', color: '#f59e0b', details: 'Tiger-print shirts, superfine Taj cotton fabric • 📍 Sawai Madhopur', url: "thetigershop.in" },
+            { name: 'Ranthambhore Maharani Handicrafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Local Handicrafts', icon: '🎨', color: '#8b5cf6', details: 'Quality local handicrafts, textiles • 📍 Sawai Madhopur', url: null },
+            { name: 'Dhonk Crafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Eco Crafts', icon: '🌿', color: '#10b981', details: 'Eco-conscious, conservation-focused products • 📍 Sawai Madhopur', url: null },
+        ];
+
+        let currentCityFilter = 'all';
+        let currentCategoryFilter = 'all';
+
+        function renderBoutiques() {
+            const container = document.getElementById('boutiques-container');
+            const noResults = document.getElementById('no-results');
+
+            let filtered = boutiquesData;
+
+            // Apply city filter
+            if (currentCityFilter !== 'all') {
+                filtered = filtered.filter(b => b.city === currentCityFilter);
+            }
+
+            // Apply category filter
+            if (currentCategoryFilter !== 'all') {
+                filtered = filtered.filter(b => b.type === currentCategoryFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            container.innerHTML = filtered.map(boutique => {
+                const nameLink = boutique.url
+                    ? `<a href="https://${boutique.url}" target="_blank" class="font-bold text-gray-900 hover:text-rose-700">${boutique.name}</a>`
+                    : `<span class="font-bold text-gray-900">${boutique.name}</span>`;
+
+                return `
+                    <div class="boutique-card bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">${boutique.icon}</span>
+                            <div>
+                                ${nameLink}
+                                <div class="text-sm text-gray-500">${boutique.city}</div>
+                            </div>
+                        </div>
+                        <div class="text-sm font-semibold text-rose-700 mb-2">${boutique.category}</div>
+                        <div class="text-sm text-gray-600 leading-relaxed">${boutique.details}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterByCity(city) {
+            currentCityFilter = city;
+
+            // Update button states
+            document.querySelectorAll('[onclick^="filterByCity"]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderBoutiques();
+        }
+
+        function filterByCategory(category) {
+            currentCategoryFilter = category;
+
+            // Update button states
+            document.querySelectorAll('[onclick^="filterByCategory"]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderBoutiques();
+        }
+
+        // Check for URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const cityParam = urlParams.get('city');
+        if (cityParam) {
+            currentCityFilter = cityParam;
+        }
+
+        // Initial render
+        renderBoutiques();
+    </script>
+
+</body>
+</html>
