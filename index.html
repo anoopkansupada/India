@@ -1210,6 +1210,7 @@
             tripData.forEach((day, index) => {
                 const dayDiv = document.createElement('div');
                 dayDiv.className = 'relative pl-8 sm:pl-10 py-2 group';
+                dayDiv.setAttribute('data-day', index + 1); // Track day number for scroll detection
 
                 // Vertical Line
                 const line = document.createElement('div');
@@ -1499,6 +1500,12 @@
 
             cityNameEl.textContent = city;
             countEl.textContent = `${boutiques.length} boutiques`;
+
+            // Update "View All" link with city parameter
+            const viewAllLink = document.getElementById('shopping-view-all');
+            if (viewAllLink) {
+                viewAllLink.href = `shopping.html?city=${encodeURIComponent(city)}`;
+            }
 
             listEl.innerHTML = '';
             boutiques.forEach(boutique => {
@@ -2118,8 +2125,87 @@
             const initialBoutiques = getCityBoutiques(currentCity);
             renderShoppingSidebar(currentCity, initialBoutiques);
 
+            // Set up dynamic city detection based on scroll position
+            setupDynamicCityDetection();
+
             // Fit map to show all locations
             map.fitBounds(bounds);
+        }
+
+        // Detect which city is currently in view and update sidebar
+        function setupDynamicCityDetection() {
+            const timelineContainer = document.getElementById('timeline-container');
+            if (!timelineContainer) return;
+
+            let ticking = false;
+
+            function updateCurrentCity() {
+                // Get all day sections
+                const daySections = timelineContainer.querySelectorAll('[data-day]');
+                if (!daySections.length) return;
+
+                // Find which day section is most in view
+                let currentDayInView = 1;
+                let maxVisibility = 0;
+
+                const viewportTop = window.scrollY;
+                const viewportBottom = viewportTop + window.innerHeight;
+                const viewportMiddle = viewportTop + (window.innerHeight / 2);
+
+                daySections.forEach(section => {
+                    const dayNum = parseInt(section.getAttribute('data-day'));
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + window.scrollY;
+                    const sectionBottom = sectionTop + rect.height;
+
+                    // Calculate how much of the section is visible
+                    const visibleTop = Math.max(sectionTop, viewportTop);
+                    const visibleBottom = Math.min(sectionBottom, viewportBottom);
+                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+                    // Prefer sections that contain the viewport middle
+                    const containsMiddle = sectionTop <= viewportMiddle && viewportMiddle <= sectionBottom;
+                    const visibility = containsMiddle ? visibleHeight * 2 : visibleHeight;
+
+                    if (visibility > maxVisibility) {
+                        maxVisibility = visibility;
+                        currentDayInView = dayNum;
+                    }
+                });
+
+                // Map day to city
+                const newCity = dayToCityMap[currentDayInView] || 'Mumbai';
+
+                // Only update if city changed
+                if (newCity !== currentCity) {
+                    currentCity = newCity;
+                    const cityBoutiques = getCityBoutiques(currentCity);
+                    renderShoppingSidebar(currentCity, cityBoutiques);
+                }
+
+                ticking = false;
+            }
+
+            // Throttled scroll handler
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateCurrentCity);
+                    ticking = true;
+                }
+            }
+
+            // Listen to scroll events
+            window.addEventListener('scroll', onScroll);
+
+            // Also update when timeline filter changes
+            const originalRenderTimeline = window.renderTimeline;
+            window.renderTimeline = function(...args) {
+                originalRenderTimeline.apply(this, args);
+                setTimeout(updateCurrentCity, 100); // Give time for DOM to update
+            };
+
+            // Initial check
+            updateCurrentCity();
         }
 
         // --- INIT ---
