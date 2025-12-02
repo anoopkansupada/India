@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Boutiques Places API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Configuration (contains API keys) -->
+    <script src="../config.js"></script>
+
+    <!-- Google Maps JavaScript API with Places library -->
+    <script>
+        (function() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
+            script.defer = true;
+            document.head.appendChild(script);
+        })();
+    </script>
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f9fafb;
+        }
+        #map {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        #console-log {
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-success {
+            color: #059669;
+        }
+        .log-warning {
+            color: #f59e0b;
+        }
+        .log-error {
+            color: #dc2626;
+        }
+        .log-info {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">🧪 Boutiques Places API Test</h1>
+            <p class="text-gray-600">Testing Google Places API integration for boutique listings</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <div class="text-3xl font-bold text-blue-600" id="total-count">0</div>
+                <div class="text-sm text-gray-600">Total Boutiques</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <div class="text-3xl font-bold text-green-600" id="found-count">0</div>
+                <div class="text-sm text-gray-600">Found on Google</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <div class="text-3xl font-bold text-amber-600" id="fallback-count">0</div>
+                <div class="text-sm text-gray-600">Using Fallback</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Map -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">🗺️ Map Preview</h2>
+                <div id="map"></div>
+            </div>
+
+            <!-- Console Log -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-900">📋 Console Log</h2>
+                    <button onclick="clearLog()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm">Clear</button>
+                </div>
+                <div id="console-log" class="bg-gray-50 p-4 rounded border border-gray-200">
+                    <div class="log-info">Initializing map...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="font-bold text-blue-900 mb-2">💡 What to Look For:</h3>
+            <ul class="text-sm text-blue-800 space-y-1">
+                <li>• <span class="text-green-600">Green ✓</span> = Successfully found on Google Places</li>
+                <li>• <span class="text-amber-600">Yellow ⚠</span> = Using fallback coordinates (not found on Google)</li>
+                <li>• Click markers to see if Google ratings appear</li>
+                <li>• Check "View on Google Maps" links work correctly</li>
+                <li>• Verify boutique positions look accurate on the map</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Stats tracking
+        let totalCount = 0;
+        let foundCount = 0;
+        let fallbackCount = 0;
+
+        function updateStats() {
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('found-count').textContent = foundCount;
+            document.getElementById('fallback-count').textContent = fallbackCount;
+        }
+
+        function logToConsole(message, type = 'info') {
+            const consoleLog = document.getElementById('console-log');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-${type} mb-1`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleLog.appendChild(logEntry);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('console-log').innerHTML = '<div class="log-info">Log cleared.</div>';
+        }
+
+        // Boutiques data (subset for testing - just Mumbai and Jaipur)
+        const boutiquesData = [
+            {
+                name: 'Lune',
+                city: 'Mumbai',
+                address: 'Shop 1 & 2, Labbaik House, 39, Chimbai Road, Bandra West, 400050',
+                fallbackPosition: { lat: 19.0596, lng: 72.8295 },
+                type: 'jewelry',
+                category: 'Jewelry',
+                icon: '💍',
+                color: '#8b5cf6',
+                details: 'Cult jewelry, celestial designs',
+                url: "shoplune.com",
+            },
+            {
+                name: 'Nicobar',
+                city: 'Mumbai',
+                address: '10 Ropewalk Lane, Above Kala Ghoda Café, Kala Ghoda, Fort',
+                fallbackPosition: { lat: 18.9278, lng: 72.8319 },
+                type: 'lifestyle',
+                category: 'Lifestyle',
+                icon: '✨',
+                color: '#ec4899',
+                details: 'Tropical-accented homeware, bohemian clothing',
+                url: "nicobar.com",
+            },
+            {
+                name: 'Good Earth',
+                city: 'Mumbai',
+                address: '11-12 Raghuvanshi Mills Compound, Senapati Bapat Marg, Lower Parel',
+                fallbackPosition: { lat: 19.0008, lng: 72.8304 },
+                type: 'home',
+                category: 'Home/Lifestyle',
+                icon: '🏠',
+                color: '#10b981',
+                details: 'Handcrafted luxury homeware, Indian crafts',
+                url: "goodearth.in",
+            },
+            {
+                name: 'ANOKHI',
+                city: 'Jaipur',
+                address: 'C-Scheme, Jaipur',
+                fallbackPosition: { lat: 26.9024, lng: 75.7878 },
+                type: 'fashion',
+                category: 'Concept/Fashion',
+                icon: '👗',
+                color: '#ec4899',
+                details: 'Block-printed clothing, eco-conscious',
+                url: "anokhi.com",
+            },
+            {
+                name: 'Nila House',
+                city: 'Jaipur',
+                address: 'C-86, Prithviraj Road, C Scheme, Jaipur',
+                fallbackPosition: { lat: 26.9024, lng: 75.7878 },
+                type: 'textile',
+                category: 'Textile/Lifestyle',
+                icon: '🧵',
+                color: '#10b981',
+                details: 'Natural dyeing, modern Rajasthani tradition',
+                url: "nilahouse.com",
+            },
+            {
+                name: 'Johri Bazaar',
+                city: 'Jaipur',
+                address: 'Johri Bazaar, Jaipur',
+                fallbackPosition: { lat: 26.9248, lng: 75.8246 },
+                type: 'shopping',
+                category: 'Traditional Market',
+                icon: '🏪',
+                color: '#ef4444',
+                details: 'Oldest pink market, jewelry, textiles',
+                url: null,
+            },
+        ];
+
+        totalCount = boutiquesData.length;
+        updateStats();
+
+        // Places API Integration
+        async function addBoutiquesWithPlacesAPI(map, bounds) {
+            const placesService = new google.maps.places.PlacesService(map);
+            let processedCount = 0;
+
+            logToConsole('Starting Places API search...', 'info');
+
+            for (const boutique of boutiquesData) {
+                await new Promise((resolve) => {
+                    const searchQuery = `${boutique.name} ${boutique.address || boutique.city}`;
+                    logToConsole(`Searching: "${searchQuery}"`, 'info');
+
+                    const request = {
+                        query: searchQuery,
+                        fields: ['name', 'geometry', 'place_id', 'formatted_address', 'rating', 'user_ratings_total', 'business_status']
+                    };
+
+                    placesService.textSearch(request, (results, status) => {
+                        let finalPosition = boutique.fallbackPosition;
+                        let placeId = null;
+                        let actualName = boutique.name;
+                        let rating = null;
+                        let userRatingsTotal = null;
+
+                        if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length > 0) {
+                            const place = results[0];
+                            finalPosition = place.geometry.location;
+                            placeId = place.place_id;
+                            actualName = place.name || boutique.name;
+                            rating = place.rating;
+                            userRatingsTotal = place.user_ratings_total;
+
+                            logToConsole(`✓ Found: ${boutique.name} → ${place.name}`, 'success');
+                            if (rating) {
+                                logToConsole(`  Rating: ${rating} ⭐ (${userRatingsTotal} reviews)`, 'success');
+                            }
+                            foundCount++;
+                        } else {
+                            logToConsole(`⚠ Using fallback for: ${boutique.name} (Status: ${status})`, 'warning');
+                            fallbackCount++;
+                        }
+
+                        updateStats();
+
+                        createBoutiqueMarker(map, boutique, finalPosition, placeId, actualName, rating, userRatingsTotal);
+
+                        if (finalPosition.lat && finalPosition.lng) {
+                            bounds.extend(finalPosition);
+                        } else {
+                            bounds.extend(new google.maps.LatLng(finalPosition.lat(), finalPosition.lng()));
+                        }
+
+                        processedCount++;
+
+                        if (processedCount === boutiquesData.length) {
+                            logToConsole(`✅ Complete! Processed ${processedCount} boutiques`, 'success');
+                            map.fitBounds(bounds);
+                        }
+
+                        setTimeout(resolve, 150);
+                    });
+                });
+            }
+        }
+
+        function createBoutiqueMarker(map, boutique, position, placeId, actualName, rating, userRatingsTotal) {
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: actualName,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillColor: boutique.color,
+                    fillOpacity: 0.85,
+                    strokeColor: 'white',
+                    strokeWeight: 2
+                },
+                label: {
+                    text: boutique.icon,
+                    color: 'white',
+                    fontSize: '10px'
+                }
+            });
+
+            let infoContent = `
+                <div style="font-family: 'Lato', sans-serif; max-width: 300px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 20px; margin-right: 8px;">${boutique.icon}</span>
+                        <h3 style="margin: 0; font-size: 15px; font-weight: bold; color: #1f2937;">${actualName}</h3>
+                    </div>
+                    <p style="margin: 0 0 4px 0; font-size: 12px; color: ${boutique.color}; font-weight: 600; text-transform: uppercase;">${boutique.category} • ${boutique.city}</p>
+            `;
+
+            if (rating && userRatingsTotal) {
+                const stars = '⭐'.repeat(Math.round(rating));
+                infoContent += `<p style="margin: 0 0 4px 0; font-size: 11px; color: #6b7280;">${stars} ${rating.toFixed(1)} (${userRatingsTotal} reviews)</p>`;
+            }
+
+            infoContent += `<p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${boutique.details}</p>`;
+
+            if (boutique.url) {
+                const fullUrl = boutique.url.startsWith('http') ? boutique.url : `https://${boutique.url}`;
+                infoContent += `<a href="${fullUrl}" target="_blank" style="display: inline-block; margin-top: 8px; font-size: 12px; color: #2563eb; text-decoration: none; font-weight: 600;">Visit Website →</a>`;
+            }
+
+            if (placeId) {
+                infoContent += `<br><a href="https://www.google.com/maps/place/?q=place_id:${placeId}" target="_blank" style="display: inline-block; margin-top: 4px; font-size: 12px; color: #059669; text-decoration: none; font-weight: 600;">View on Google Maps →</a>`;
+            } else {
+                infoContent += `<br><span style="display: inline-block; margin-top: 4px; font-size: 11px; color: #9ca3af; font-style: italic;">Using fallback coordinates</span>`;
+            }
+
+            infoContent += `</div>`;
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: infoContent
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
+        }
+
+        // Initialize Map
+        window.initMap = function() {
+            logToConsole('Map initialized', 'success');
+
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: { lat: 23.0, lng: 77.0 },
+                mapTypeId: 'roadmap'
+            });
+
+            const bounds = new google.maps.LatLngBounds();
+
+            addBoutiquesWithPlacesAPI(map, bounds);
+        }
+    </script>
+</body>
+</html>
