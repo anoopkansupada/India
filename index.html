@@ -7,6 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS for interactive map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- Chosen Palette: Royal Rajasthan -->
     <!-- 
@@ -92,6 +96,26 @@
             background: #D1D5DB;
             border-radius: 4px;
         }
+        /* Map container */
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 640px) {
+            #map {
+                height: 400px;
+            }
+        }
+        /* Custom map popup styling */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+        }
+        .leaflet-popup-content {
+            font-family: 'Lato', sans-serif;
+            margin: 12px;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -162,6 +186,31 @@
                     <span class="mr-2 text-2xl">🍽️</span>
                     <span>Dining Options</span>
                 </a>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE MAP -->
+        <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold serif-font text-gray-800 mb-2">🗺️ Journey Map</h2>
+            <p class="text-gray-600 text-sm mb-4">Interactive map showing your route through Rajasthan: Udaipur → Agra → Ranthambore → Jaipur</p>
+            <div id="map"></div>
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-red-600 rounded-full mr-2"></div>
+                    <span class="text-gray-700">Day 1-2: Udaipur</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-blue-600 rounded-full mr-2"></div>
+                    <span class="text-gray-700">Day 3-4: Agra</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
+                    <span class="text-gray-700">Day 4-6: Ranthambore</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-purple-600 rounded-full mr-2"></div>
+                    <span class="text-gray-700">Day 6-9: Jaipur</span>
+                </div>
             </div>
         </div>
 
@@ -519,23 +568,63 @@
 
         function renderCharts() {
             const ctx = document.getElementById('balanceChart').getContext('2d');
-            
-            // Dynamically calculate event counts by type
-            let cultureCounts = 0, diningCounts = 0, leisureCounts = 0, logisticsCounts = 0;
+
+            // Calculate approximate hours spent on each activity type
+            let cultureHours = 0, diningHours = 0, leisureHours = 0, logisticsHours = 0;
 
             tripData.forEach(day => {
                 day.events.forEach(event => {
-                    if (event.type === 'culture') cultureCounts++;
-                    else if (event.type === 'dining') diningCounts++;
-                    else if (event.type === 'leisure') leisureCounts++;
-                    else if (event.type === 'logistics') logisticsCounts++;
+                    // Estimate hours based on activity type and typical durations
+                    let hours = 0;
+
+                    if (event.type === 'culture') {
+                        // Tours, museums, activities: 2-4 hours each
+                        if (event.title.includes('Safari')) hours = 4;
+                        else if (event.title.includes('Tour') || event.title.includes('Fort')) hours = 3;
+                        else if (event.title.includes('Elefantastic')) hours = 4;
+                        else if (event.title.includes('Workshop') || event.title.includes('Painting') || event.title.includes('Art')) hours = 1.5;
+                        else if (event.title.includes('Boat Ride')) hours = 1;
+                        else hours = 2; // Default for cultural activities
+                        cultureHours += hours;
+                    }
+                    else if (event.type === 'dining') {
+                        // Meals: 1-2 hours each
+                        if (event.title.includes('Breakfast')) hours = 1;
+                        else if (event.title.includes('Lunch')) hours = 1.5;
+                        else if (event.title.includes('Dinner')) hours = 2;
+                        else if (event.title.includes('Boxes')) hours = 0.5; // Packed breakfast boxes
+                        else hours = 1.5; // Default
+                        diningHours += hours;
+                    }
+                    else if (event.type === 'leisure') {
+                        // Relaxation, spa, activities: varies
+                        if (event.title.includes('Spa')) hours = 2.5;
+                        else if (event.title.includes('Activities') || event.title.includes('Birthday Activities')) hours = 3;
+                        else if (event.title.includes('Leisure')) hours = 2;
+                        else hours = 1.5; // Optional activities, etc.
+                        leisureHours += hours;
+                    }
+                    else if (event.type === 'logistics') {
+                        // Flights, drives, check-ins
+                        if (event.title.includes('Flight') && event.title.includes('2579')) hours = 1.5; // BOM to UDR
+                        else if (event.title.includes('Flight') && event.title.includes('UDR→DEL')) hours = 1.5;
+                        else if (event.title.includes('Flight Departure')) hours = 2;
+                        else if (event.title.includes('Drive') && event.title.includes('Ranthambore')) hours = 5;
+                        else if (event.title.includes('Drive') && event.title.includes('Jaipur')) hours = 3.5;
+                        else if (event.title.includes('Drive') && event.title.includes('Agra')) hours = 3.5;
+                        else if (event.title.includes('Check-in') || event.title.includes('Checkout')) hours = 0.5;
+                        else if (event.title.includes('Transfer')) hours = 1;
+                        else if (event.title.includes('Pickup')) hours = 0.5;
+                        else hours = 1; // Default
+                        logisticsHours += hours;
+                    }
                 });
             });
 
             const data = {
                 labels: ['Culture & Sightseeing', 'Dining & Social', 'Leisure & Relax', 'Logistics & Travel'],
                 datasets: [{
-                    data: [cultureCounts, diningCounts, leisureCounts, logisticsCounts],
+                    data: [cultureHours, diningHours, leisureHours, logisticsHours],
                     backgroundColor: [
                         '#be123c', // Culture (Rose 700)
                         '#f59e0b', // Dining (Amber 500)
@@ -612,11 +701,175 @@
             renderTimeline(type);
         }
 
+        // --- MAP INITIALIZATION ---
+        function initMap() {
+            // Actual hotel and airport coordinates
+            const locations = [
+                {
+                    name: 'Oberoi Udaivilas',
+                    city: 'Udaipur',
+                    coords: [24.5768, 73.6805],
+                    address: 'Haridasji Ki Magri, Udaipur, Rajasthan 313001',
+                    days: 'Day 1-2 (Dec 17-18)',
+                    color: '#dc2626',
+                    details: 'Lake Palace views • City Palace tour • Sunset boat ride'
+                },
+                {
+                    name: 'Oberoi Amarvilas',
+                    city: 'Agra',
+                    coords: [27.1751, 78.0421],
+                    address: 'Taj East Gate Road, Agra, Uttar Pradesh 282001',
+                    days: 'Day 3-4 (Dec 19-20)',
+                    color: '#2563eb',
+                    details: 'Taj Mahal sunrise tour • All rooms with Taj views'
+                },
+                {
+                    name: 'Oberoi Vanyavilas',
+                    city: 'Ranthambore',
+                    coords: [26.0173, 76.5026],
+                    address: 'Ranthambore Road, Sawai Madhopur, Rajasthan 322001',
+                    days: 'Day 4-6 (Dec 20-22)',
+                    color: '#16a34a',
+                    details: 'Tiger safari • Luxury tents • Spa treatments'
+                },
+                {
+                    name: 'Oberoi Rajvilas',
+                    city: 'Jaipur',
+                    coords: [26.9124, 75.7873],
+                    address: 'Goner Road, Jaipur, Rajasthan 303012',
+                    days: 'Day 6-9 (Dec 22-25)',
+                    color: '#9333ea',
+                    details: "Zane's Birthday • Elefantastic • Amber Fort • Shopping"
+                }
+            ];
+
+            // Airports
+            const airports = [
+                {
+                    name: 'Maharana Pratap Airport (UDR)',
+                    coords: [24.6177, 73.8961],
+                    city: 'Udaipur'
+                },
+                {
+                    name: 'Indira Gandhi Airport (DEL)',
+                    coords: [28.5562, 77.1000],
+                    city: 'Delhi'
+                },
+                {
+                    name: 'Jaipur Airport (JAI)',
+                    coords: [26.8242, 75.8122],
+                    city: 'Jaipur'
+                }
+            ];
+
+            // Initialize map centered on Rajasthan
+            const map = L.map('map').setView([26.0, 75.0], 6);
+
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18
+            }).addTo(map);
+
+            // Create custom icon function
+            function createCustomIcon(color, number) {
+                return L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background-color: ${color}; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${number}</div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+            }
+
+            // Add markers for each hotel location
+            locations.forEach((location, index) => {
+                const marker = L.marker(location.coords, {
+                    icon: createCustomIcon(location.color, index + 1)
+                }).addTo(map);
+
+                // Add popup with details
+                const popupContent = `
+                    <div style="font-family: 'Lato', sans-serif;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold; color: #1f2937;">${location.name}</h3>
+                        <p style="margin: 0 0 4px 0; font-size: 14px; color: ${location.color}; font-weight: 600;">${location.days}</p>
+                        <p style="margin: 0 0 6px 0; font-size: 12px; color: #9ca3af; font-style: italic;">${location.address}</p>
+                        <p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${location.details}</p>
+                    </div>
+                `;
+                marker.bindPopup(popupContent);
+            });
+
+            // Add airport markers (smaller, gray icons)
+            airports.forEach(airport => {
+                const airportIcon = L.divIcon({
+                    className: 'airport-marker',
+                    html: `<div style="background-color: #6b7280; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">✈️</div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, -12]
+                });
+
+                const marker = L.marker(airport.coords, {
+                    icon: airportIcon
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div style="font-family: 'Lato', sans-serif;">
+                        <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: bold; color: #1f2937;">${airport.name}</h3>
+                        <p style="margin: 0; font-size: 12px; color: #6b7280;">${airport.city}</p>
+                    </div>
+                `);
+            });
+
+            // Draw route lines between locations
+            const routeCoords = locations.map(loc => loc.coords);
+
+            // Flight path from Udaipur Airport to Delhi Airport - dashed line
+            L.polyline([airports[0].coords, airports[1].coords], {
+                color: '#3b82f6',
+                weight: 3,
+                opacity: 0.6,
+                dashArray: '10, 10',
+                lineJoin: 'round'
+            }).addTo(map).bindPopup('✈️ Flight: Udaipur (UDR) → Delhi (DEL) - Dec 19');
+
+            // Drive from Delhi to Agra via Yamuna Expressway - solid line
+            L.polyline([airports[1].coords, locations[1].coords], {
+                color: '#f59e0b',
+                weight: 4,
+                opacity: 0.7,
+                lineJoin: 'round'
+            }).addTo(map).bindPopup('🚙 Drive: Delhi → Agra via Yamuna Expressway (~3.5 hours)');
+
+            // Drive from Agra to Ranthambore - solid line
+            L.polyline([locations[1].coords, locations[2].coords], {
+                color: '#f59e0b',
+                weight: 4,
+                opacity: 0.7,
+                lineJoin: 'round'
+            }).addTo(map).bindPopup('🚙 Drive: Agra → Ranthambore (~5 hours, Dec 20)');
+
+            // Drive from Ranthambore to Jaipur - solid line
+            L.polyline([locations[2].coords, locations[3].coords], {
+                color: '#f59e0b',
+                weight: 4,
+                opacity: 0.7,
+                lineJoin: 'round'
+            }).addTo(map).bindPopup('🚙 Drive: Ranthambore → Jaipur (~3.5 hours, Dec 22)');
+
+            // Fit map to show all locations (hotels and airports)
+            const allCoords = [...routeCoords, ...airports.map(a => a.coords)];
+            const bounds = L.latLngBounds(allCoords);
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+
         // --- INIT ---
         window.onload = function() {
             renderTimeline('all');
             renderDining();
             renderCharts();
+            initMap();
         };
 
     </script>
