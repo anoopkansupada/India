@@ -8,10 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Leaflet CSS for interactive map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+    <!-- Google Maps JavaScript API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSRrd-sjbtPbT8BSd4f4icQJTWQNJHpwE&callback=initMap&libraries=places&v=weekly" defer></script>
+
     <!-- Chosen Palette: Royal Rajasthan -->
     <!-- 
         Primary Background: #FDFBF7 (Warm Sandstone)
@@ -98,23 +97,23 @@
         }
         /* Map container */
         #map {
-            height: 500px;
+            height: 600px;
             width: 100%;
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         @media (max-width: 640px) {
             #map {
-                height: 400px;
+                height: 450px;
             }
         }
-        /* Custom map popup styling */
-        .leaflet-popup-content-wrapper {
+        /* Custom Google Maps info window styling */
+        .gm-style .gm-style-iw-c {
             border-radius: 8px;
+            padding: 12px;
         }
-        .leaflet-popup-content {
+        .gm-style .gm-style-iw-d {
             font-family: 'Lato', sans-serif;
-            margin: 12px;
         }
     </style>
 </head>
@@ -132,6 +131,9 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <a href="fashion.html" class="hidden md:flex items-center bg-rose-700 hover:bg-rose-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
+                        <span>👗 Fashion Guide</span>
+                    </a>
                     <a href="feedback.html" class="hidden md:flex items-center bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
                         <span>💭 Suggest Changes</span>
                     </a>
@@ -170,22 +172,6 @@
                     <div class="font-bold text-green-900">🎂 Birthday!</div>
                     <div class="text-green-600 text-xs">Zane turns 3 on Dec 24</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- REFERENCE DOCUMENTS -->
-        <div class="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg shadow-sm border border-purple-100">
-            <h2 class="text-xl font-bold serif-font text-purple-900 mb-3">📄 Reference Documents</h2>
-            <p class="text-gray-700 text-sm mb-4">Download detailed information about Oberoi experiences and dining options:</p>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <a href="Mitesh/OBEROI EXPERIENCES.pdf" target="_blank" class="flex-1 flex items-center justify-center bg-white hover:bg-purple-100 border-2 border-purple-300 text-purple-900 font-semibold px-6 py-3 rounded-lg transition-all shadow-sm hover:shadow-md">
-                    <span class="mr-2 text-2xl">🏰</span>
-                    <span>Oberoi Experiences</span>
-                </a>
-                <a href="Mitesh/DINING OPTIONS (1).pdf" target="_blank" class="flex-1 flex items-center justify-center bg-white hover:bg-purple-100 border-2 border-purple-300 text-purple-900 font-semibold px-6 py-3 rounded-lg transition-all shadow-sm hover:shadow-md">
-                    <span class="mr-2 text-2xl">🍽️</span>
-                    <span>Dining Options</span>
-                </a>
             </div>
         </div>
 
@@ -717,44 +703,63 @@
         }
 
         // --- MAP INITIALIZATION ---
-        function initMap() {
-            // Actual hotel and airport coordinates
+        // Note: This function is called by the Google Maps API callback
+        window.initMap = function() {
+            // Initialize Google Map centered on Rajasthan
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: { lat: 25.0, lng: 76.0 },
+                mapTypeId: 'roadmap',
+                styles: [
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'on' }]
+                    }
+                ]
+            });
+
+            // Actual hotel and airport coordinates (Google Maps uses {lat, lng} objects)
             const locations = [
                 {
                     name: 'Oberoi Udaivilas',
                     city: 'Udaipur',
-                    coords: [24.5768, 73.6805],
+                    position: { lat: 24.5768, lng: 73.6805 },
                     address: 'Haridasji Ki Magri, Udaipur, Rajasthan 313001',
                     days: 'Day 1-2 (Dec 17-18)',
                     color: '#dc2626',
-                    details: 'Lake Palace views • City Palace tour • Sunset boat ride'
+                    details: 'Lake Palace views • City Palace tour • Sunset boat ride',
+                    number: 1
                 },
                 {
                     name: 'Oberoi Amarvilas',
                     city: 'Agra',
-                    coords: [27.1751, 78.0421],
+                    position: { lat: 27.1751, lng: 78.0421 },
                     address: 'Taj East Gate Road, Agra, Uttar Pradesh 282001',
                     days: 'Day 3-4 (Dec 19-20)',
                     color: '#2563eb',
-                    details: 'Taj Mahal sunrise tour • All rooms with Taj views'
+                    details: 'Taj Mahal sunrise tour • All rooms with Taj views',
+                    number: 2
                 },
                 {
                     name: 'Oberoi Vanyavilas',
                     city: 'Ranthambore',
-                    coords: [26.0173, 76.5026],
+                    position: { lat: 26.0173, lng: 76.5026 },
                     address: 'Ranthambore Road, Sawai Madhopur, Rajasthan 322001',
                     days: 'Day 4-6 (Dec 20-22)',
                     color: '#16a34a',
-                    details: 'Tiger safari • Luxury tents • Spa treatments'
+                    details: 'Tiger safari • Luxury tents • Spa treatments',
+                    number: 3
                 },
                 {
                     name: 'Oberoi Rajvilas',
                     city: 'Jaipur',
-                    coords: [26.9124, 75.7873],
+                    position: { lat: 26.9124, lng: 75.7873 },
                     address: 'Goner Road, Jaipur, Rajasthan 303012',
                     days: 'Day 6-9 (Dec 22-25)',
                     color: '#9333ea',
-                    details: "Zane's Birthday • Elefantastic • Amber Fort • Shopping"
+                    details: "Zane's Birthday • Elefantastic • Amber Fort • Shopping",
+                    number: 4
                 }
             ];
 
@@ -762,159 +767,227 @@
             const airports = [
                 {
                     name: 'Chhatrapati Shivaji Airport (BOM)',
-                    coords: [19.0896, 72.8656],
+                    position: { lat: 19.0896, lng: 72.8656 },
                     city: 'Mumbai',
                     type: 'start-end'
                 },
                 {
                     name: 'Maharana Pratap Airport (UDR)',
-                    coords: [24.6177, 73.8961],
+                    position: { lat: 24.6177, lng: 73.8961 },
                     city: 'Udaipur'
                 },
                 {
                     name: 'Indira Gandhi Airport (DEL)',
-                    coords: [28.5562, 77.1000],
+                    position: { lat: 28.5562, lng: 77.1000 },
                     city: 'Delhi'
                 },
                 {
                     name: 'Jaipur Airport (JAI)',
-                    coords: [26.8242, 75.8122],
+                    position: { lat: 26.8242, lng: 75.8122 },
                     city: 'Jaipur'
                 }
             ];
 
-            // Initialize map centered on Rajasthan
-            const map = L.map('map').setView([26.0, 75.0], 6);
-
-            // Add tile layer (OpenStreetMap)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                maxZoom: 18
-            }).addTo(map);
-
-            // Create custom icon function
-            function createCustomIcon(color, number) {
-                return L.divIcon({
-                    className: 'custom-marker',
-                    html: `<div style="background-color: ${color}; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${number}</div>`,
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-            }
+            // Bounds for auto-fitting the map
+            const bounds = new google.maps.LatLngBounds();
 
             // Add markers for each hotel location
-            locations.forEach((location, index) => {
-                const marker = L.marker(location.coords, {
-                    icon: createCustomIcon(location.color, index + 1)
-                }).addTo(map);
+            locations.forEach((location) => {
+                // Create custom numbered marker with colored background
+                const marker = new google.maps.Marker({
+                    position: location.position,
+                    map: map,
+                    title: location.name,
+                    label: {
+                        text: location.number.toString(),
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                    },
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 16,
+                        fillColor: location.color,
+                        fillOpacity: 1,
+                        strokeColor: 'white',
+                        strokeWeight: 3
+                    }
+                });
 
-                // Add popup with details
-                const popupContent = `
-                    <div style="font-family: 'Lato', sans-serif;">
+                // Info window content
+                const infoContent = `
+                    <div style="font-family: 'Lato', sans-serif; max-width: 250px;">
                         <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold; color: #1f2937;">${location.name}</h3>
                         <p style="margin: 0 0 4px 0; font-size: 14px; color: ${location.color}; font-weight: 600;">${location.days}</p>
                         <p style="margin: 0 0 6px 0; font-size: 12px; color: #9ca3af; font-style: italic;">${location.address}</p>
                         <p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${location.details}</p>
                     </div>
                 `;
-                marker.bindPopup(popupContent);
-            });
 
-            // Add airport markers (smaller, gray icons; Mumbai is special)
-            airports.forEach(airport => {
-                const isMumbai = airport.type === 'start-end';
-                const airportIcon = L.divIcon({
-                    className: 'airport-marker',
-                    html: `<div style="background-color: ${isMumbai ? '#059669' : '#6b7280'}; width: ${isMumbai ? '28px' : '24px'}; height: ${isMumbai ? '28px' : '24px'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">✈️</div>`,
-                    iconSize: [isMumbai ? 28 : 24, isMumbai ? 28 : 24],
-                    iconAnchor: [isMumbai ? 14 : 12, isMumbai ? 14 : 12],
-                    popupAnchor: [0, isMumbai ? -14 : -12]
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
                 });
 
-                const marker = L.marker(airport.coords, {
-                    icon: airportIcon
-                }).addTo(map);
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
 
-                marker.bindPopup(`
+                bounds.extend(location.position);
+            });
+
+            // Add airport markers
+            airports.forEach(airport => {
+                const isMumbai = airport.type === 'start-end';
+
+                const marker = new google.maps.Marker({
+                    position: airport.position,
+                    map: map,
+                    title: airport.name,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: isMumbai ? 14 : 12,
+                        fillColor: isMumbai ? '#059669' : '#6b7280',
+                        fillOpacity: 1,
+                        strokeColor: 'white',
+                        strokeWeight: 2
+                    },
+                    label: {
+                        text: '✈',
+                        color: 'white',
+                        fontSize: '12px'
+                    }
+                });
+
+                const infoContent = `
                     <div style="font-family: 'Lato', sans-serif;">
                         <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: bold; color: #1f2937;">${airport.name}</h3>
                         <p style="margin: 0; font-size: 12px; color: #6b7280;">${airport.city}${isMumbai ? ' • START/END' : ''}</p>
                     </div>
-                `);
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                bounds.extend(airport.position);
             });
 
+            // Helper function to create info window for routes
+            function createRouteInfoWindow(content) {
+                return new google.maps.InfoWindow({
+                    content: `<div style="font-family: 'Lato', sans-serif; font-size: 13px;">${content}</div>`
+                });
+            }
+
             // Draw route lines between locations
-            const routeCoords = locations.map(loc => loc.coords);
             const bomAirport = airports[0]; // Mumbai
             const udrAirport = airports[1]; // Udaipur
             const delAirport = airports[2]; // Delhi
             const jaiAirport = airports[3]; // Jaipur
 
             // 1. ARRIVAL: Flight from Mumbai to Udaipur - Dec 17
-            L.polyline([bomAirport.coords, udrAirport.coords], {
-                color: '#059669',
-                weight: 4,
-                opacity: 0.8,
-                dashArray: '10, 10',
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('✈️ <strong>DAY 1:</strong> Flight AI 2579<br>Mumbai (BOM) → Udaipur (UDR)<br>Dec 17, 10:30 AM - 12:00 PM');
+            const route1 = new google.maps.Polyline({
+                path: [bomAirport.position, udrAirport.position],
+                geodesic: true,
+                strokeColor: '#059669',
+                strokeOpacity: 0.8,
+                strokeWeight: 4,
+                icons: [{
+                    icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 4 },
+                    offset: '0',
+                    repeat: '20px'
+                }],
+                map: map
+            });
+            const info1 = createRouteInfoWindow('✈️ <strong>DAY 1:</strong> Flight AI 2579<br>Mumbai (BOM) → Udaipur (UDR)<br>Dec 17, 10:30 AM - 12:00 PM');
+            route1.addListener('click', (e) => { info1.setPosition(e.latLng); info1.open(map); });
 
-            // 2. Flight path from Udaipur Airport to Delhi Airport - Dec 19
-            L.polyline([udrAirport.coords, delAirport.coords], {
-                color: '#3b82f6',
-                weight: 3,
-                opacity: 0.6,
-                dashArray: '10, 10',
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('✈️ <strong>DAY 3:</strong> Flight<br>Udaipur (UDR) → Delhi (DEL)<br>Dec 19, ~11:00 AM');
+            // 2. Flight path from Udaipur to Delhi - Dec 19
+            const route2 = new google.maps.Polyline({
+                path: [udrAirport.position, delAirport.position],
+                geodesic: true,
+                strokeColor: '#3b82f6',
+                strokeOpacity: 0.6,
+                strokeWeight: 3,
+                icons: [{
+                    icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 3 },
+                    offset: '0',
+                    repeat: '20px'
+                }],
+                map: map
+            });
+            const info2 = createRouteInfoWindow('✈️ <strong>DAY 3:</strong> Flight<br>Udaipur (UDR) → Delhi (DEL)<br>Dec 19, ~11:00 AM');
+            route2.addListener('click', (e) => { info2.setPosition(e.latLng); info2.open(map); });
 
-            // 3. Drive from Delhi to Agra via Yamuna Expressway - Dec 19
-            L.polyline([delAirport.coords, locations[1].coords], {
-                color: '#f59e0b',
-                weight: 4,
-                opacity: 0.7,
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('🚙 <strong>DAY 3:</strong> Drive<br>Delhi → Agra via Yamuna Expressway<br>~3.5 hours, Dec 19');
+            // 3. Drive from Delhi to Agra - Dec 19
+            const route3 = new google.maps.Polyline({
+                path: [delAirport.position, locations[1].position],
+                geodesic: true,
+                strokeColor: '#f59e0b',
+                strokeOpacity: 0.7,
+                strokeWeight: 4,
+                map: map
+            });
+            const info3 = createRouteInfoWindow('🚙 <strong>DAY 3:</strong> Drive<br>Delhi → Agra via Yamuna Expressway<br>~3.5 hours, Dec 19');
+            route3.addListener('click', (e) => { info3.setPosition(e.latLng); info3.open(map); });
 
             // 4. Drive from Agra to Ranthambore - Dec 20
-            L.polyline([locations[1].coords, locations[2].coords], {
-                color: '#f59e0b',
-                weight: 4,
-                opacity: 0.7,
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('🚙 <strong>DAY 4:</strong> Drive<br>Agra → Ranthambore<br>~5 hours, Dec 20');
+            const route4 = new google.maps.Polyline({
+                path: [locations[1].position, locations[2].position],
+                geodesic: true,
+                strokeColor: '#f59e0b',
+                strokeOpacity: 0.7,
+                strokeWeight: 4,
+                map: map
+            });
+            const info4 = createRouteInfoWindow('🚙 <strong>DAY 4:</strong> Drive<br>Agra → Ranthambore<br>~5 hours, Dec 20');
+            route4.addListener('click', (e) => { info4.setPosition(e.latLng); info4.open(map); });
 
             // 5. Drive from Ranthambore to Jaipur - Dec 22
-            L.polyline([locations[2].coords, locations[3].coords], {
-                color: '#f59e0b',
-                weight: 4,
-                opacity: 0.7,
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('🚙 <strong>DAY 6:</strong> Drive<br>Ranthambore → Jaipur<br>~3.5 hours, Dec 22');
+            const route5 = new google.maps.Polyline({
+                path: [locations[2].position, locations[3].position],
+                geodesic: true,
+                strokeColor: '#f59e0b',
+                strokeOpacity: 0.7,
+                strokeWeight: 4,
+                map: map
+            });
+            const info5 = createRouteInfoWindow('🚙 <strong>DAY 6:</strong> Drive<br>Ranthambore → Jaipur<br>~3.5 hours, Dec 22');
+            route5.addListener('click', (e) => { info5.setPosition(e.latLng); info5.open(map); });
 
             // 6. DEPARTURE: Flight from Jaipur to Mumbai - Dec 25
-            L.polyline([jaiAirport.coords, bomAirport.coords], {
-                color: '#059669',
-                weight: 4,
-                opacity: 0.8,
-                dashArray: '10, 10',
-                lineJoin: 'round'
-            }).addTo(map).bindPopup('✈️ <strong>DAY 9:</strong> Flight Departure<br>Jaipur (JAI) → Mumbai (BOM)<br>Dec 25, 7:55 PM');
+            const route6 = new google.maps.Polyline({
+                path: [jaiAirport.position, bomAirport.position],
+                geodesic: true,
+                strokeColor: '#059669',
+                strokeOpacity: 0.8,
+                strokeWeight: 4,
+                icons: [{
+                    icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 4 },
+                    offset: '0',
+                    repeat: '20px'
+                }],
+                map: map
+            });
+            const info6 = createRouteInfoWindow('✈️ <strong>DAY 9:</strong> Flight Departure<br>Jaipur (JAI) → Mumbai (BOM)<br>Dec 25, 7:55 PM');
+            route6.addListener('click', (e) => { info6.setPosition(e.latLng); info6.open(map); });
 
-            // Fit map to show all locations (hotels and airports)
-            const allCoords = [...routeCoords, ...airports.map(a => a.coords)];
-            const bounds = L.latLngBounds(allCoords);
-            map.fitBounds(bounds, { padding: [50, 50] });
+            // Fit map to show all locations
+            map.fitBounds(bounds);
         }
 
         // --- INIT ---
-        window.onload = function() {
+        // Note: initMap is called automatically by Google Maps API callback
+        // Other rendering functions are called on DOM load
+        window.addEventListener('DOMContentLoaded', function() {
             renderTimeline('all');
             renderDining();
             renderCharts();
-            initMap();
-        };
+        });
 
     </script>
 </body>
