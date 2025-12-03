@@ -168,7 +168,7 @@
 
     <script>
         // Handle form submission
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // Get form data
@@ -189,6 +189,51 @@
             const existingFeedback = JSON.parse(localStorage.getItem('tripFeedback') || '[]');
             existingFeedback.push(feedback);
             localStorage.setItem('tripFeedback', JSON.stringify(existingFeedback));
+
+            // Send email via EmailJS or FormSubmit
+            try {
+                // Format email body
+                const emailBody = `
+New Trip Feedback Received
+
+Category: ${feedback.category}
+Day: ${feedback.day}
+Priority: ${feedback.priority}
+Submitted by: ${feedback.name}
+Time: ${new Date(feedback.timestamp).toLocaleString()}
+
+Feedback:
+${feedback.feedback}
+                `.trim();
+
+                // Using FormSubmit.co (free service, no signup needed)
+                const response = await fetch('https://formsubmit.co/anoop.kansupada@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        _subject: `Trip Feedback: ${feedback.category} - ${feedback.priority} priority`,
+                        _template: 'table',
+                        category: feedback.category,
+                        day: feedback.day,
+                        priority: feedback.priority,
+                        feedback: feedback.feedback,
+                        name: feedback.name,
+                        timestamp: new Date(feedback.timestamp).toLocaleString()
+                    })
+                });
+
+                if (response.ok) {
+                    console.log('Email sent successfully!');
+                } else {
+                    console.error('Email sending failed, but feedback is saved locally');
+                }
+            } catch (error) {
+                console.error('Error sending email:', error);
+                // Continue anyway - feedback is still saved locally
+            }
 
             // Show success message
             document.getElementById('successMessage').classList.remove('hidden');

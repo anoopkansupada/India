@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutiques Feature Diagnostics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .pass {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .fail {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Boutiques Feature Diagnostics</h1>
+
+    <h2>Test Results</h2>
+    <div id="results"></div>
+
+    <h2>Console Output</h2>
+    <div id="console-output"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        const consoleOutput = document.getElementById('console-output');
+
+        // Capture console logs
+        const logs = [];
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+
+        console.log = function(...args) {
+            logs.push({ type: 'log', message: args.join(' ') });
+            originalConsoleLog.apply(console, args);
+        };
+
+        console.error = function(...args) {
+            logs.push({ type: 'error', message: args.join(' ') });
+            originalConsoleError.apply(console, args);
+        };
+
+        console.warn = function(...args) {
+            logs.push({ type: 'warn', message: args.join(' ') });
+            originalConsoleWarn.apply(console, args);
+        };
+
+        function addTest(name, passed, details = '') {
+            const div = document.createElement('div');
+            div.className = `test ${passed ? 'pass' : 'fail'}`;
+            div.innerHTML = `
+                <strong>${passed ? '✓' : '✗'} ${name}</strong>
+                ${details ? `<br><small>${details}</small>` : ''}
+            `;
+            results.appendChild(div);
+        }
+
+        function addInfo(message) {
+            const div = document.createElement('div');
+            div.className = 'test info';
+            div.innerHTML = `<strong>ℹ️ ${message}</strong>`;
+            results.appendChild(div);
+        }
+
+        // Run tests
+        setTimeout(() => {
+            // Test 1: Check if boutiques data exists
+            try {
+                const iframe = document.createElement('iframe');
+                iframe.src = 'index.html';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+
+                iframe.onload = function() {
+                    const iframeWindow = iframe.contentWindow;
+
+                    // Test boutiques data
+                    if (iframeWindow.boutiquesData) {
+                        addTest('Boutiques data loaded', true, `${iframeWindow.boutiquesData.length} boutiques found`);
+
+                        // Check categories
+                        const types = new Set();
+                        iframeWindow.boutiquesData.forEach(b => types.add(b.type));
+                        addInfo(`Categories: ${Array.from(types).sort().join(', ')}`);
+
+                        // Check cities
+                        const cities = new Set();
+                        iframeWindow.boutiquesData.forEach(b => cities.add(b.city));
+                        addInfo(`Cities: ${Array.from(cities).sort().join(', ')}`);
+                    } else {
+                        addTest('Boutiques data loaded', false, 'boutiquesData not found');
+                    }
+
+                    // Test map controls
+                    const shoppingToggle = iframe.contentDocument.getElementById('shopping-toggle');
+                    addTest('Shopping toggle button exists', !!shoppingToggle);
+
+                    const shoppingDropdown = iframe.contentDocument.getElementById('shopping-dropdown');
+                    addTest('Shopping dropdown exists', !!shoppingDropdown);
+
+                    // Count checkboxes
+                    if (shoppingDropdown) {
+                        const checkboxes = shoppingDropdown.querySelectorAll('input[type="checkbox"]');
+                        addTest('Category checkboxes created', checkboxes.length > 0, `${checkboxes.length} checkboxes found`);
+
+                        // List categories
+                        const categories = [];
+                        checkboxes.forEach(cb => {
+                            categories.push(cb.getAttribute('data-category'));
+                        });
+                        addInfo(`Checkbox categories: ${categories.join(', ')}`);
+                    }
+
+                    // Test sidebar
+                    const sidebar = iframe.contentDocument.getElementById('shopping-sidebar-list');
+                    addTest('Shopping sidebar exists', !!sidebar);
+
+                    // Test map
+                    const mapDiv = iframe.contentDocument.getElementById('map');
+                    addTest('Map div exists', !!mapDiv);
+
+                    // Display console logs
+                    if (logs.length > 0) {
+                        const pre = document.createElement('pre');
+                        pre.textContent = logs.map(log => `[${log.type.toUpperCase()}] ${log.message}`).join('\n');
+                        consoleOutput.appendChild(pre);
+                    } else {
+                        consoleOutput.innerHTML = '<p>No console output captured</p>';
+                    }
+                };
+
+            } catch (error) {
+                addTest('Error running tests', false, error.message);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
