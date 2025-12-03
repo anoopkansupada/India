@@ -137,55 +137,86 @@
         // Boutiques data - will be loaded from the same source as index.html
         const boutiquesData = [
             // MUMBAI
-            { name: 'Lune', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Cult jewelry, celestial designs • Hours: Mon-Sat 11am–7:30pm, Sun closed • 📍 Shop 1 & 2, Labbaik House, 39, Chimbai Road, Bandra West, 400050', url: "shoplune.com" },
-            { name: 'Two Extra Lives', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'fashion', category: 'Vintage/Concept', icon: '👗', color: '#ec4899', details: 'Upcycled, vintage, conscious fashion • Hours: Daily 11am–8pm • 📍 Bungalow 111, 562 Dr Ambedkar Road, Pali Village, Bandra West, 400050', url: "twoextralives.com" },
-            { name: 'Call of the Valley', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'perfume', category: 'Perfume/Lifestyle', icon: '🌸', color: '#a855f7', details: 'Artisanal Indian perfume oils • 📍 Shop 3, Aruna Niwas, Pali Village, Bandra West, 400050', url: "callofthevalley.com" },
-            { name: 'Good Earth', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Lifestyle', icon: '🪴', color: '#10b981', details: 'Handcrafted luxury homeware, Indian crafts • 📍 11-12 Raghuvanshi Mills Compound, Senapati Bapat Marg, Lower Parel', url: "goodearth.in" },
-            { name: 'Hatsu', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Design', icon: '🪴', color: '#10b981', details: 'Modern lighting, furniture, quirky décor • 📍 25, Laxmi Mill Compound, Shakti Mills Lane, Mahalakshmi', url: "hatsu.in" },
-            { name: 'James Ferreira', city: 'Mumbai', position: { lat: 18.951, lng: 72.8144 }, type: 'fashion', category: 'Fashion', icon: '👗', color: '#ec4899', details: 'Contemporary clothing from heritage bungalow • 📍 Studio 47-G Khotachiwadi Trail, 1st Lane, Khotachiwadi, Girgaon', url: "jamesferreira.in" },
-            { name: 'Nicobar', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'lifestyle', category: 'Lifestyle', icon: '✨', color: '#ec4899', details: 'Tropical-accented homeware, bohemian clothing • 📍 10 Ropewalk Lane, Above Kala Ghoda Café, Kala Ghoda, Fort', url: "nicobar.com" },
-            { name: 'Ogaan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Indian designer clothing (men\'s and women\'s) • 📍 6/8, Navbharat House, Burjorji S Bharucha Marg, Kala Ghoda', url: "ogaan.com" },
-            { name: 'Sabyasachi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Couture/Wedding', icon: '👰', color: '#f472b6', details: 'Bridalwear flagship/living museum • 📍 IGP Fort, Veer Nariman Road, near Horniman Circle, Fort', url: "sabyasachiofficial.com" },
-            { name: 'Valliyan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Statement jewelry, retro-futurist designs • 📍 First Floor, Rhythm House Building, 59 Forbes Street, Fort', url: "valliyan.com" },
-            { name: 'Moonray', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Womenswear', icon: '👗', color: '#ec4899', details: 'Sophisticated tailored womenswear & accessories • 📍 Ground floor, Mittal Avenue, Kala Ghoda, Fort', url: "moonray.in" },
-            { name: 'Jodi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Menswear/Womenswear', icon: '👗', color: '#ec4899', details: 'Hand-block print, colorful menswear • 📍 Shop no. 1, Lentin Chambers, Dalal Street, Fort', url: "thejodilife.com" },
-            { name: 'Obataimu', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'menswear', category: 'Concept/Menswear', icon: '👔', color: '#3b82f6', details: 'Limited-edition, innovative contemporary clothing • 📍 Ground Floor, Machinery House, 3, S Bharucha Marg, Kala Ghoda, Fort', url: "obataimu.com" },
-            { name: 'Nappa Dori', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'accessories', category: 'Accessories', icon: '👜', color: '#f59e0b', details: 'Luggage and leather accessories • 📍 2, Sunny House, Mereweather Road, Colaba', url: "nappadori.com" },
-            { name: 'Le Mill', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'luxury', category: 'Luxury Fashion', icon: '💎', color: '#8b5cf6', details: 'Global luxury brands, top international labels • 📍 1st Floor, Pheroze Building, Chhatrapati Shivaji Maharaj Marg, Colaba', url: "lemillindia.com" },
+            { name: 'Lune', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Cult jewelry, celestial designs • Hours: Mon-Sat 11am–7:30pm, Sun closed • 📍 Shop 1 & 2, Labbaik House, 39, Chimbai Road, Bandra West, 400050', url: "shoplune.com", instagram: "shoplune" },
+            { name: 'Two Extra Lives', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'fashion', category: 'Vintage/Concept', icon: '👗', color: '#ec4899', details: 'Upcycled, vintage, conscious fashion • Hours: Daily 11am–8pm • 📍 Bungalow 111, 562 Dr Ambedkar Road, Pali Village, Bandra West, 400050', url: "twoextralives.com", instagram: "two.extra.lives" },
+            { name: 'Call of the Valley', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'perfume', category: 'Perfume/Lifestyle', icon: '🌸', color: '#a855f7', details: 'Artisanal Indian perfume oils • 📍 Shop 3, Aruna Niwas, Pali Village, Bandra West, 400050', url: "callofthevalley.com", instagram: "callofthevalleyofficial" },
+            { name: 'Good Earth', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Lifestyle', icon: '🪴', color: '#10b981', details: 'Handcrafted luxury homeware, Indian crafts • 📍 11-12 Raghuvanshi Mills Compound, Senapati Bapat Marg, Lower Parel', url: "goodearth.in" , instagram: "goodearthindia" },
+
+            { name: 'Hatsu', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Design', icon: '🪴', color: '#10b981', details: 'Modern lighting, furniture, quirky décor • 📍 25, Laxmi Mill Compound, Shakti Mills Lane, Mahalakshmi', url: "hatsu.in" , instagram: "hatsu.in" },
+
+            { name: 'James Ferreira', city: 'Mumbai', position: { lat: 18.951, lng: 72.8144 }, type: 'fashion', category: 'Fashion', icon: '👗', color: '#ec4899', details: 'Contemporary clothing from heritage bungalow • 📍 Studio 47-G Khotachiwadi Trail, 1st Lane, Khotachiwadi, Girgaon', url: "jamesferreira.in" , instagram: "jamesferreirastudio" },
+
+            { name: 'Nicobar', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'lifestyle', category: 'Lifestyle', icon: '✨', color: '#ec4899', details: 'Tropical-accented homeware, bohemian clothing • 📍 10 Ropewalk Lane, Above Kala Ghoda Café, Kala Ghoda, Fort', url: "nicobar.com" , instagram: "nicobarhq" },
+
+            { name: 'Ogaan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Indian designer clothing (men\'s and women\'s) • 📍 6/8, Navbharat House, Burjorji S Bharucha Marg, Kala Ghoda', url: "ogaan.com" , instagram: "ogaanindia" },
+
+            { name: 'Sabyasachi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Couture/Wedding', icon: '👰', color: '#f472b6', details: 'Bridalwear flagship/living museum • 📍 IGP Fort, Veer Nariman Road, near Horniman Circle, Fort', url: "sabyasachiofficial.com" , instagram: "sabyasachiofficial" },
+
+            { name: 'Valliyan', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Statement jewelry, retro-futurist designs • 📍 First Floor, Rhythm House Building, 59 Forbes Street, Fort', url: "valliyan.com" , instagram: "valliyan" },
+
+            { name: 'Moonray', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'fashion', category: 'Womenswear', icon: '👗', color: '#ec4899', details: 'Sophisticated tailored womenswear & accessories • 📍 Ground floor, Mittal Avenue, Kala Ghoda, Fort', url: "moonray.in" , instagram: "moonray.in" },
+
+            { name: 'Jodi', city: 'Mumbai', position: { lat: 18.932, lng: 72.8347 }, type: 'fashion', category: 'Menswear/Womenswear', icon: '👗', color: '#ec4899', details: 'Hand-block print, colorful menswear • 📍 Shop no. 1, Lentin Chambers, Dalal Street, Fort', url: "thejodilife.com" , instagram: "thejodilife" },
+
+            { name: 'Obataimu', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'menswear', category: 'Concept/Menswear', icon: '👔', color: '#3b82f6', details: 'Limited-edition, innovative contemporary clothing • 📍 Ground Floor, Machinery House, 3, S Bharucha Marg, Kala Ghoda, Fort', url: "obataimu.com" , instagram: "obataimu" },
+
+            { name: 'Nappa Dori', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'accessories', category: 'Accessories', icon: '👜', color: '#f59e0b', details: 'Luggage and leather accessories • 📍 2, Sunny House, Mereweather Road, Colaba', url: "nappadori.com" , instagram: "nappadori" },
+
+            { name: 'Le Mill', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'luxury', category: 'Luxury Fashion', icon: '💎', color: '#8b5cf6', details: 'Global luxury brands, top international labels • 📍 1st Floor, Pheroze Building, Chhatrapati Shivaji Maharaj Marg, Colaba', url: "lemillindia.com" , instagram: "lemillindia" },
+
             { name: 'Pernia\'s Pop-Up Studio (Bandra)', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Bandra', url: "perniaspopupshop.com" },
             { name: 'Pernia\'s Pop-Up Studio (Juhu)', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Multi-designer luxury menswear • 📍 Juhu', url: "perniaspopupshop.com" },
             { name: 'Raymond', city: 'Mumbai', position: { lat: 19.1355, lng: 72.8262 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Andheri West', url: "myraymond.com" },
-            { name: 'Curato', city: 'Mumbai', position: { lat: 19.0708, lng: 72.8357 }, type: 'menswear', category: 'Menswear', icon: '👔', color: '#3b82f6', details: 'Leading Indian designer brands • 📍 Khar, Kala Ghoda', url: "curato.in" },
-            { name: 'Masculine', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Tailoring', icon: '👔', color: '#3b82f6', details: 'Bespoke tailoring, established 1987 • 📍 Juhu', url: null },
-            { name: 'Abstract Mens', city: 'Mumbai', position: { lat: 19.2307, lng: 72.8567 }, type: 'menswear', category: 'Streetwear', icon: '🧢', color: '#6366f1', details: 'Modern oversized, hype street fashion • 📍 Borivali West', url: null },
-            { name: 'Paak Pehnawa', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Pure, premium ethnicwear for men • 📍 Mumbai', url: null },
-            { name: 'Acros Ethnic', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Traditional, Indo-western, trending • 📍 Mumbai', url: null },
+            { name: 'Curato', city: 'Mumbai', position: { lat: 19.0708, lng: 72.8357 }, type: 'menswear', category: 'Menswear', icon: '👔', color: '#3b82f6', details: 'Leading Indian designer brands • 📍 Khar, Kala Ghoda', url: "curato.in" , instagram: "curato.in" },
+
+            { name: 'Masculine', city: 'Mumbai', position: { lat: 19.099, lng: 72.8268 }, type: 'menswear', category: 'Tailoring', icon: '👔', color: '#3b82f6', details: 'Bespoke tailoring, established 1987 • 📍 Juhu', url: null , instagram: "masculineofficial" },
+
+            { name: 'Abstract Mens', city: 'Mumbai', position: { lat: 19.2307, lng: 72.8567 }, type: 'menswear', category: 'Streetwear', icon: '🧢', color: '#6366f1', details: 'Modern oversized, hype street fashion • 📍 Borivali West', url: null , instagram: "abstractb" },
+
+            { name: 'Paak Pehnawa', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Pure, premium ethnicwear for men • 📍 Mumbai', url: null , instagram: "paak.pehnawa.mens" },
+
+            { name: 'Acros Ethnic', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Traditional, Indo-western, trending • 📍 Mumbai', url: null , instagram: "acros_ethnic" },
+
             { name: 'Linking Road', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Trendy street fashion, accessible prices • 📍 Bandra West', url: null },
             { name: 'Colaba Causeway', city: 'Mumbai', position: { lat: 18.9067, lng: 72.8147 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Eclectic finds, vintage-inspired • 📍 Colaba', url: null },
             { name: 'Oberoi Mall', city: 'Mumbai', position: { lat: 19.1653, lng: 72.8494 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'High-street fashion, multi-brand • 📍 Goregaon', url: null },
             { name: 'Phoenix Palladium', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'Luxury brands, flagship stores • 📍 Lower Parel', url: null },
             { name: 'R City Mall', city: 'Mumbai', position: { lat: 19.0866, lng: 72.9081 }, type: 'shopping', category: 'Mall', icon: '🏬', color: '#64748b', details: 'New brand launches, trendy casuals • 📍 Ghatkopar West', url: null },
-            { name: 'Bhavya Ramesh', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Alternative, edgy, celestial-inspired • 📍 Kala Ghoda', url: "bhavyaramesh.com" },
-            { name: 'ISHARYA', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern Indian statement jewelry • 📍 Mumbai', url: "isharya.com" },
-            { name: 'Tanzire', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Handmade demi-fine jewelry • 📍 Mumbai', url: "tanzire.com" },
-            { name: 'Moksh', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern, contemporary, luxury jewelry • 📍 Mumbai', url: "mokshjewellery.com" },
-            { name: 'Bodements', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'fashion', category: 'Fashion/Vintage', icon: '👗', color: '#ec4899', details: 'Curated vintage/upcycled clothing • 📍 Mumbai/Paris', url: "bodements.com" },
-            { name: 'Timeless Vintage Studios', city: 'Mumbai', position: { lat: 19.2042, lng: 72.8546 }, type: 'fashion', category: 'Vintage/Thrift', icon: '👗', color: '#ec4899', details: 'Thrift, collectibles, vintage, pop-ups • 📍 Kandivali', url: null },
-            { name: 'Teatro Dhora', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Art-fashion, multi-designer, experiential • 📍 Bandra', url: "teatrodhora.com" },
-            { name: 'Yusuf Bhai Perfumery', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Heritage Bombay-style perfume • 📍 Mumbai', url: null },
-            { name: 'Boond Fragrances', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Pure, natural, artisanal Indian fragrances • 📍 Mumbai/Kannauj', url: "boondfragrances.com" },
-            { name: 'BoConcept India', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Furniture', icon: '🪴', color: '#10b981', details: 'Modern Danish design, premium • 📍 Lower Parel', url: "boconcept.in" },
-            { name: 'The Pure Concept Home', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'home', category: 'Home/Interiors', icon: '🪴', color: '#10b981', details: 'Luxe fabrics, home consultancy • 📍 Kala Ghoda', url: "shop.thepureconcepthome.com" },
-            { name: 'Maison Sia', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Decor', icon: '🪴', color: '#10b981', details: 'International, curated luxury • 📍 Raghuvanshi Mills', url: "maisonsia.com" },
+            { name: 'Bhavya Ramesh', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Alternative, edgy, celestial-inspired • 📍 Kala Ghoda', url: "bhavyaramesh.com" , instagram: "bhavyarameshjewelry" },
+
+            { name: 'ISHARYA', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern Indian statement jewelry • 📍 Mumbai', url: "isharya.com" , instagram: "isharya" },
+
+            { name: 'Tanzire', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Handmade demi-fine jewelry • 📍 Mumbai', url: "tanzire.com" , instagram: "tanzire.co" },
+
+            { name: 'Moksh', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'jewelry', category: 'Jewelry', icon: '💍', color: '#8b5cf6', details: 'Modern, contemporary, luxury jewelry • 📍 Mumbai', url: "mokshjewellery.com" , instagram: "jewelsbymoksh" },
+
+            { name: 'Bodements', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'fashion', category: 'Fashion/Vintage', icon: '👗', color: '#ec4899', details: 'Curated vintage/upcycled clothing • 📍 Mumbai/Paris', url: "bodements.com" , instagram: "bodements_" },
+
+            { name: 'Timeless Vintage Studios', city: 'Mumbai', position: { lat: 19.2042, lng: 72.8546 }, type: 'fashion', category: 'Vintage/Thrift', icon: '👗', color: '#ec4899', details: 'Thrift, collectibles, vintage, pop-ups • 📍 Kandivali', url: null , instagram: "timelessvintagestudios" },
+
+            { name: 'Teatro Dhora', city: 'Mumbai', position: { lat: 19.0596, lng: 72.8295 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Art-fashion, multi-designer, experiential • 📍 Bandra', url: "teatrodhora.com" , instagram: "teatrodhora" },
+
+            { name: 'Yusuf Bhai Perfumery', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Heritage Bombay-style perfume • 📍 Mumbai', url: null , instagram: "yusufbhaiperfumer" },
+
+            { name: 'Boond Fragrances', city: 'Mumbai', position: { lat: 19.076, lng: 72.8777 }, type: 'perfume', category: 'Perfume', icon: '🌸', color: '#a855f7', details: 'Pure, natural, artisanal Indian fragrances • 📍 Mumbai/Kannauj', url: "boondfragrances.com" , instagram: "boondfragrances" },
+
+            { name: 'BoConcept India', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Furniture', icon: '🪴', color: '#10b981', details: 'Modern Danish design, premium • 📍 Lower Parel', url: "boconcept.in" , instagram: "boconceptin" },
+
+            { name: 'The Pure Concept Home', city: 'Mumbai', position: { lat: 18.9278, lng: 72.8319 }, type: 'home', category: 'Home/Interiors', icon: '🪴', color: '#10b981', details: 'Luxe fabrics, home consultancy • 📍 Kala Ghoda', url: "shop.thepureconcepthome.com" , instagram: "tpc.home" },
+
+            { name: 'Maison Sia', city: 'Mumbai', position: { lat: 19.0008, lng: 72.8304 }, type: 'home', category: 'Home/Decor', icon: '🪴', color: '#10b981', details: 'International, curated luxury • 📍 Raghuvanshi Mills', url: "maisonsia.com" , instagram: "maisonsia_" },
 
             // JAIPUR
-            { name: 'Togs Jaipur', city: 'Jaipur', position: { lat: 26.8871, lng: 75.8076 }, type: 'menswear', category: 'Custom Menswear', icon: '👔', color: '#3b82f6', details: 'Designer half jackets to tuxedos, Kurta to Sherwanis • 📍 B14c, near MFG mall, C Scheme, Ashok Nagar, Jaipur', url: null },
+            { name: 'Togs Jaipur', city: 'Jaipur', position: { lat: 26.8871, lng: 75.8076 }, type: 'menswear', category: 'Custom Menswear', icon: '👔', color: '#3b82f6', details: 'Designer half jackets to tuxedos, Kurta to Sherwanis • 📍 B14c, near MFG mall, C Scheme, Ashok Nagar, Jaipur', url: null , instagram: "togsjaipur" },
+
             { name: 'Raymond Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Jawaharlal Nehru Marg, Malviya Nagar, Jaipur', url: "myraymond.com" },
             { name: 'Park Avenue Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Business suits, formal wear, casual wear • 📍 Malviya Nagar, Jaipur', url: "parkavenue.in" },
             { name: 'Cityvibes Jaipur', city: 'Jaipur', position: { lat: 26.8544, lng: 75.8205 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Kurta pajamas, sherwanis, Indo-Western • 📍 Malviya Nagar, Vaishali Nagar, Jaipur', url: "cityvibes.in" },
-            { name: 'ANOKHI', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'fashion', category: 'Concept/Fashion', icon: '👗', color: '#ec4899', details: 'Block-printed clothing, eco-conscious, 50+ years heritage • 📍 C-Scheme & Amer, Jaipur', url: "anokhi.com" },
+            { name: 'ANOKHI', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'fashion', category: 'Concept/Fashion', icon: '👗', color: '#ec4899', details: 'Block-printed clothing, eco-conscious, 50+ years heritage • 📍 C-Scheme & Amer, Jaipur', url: "anokhi.com" , instagram: "anokhijaipur" },
+
             { name: 'Jaipur Modern', city: 'Jaipur', position: { lat: 26.9124, lng: 75.7873 }, type: 'lifestyle', category: 'Concept Store', icon: '✨', color: '#ec4899', details: 'Contemporary, minimalist locally-made silk & cotton • 📍 Jaipur', url: null },
-            { name: 'Nila House', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'textile', category: 'Textile/Lifestyle', icon: '🧵', color: '#10b981', details: 'Natural dyeing, modern Rajasthani tradition • 📍 C-86, Prithviraj Road, C Scheme, Jaipur', url: "nilahouse.com" },
+            { name: 'Nila House', city: 'Jaipur', position: { lat: 26.9024, lng: 75.7878 }, type: 'textile', category: 'Textile/Lifestyle', icon: '🧵', color: '#10b981', details: 'Natural dyeing, modern Rajasthani tradition • 📍 C-86, Prithviraj Road, C Scheme, Jaipur', url: "nilahouse.com" , instagram: "nilahouse" },
+
             { name: 'Anokhi Museum', city: 'Jaipur', position: { lat: 26.9855, lng: 75.8513 }, type: 'museum', category: 'Museum/Textile', icon: '🏛️', color: '#6366f1', details: 'Hand-block printing heritage techniques • 📍 Kheri Gate, Amer, Jaipur', url: "anokhi.com" },
             { name: 'Johri Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Oldest pink market, jewelry, textiles, lehariya • 📍 Johri Bazaar, Jaipur', url: null },
             { name: 'Bapu Bazaar', city: 'Jaipur', position: { lat: 26.9248, lng: 75.8246 }, type: 'shopping', category: 'Street Shopping', icon: '🛍️', color: '#f59e0b', details: 'Men\'s suits, boots, ethnic wear • 📍 Bapu Bazaar, Jaipur', url: null },
@@ -193,9 +224,12 @@
 
             // UDAIPUR
             { name: 'Cityvibes Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Wedding wear, kurta pajamas, sherwanis • 📍 Udaipur, Rajasthan', url: "cityvibes.in" },
-            { name: 'Saptapadi Luxury Store', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Wedding Menswear', icon: '👔', color: '#3b82f6', details: 'Bespoke sartorial products, luxury wedding wear • 📍 Udaipur Flagship', url: "saptapadistore.com" },
-            { name: 'Manyavar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, Indo-Western, Modi Kurta • 📍 Bapu Bazar, Bhuwana, Udaipur', url: "manyavar.com" },
-            { name: 'Jade Blue', city: 'Udaipur', position: { lat: 24.5858, lng: 73.6854 }, type: 'menswear', category: 'Ethnic & Western', icon: '👔', color: '#3b82f6', details: 'Evening shirts, blazers, Modi Kurta • 📍 Court Chowaraha, Udaipur', url: "jadeblue.com" },
+            { name: 'Saptapadi Luxury Store', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'menswear', category: 'Wedding Menswear', icon: '👔', color: '#3b82f6', details: 'Bespoke sartorial products, luxury wedding wear • 📍 Udaipur Flagship', url: "saptapadistore.com" , instagram: "saptapadistore" },
+
+            { name: 'Manyavar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, Indo-Western, Modi Kurta • 📍 Bapu Bazar, Bhuwana, Udaipur', url: "manyavar.com" , instagram: "manyavar" },
+
+            { name: 'Jade Blue', city: 'Udaipur', position: { lat: 24.5858, lng: 73.6854 }, type: 'menswear', category: 'Ethnic & Western', icon: '👔', color: '#3b82f6', details: 'Evening shirts, blazers, Modi Kurta • 📍 Court Chowaraha, Udaipur', url: "jadeblue.com" , instagram: "jadeblueindia" },
+
             { name: 'Raymond Udaipur', city: 'Udaipur', position: { lat: 24.5854, lng: 73.6872 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Premium suits, tailoring • 📍 Panchwati, Near Sukhadia Circle, Udaipur', url: "myraymond.com" },
             { name: 'Bapu Bazaar Udaipur', city: 'Udaipur', position: { lat: 24.58, lng: 73.682 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Bandhani sarees, embroidered textiles • 📍 Bapu Bazaar, Udaipur', url: null },
             { name: 'Jagdish Chowk', city: 'Udaipur', position: { lat: 24.5794, lng: 73.6833 }, type: 'shopping', category: 'Heritage Market', icon: '🏛️', color: '#ef4444', details: 'Antique jewelry, hand-carved items • 📍 Jagdish Chowk, Udaipur', url: null },
@@ -204,20 +238,26 @@
             { name: 'Umang Boutique', city: 'Udaipur', position: { lat: 24.5854, lng: 73.7125 }, type: 'fashion', category: 'Designer Fashion', icon: '👗', color: '#ec4899', details: 'Latest Indian designer patterns, ethnic wear • 📍 Udaipur', url: null },
 
             // AGRA
-            { name: 'Dimple Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Men\'s ethnic wear, kurtas, sherwanis • 📍 E-21, Bypass Road, Kamla Nagar, Agra', url: "dimplecollection.in" },
-            { name: 'Riti Riwaaz Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, blazers, Indo-Western • 📍 E-90, Kamla Nagar, Agra', url: null },
+            { name: 'Dimple Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Ethnic Menswear', icon: '👔', color: '#3b82f6', details: 'Men\'s ethnic wear, kurtas, sherwanis • 📍 E-21, Bypass Road, Kamla Nagar, Agra', url: "dimplecollection.in" , instagram: "dimplecollection" },
+
+            { name: 'Riti Riwaaz Collection', city: 'Agra', position: { lat: 27.2046, lng: 78.0131 }, type: 'menswear', category: 'Designer Menswear', icon: '👔', color: '#3b82f6', details: 'Sherwanis, blazers, Indo-Western • 📍 E-90, Kamla Nagar, Agra', url: null , instagram: "ritiriwaazcollection" },
+
             { name: 'Raymond Agra', city: 'Agra', position: { lat: 27.2152, lng: 77.9753 }, type: 'menswear', category: 'Suiting', icon: '👔', color: '#3b82f6', details: 'Classic suits, custom tailoring • 📍 Sulabh Puram Colony, Sikandra, Agra', url: "myraymond.com" },
-            { name: 'Blackberrys Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Premium formal and casual menswear • 📍 MG Road, Sanjay Place, Agra', url: "blackberrys.com" },
-            { name: 'Lifestyle Stores Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Multi-brand', icon: '🛍️', color: '#64748b', details: 'Contemporary fashion, multi-brand mall store • 📍 Ashok Cosmos Mall, Sanjay Place, Agra', url: "lifestylestores.com" },
+            { name: 'Blackberrys Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'menswear', category: 'Premium Menswear', icon: '👔', color: '#3b82f6', details: 'Premium formal and casual menswear • 📍 MG Road, Sanjay Place, Agra', url: "blackberrys.com" , instagram: "blackberrys" },
+
+            { name: 'Lifestyle Stores Agra', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Multi-brand', icon: '🛍️', color: '#64748b', details: 'Contemporary fashion, multi-brand mall store • 📍 Ashok Cosmos Mall, Sanjay Place, Agra', url: "lifestylestores.com" , instagram: "lifestyle_stores" },
+
             { name: 'Sadar Bazaar', city: 'Agra', position: { lat: 27.1903, lng: 78.0022 }, type: 'shopping', category: 'Traditional Market', icon: '🏪', color: '#ef4444', details: 'Traditional shopping, textiles • 📍 Sadar Bazaar, Agra', url: null },
             { name: 'Kinari Bazaar', city: 'Agra', position: { lat: 27.1751, lng: 78.0421 }, type: 'shopping', category: 'Textile Market', icon: '🧵', color: '#10b981', details: 'Textiles, embroidery, traditional crafts • 📍 Kinari Bazaar, Agra', url: null },
             { name: 'Sanjay Place', city: 'Agra', position: { lat: 27.1767, lng: 78.0081 }, type: 'shopping', category: 'Shopping District', icon: '🏬', color: '#64748b', details: 'Modern retail, malls, branded stores • 📍 Sanjay Place, Agra', url: null },
 
             // RANTHAMBORE
-            { name: 'Dastkar Ranthambore', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Handicrafts/Textiles', icon: '🎨', color: '#8b5cf6', details: 'Community coop, handmade textiles, village crafts • 📍 Sawai Madhopur, near Ranthambore', url: "dastkar.org" },
+            { name: 'Dastkar Ranthambore', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Handicrafts/Textiles', icon: '🎨', color: '#8b5cf6', details: 'Community coop, handmade textiles, village crafts • 📍 Sawai Madhopur, near Ranthambore', url: "dastkar.org" , instagram: "dastkar_ranthambore" },
+
             { name: 'Village Women Craft', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Community Crafts', icon: '🎨', color: '#8b5cf6', details: 'Hand-carved items, paintings, textiles • 📍 Sawai Madhopur', url: null },
             { name: 'Ranthambore School of Arts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Traditional Crafts', icon: '🎨', color: '#8b5cf6', details: 'Batik, tie-dye, silver jewelry, Rajasthani items • 📍 Sawai Madhopur', url: null },
-            { name: 'The Tiger Shop', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'souvenirs', category: 'Souvenirs', icon: '🎁', color: '#f59e0b', details: 'Tiger-print shirts, superfine Taj cotton fabric • 📍 Sawai Madhopur', url: "thetigershop.in" },
+            { name: 'The Tiger Shop', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'souvenirs', category: 'Souvenirs', icon: '🎁', color: '#f59e0b', details: 'Tiger-print shirts, superfine Taj cotton fabric • 📍 Sawai Madhopur', url: "thetigershop.in" , instagram: "thetigershop" },
+
             { name: 'Ranthambhore Maharani Handicrafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Local Handicrafts', icon: '🎨', color: '#8b5cf6', details: 'Quality local handicrafts, textiles • 📍 Sawai Madhopur', url: null },
             { name: 'Dhonk Crafts', city: 'Ranthambore', position: { lat: 26.0173, lng: 76.3426 }, type: 'handicrafts', category: 'Eco Crafts', icon: '🌿', color: '#10b981', details: 'Eco-conscious, conservation-focused products • 📍 Sawai Madhopur', url: null },
         ];
@@ -259,17 +299,29 @@
                     ? `<a href="https://${boutique.url}" target="_blank" class="font-bold text-gray-900 hover:text-rose-700">${boutique.name}</a>`
                     : `<span class="font-bold text-gray-900">${boutique.name}</span>`;
 
+                const socialLinks = [];
+                if (boutique.url) {
+                    socialLinks.push(`<a href="https://${boutique.url}" target="_blank" class="text-xs text-blue-600 hover:text-blue-800">🌐 Website</a>`);
+                }
+                if (boutique.instagram) {
+                    socialLinks.push(`<a href="https://instagram.com/${boutique.instagram}" target="_blank" class="text-xs text-pink-600 hover:text-pink-800">📷 Instagram</a>`);
+                }
+                const socialLinksHTML = socialLinks.length > 0
+                    ? `<div class="flex gap-3 mt-2 pt-2 border-t border-gray-100">${socialLinks.join(' • ')}</div>`
+                    : '';
+
                 return `
                     <div class="boutique-card bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="text-3xl">${boutique.icon}</span>
-                            <div>
+                            <div class="flex-1">
                                 ${nameLink}
                                 <div class="text-sm text-gray-500">${boutique.city}</div>
                             </div>
                         </div>
                         <div class="text-sm font-semibold text-rose-700 mb-2">${boutique.category}</div>
                         <div class="text-sm text-gray-600 leading-relaxed">${boutique.details}</div>
+                        ${socialLinksHTML}
                     </div>
                 `;
             }).join('');
@@ -389,8 +441,15 @@
                         <p style="margin: 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${boutique.details}</p>
                 `;
 
+                const mapSocialLinks = [];
                 if (boutique.url) {
-                    infoContent += `<a href="https://${boutique.url}" target="_blank" style="display: inline-block; margin-top: 8px; font-size: 12px; color: #2563eb; text-decoration: none; font-weight: 600;">Visit Website →</a>`;
+                    mapSocialLinks.push(`<a href="https://${boutique.url}" target="_blank" style="color: #2563eb; text-decoration: none; font-weight: 600;">🌐 Website</a>`);
+                }
+                if (boutique.instagram) {
+                    mapSocialLinks.push(`<a href="https://instagram.com/${boutique.instagram}" target="_blank" style="color: #ec4899; text-decoration: none; font-weight: 600;">📷 Instagram</a>`);
+                }
+                if (mapSocialLinks.length > 0) {
+                    infoContent += `<div style="display: flex; gap: 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e7eb; font-size: 12px;">${mapSocialLinks.join(' • ')}</div>`;
                 }
 
                 infoContent += `</div>`;
