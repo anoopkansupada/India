@@ -39,17 +39,26 @@ Your Google Maps API key `AIzaSyBSRrd-sjbtPbT8BSd4f4icQJTWQNJHpwE` was exposed i
 
 #### Set Application Restrictions:
 - Select **"HTTP referrers (web sites)"**
-- Click **"ADD AN ITEM"** and add:
+- Click **"ADD AN ITEM"** and add (for GitHub Pages):
   ```
-  https://anoopkansupada.github.io/*
+  https://anoopkansupada.github.io/India/*
   ```
-- Click **"ADD AN ITEM"** again and add:
+- Click **"ADD AN ITEM"** again and add (for local testing):
   ```
-  http://localhost:*
+  http://localhost/*
   ```
-- Click **"ADD AN ITEM"** again and add (for local file testing):
+- Click **"ADD AN ITEM"** again and add (for local testing on any port):
   ```
-  file:///*
+  http://localhost:*/*
+  ```
+
+**Note:** For local file testing (opening HTML directly), restrictions won't work. You have two options:
+- **Option A:** Temporarily select "None" for Application restrictions while testing locally
+- **Option B:** Use a local web server (recommended):
+  ```bash
+  cd /Users/anoopkansupada/India/India
+  python3 -m http.server 8000
+  # Then open: http://localhost:8000/index.html
   ```
 
 #### Set API Restrictions:

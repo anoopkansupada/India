@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Test - New API Key</title>
+    <script src="config.js"></script>
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #status {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+        .error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+        .loading { background: #fff3cd; color: #856404; border: 2px solid #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>🗺️ Map Test - New API Key Verification</h1>
+    <div id="status" class="loading">⏳ Loading Google Maps API...</div>
+
+    <div style="background: #e7f3ff; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h3>Testing New API Key:</h3>
+        <p><strong>Key (first 20 chars):</strong> <code id="keyPreview"></code></p>
+        <p><strong>Status:</strong> <span id="statusText">Initializing...</span></p>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        // Display key preview (first 20 characters only for security)
+        document.getElementById('keyPreview').textContent = CONFIG.GOOGLE_MAPS_API_KEY.substring(0, 20) + '...';
+
+        console.log('🚀 Test page loaded');
+        console.log('📍 API Key configured:', CONFIG.GOOGLE_MAPS_API_KEY ? 'YES' : 'NO');
+
+        window.initMap = function() {
+            console.log('✅ initMap called successfully!');
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+
+            statusDiv.className = 'success';
+            statusDiv.innerHTML = '✅ Google Maps API loaded successfully!';
+            statusText.textContent = 'API authenticated successfully';
+
+            try {
+                // Initialize map centered on India
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: { lat: 26.9124, lng: 75.7873 }, // Jaipur
+                    mapTypeId: 'roadmap',
+                    styles: [
+                        {
+                            featureType: 'poi',
+                            elementType: 'labels',
+                            stylers: [{ visibility: 'on' }]
+                        }
+                    ]
+                });
+
+                // Add test markers for your trip locations
+                const locations = [
+                    { lat: 24.5768, lng: 73.6805, title: 'Oberoi Udaivilas - Udaipur', color: '#dc2626' },
+                    { lat: 27.1751, lng: 78.0421, title: 'Oberoi Amarvilas - Agra', color: '#2563eb' },
+                    { lat: 26.0820, lng: 76.3915, title: 'Oberoi Vanyavilas - Ranthambore', color: '#16a34a' },
+                    { lat: 26.9124, lng: 75.7873, title: 'Oberoi Rajvilas - Jaipur', color: '#d97706' }
+                ];
+
+                locations.forEach(loc => {
+                    const marker = new google.maps.Marker({
+                        position: { lat: loc.lat, lng: loc.lng },
+                        map: map,
+                        title: loc.title,
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<div style="padding: 10px;"><strong>${loc.title}</strong></div>`
+                    });
+
+                    marker.addListener('click', () => {
+                        infoWindow.open(map, marker);
+                    });
+                });
+
+                // Fit map to show all markers
+                const bounds = new google.maps.LatLngBounds();
+                locations.forEach(loc => bounds.extend({ lat: loc.lat, lng: loc.lng }));
+                map.fitBounds(bounds);
+
+                statusText.textContent = '✅ Map fully loaded with all locations!';
+                console.log('✅ Map initialized with', locations.length, 'locations');
+
+            } catch (error) {
+                console.error('❌ Error initializing map:', error);
+                statusDiv.className = 'error';
+                statusDiv.innerHTML = '❌ Error creating map: ' + error.message;
+                statusText.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Handle authentication failures
+        window.gm_authFailure = function() {
+            console.error('❌ Google Maps authentication failed!');
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            statusDiv.className = 'error';
+            statusDiv.innerHTML = `
+                <div>
+                    <strong>❌ Authentication Failed</strong><br>
+                    <small>The API key needs proper restrictions configured in Google Cloud Console.</small>
+                </div>
+            `;
+            statusText.innerHTML = `
+                <strong>Action Required:</strong>
+                <ol style="margin: 10px 0; text-align: left;">
+                    <li>Go to <a href="https://console.cloud.google.com/google/maps-apis/credentials" target="_blank">Google Cloud Console</a></li>
+                    <li>Edit your API key</li>
+                    <li>Under "Application restrictions" add: <code>file:///*</code></li>
+                    <li>Save and refresh this page</li>
+                </ol>
+            `;
+        }
+
+        // Load Google Maps script
+        (function() {
+            console.log('📡 Loading Google Maps script...');
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
+            script.defer = true;
+
+            script.onerror = function() {
+                console.error('❌ Failed to load Google Maps script');
+                const statusDiv = document.getElementById('status');
+                statusDiv.className = 'error';
+                statusDiv.innerHTML = '❌ Failed to load Google Maps script. Check your internet connection.';
+            };
+
+            document.head.appendChild(script);
+            console.log('✅ Script tag added to page');
+        })();
+    </script>
+</body>
+</html>

@@ -16,11 +16,13 @@ Your Google Maps API key is currently public in the HTML file. Here's how to pro
    - Choose "HTTP referrers (web sites)"
    - Add your allowed websites:
      ```
-     https://yourdomain.com/*
-     http://localhost:*
-     file:///*
+     https://anoopkansupada.github.io/India/*
+     http://localhost/*
+     http://localhost:*/*
      ```
    - This prevents unauthorized use from other domains
+
+   **Note:** To test locally by opening HTML files directly (file:///...), you'll need to temporarily set "Application restrictions" to "None". For production, use the referrers above.
 
 5. **Set API Restrictions**:
    - Choose "Restrict key"
