@@ -9,16 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
     <!-- Configuration (contains API keys) -->
-    <script src="config.js"></script>
+    <!-- For local development: config.js is loaded -->
+    <!-- For GitHub Pages: config.js is injected during deployment -->
+    <script src="config.js" onerror="console.warn('config.js not found - will be injected during deployment')"></script>
 
     <!-- Google Maps JavaScript API (key loaded from config.js) -->
     <script>
         // Dynamically load Google Maps with API key from config
         (function() {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
-            script.defer = true;
-            document.head.appendChild(script);
+            // Wait a brief moment to ensure config.js loads (if present)
+            setTimeout(function() {
+                if (typeof CONFIG === 'undefined' || !CONFIG.GOOGLE_MAPS_API_KEY) {
+                    console.error('❌ Google Maps API key not configured. Map will not load.');
+                    const mapDiv = document.getElementById('map');
+                    if (mapDiv) {
+                        mapDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">⚠️ Map configuration pending. Please check deployment settings.</div>';
+                    }
+                    return;
+                }
+
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${CONFIG.GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places&v=weekly`;
+                script.defer = true;
+                script.onerror = function() {
+                    console.error('❌ Failed to load Google Maps API');
+                };
+                document.head.appendChild(script);
+            }, 100);
         })();
     </script>
 
