@@ -1055,9 +1055,46 @@
             }
         }
 
+        function sendRestaurantEmail(restaurantName, cuisine, date, eventId) {
+            // Get the selected restaurant details
+            const day = tripData[parseInt(eventId.split('-')[0].replace('day', '')) - 1];
+            const subject = encodeURIComponent(`Restaurant Selection: ${restaurantName} for ${date}`);
+            const body = encodeURIComponent(
+                `Hello,\n\n` +
+                `A restaurant has been selected for the India trip:\n\n` +
+                `Date: ${date}\n` +
+                `Restaurant: ${restaurantName}\n` +
+                `Cuisine: ${cuisine}\n` +
+                `Location: ${day.location}\n` +
+                `Hotel: ${day.hotel}\n\n` +
+                `This selection has been saved and can be changed at any time.\n\n` +
+                `Best regards`
+            );
+
+            // Open email client with pre-filled content
+            window.location.href = `mailto:anoopkansupada@gmail.com?subject=${subject}&body=${body}`;
+        }
+
         function selectRestaurant(eventId, restaurantId, dayIndex, eventIndex) {
             if (saveRestaurantSelection(eventId, restaurantId)) {
-                showToast('✓ Restaurant saved!');
+                // Get the selected restaurant details
+                const day = tripData[dayIndex];
+                const event = day.events[eventIndex];
+                const selectedRestaurant = event.restaurantOptions.find(r => r.id === restaurantId);
+
+                if (selectedRestaurant) {
+                    showToast('✓ Restaurant saved! Opening email...');
+
+                    // Send email with selection
+                    setTimeout(() => {
+                        sendRestaurantEmail(
+                            selectedRestaurant.name,
+                            selectedRestaurant.cuisine,
+                            day.date,
+                            eventId
+                        );
+                    }, 500);
+                }
 
                 setTimeout(() => {
                     renderTimeline('all');
