@@ -8,7 +8,7 @@ Your Google Maps API key is currently public in the HTML file. Here's how to pro
    - Visit: https://console.cloud.google.com/google/maps-apis/credentials
    - Sign in with your Google account
 
-2. **Find your API key** (`AIzaSyBSRrd-sjbtPbT8BSd4f4icQJTWQNJHpwE`)
+2. **Find your API key** (it should be listed in the credentials page)
 
 3. **Click "Edit API key" (pencil icon)**
 
