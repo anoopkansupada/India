@@ -23,7 +23,7 @@ This guide will help you deploy your India trip website to GitHub Pages with the
 4. Click the **New repository secret** button
 5. Enter:
    - **Name**: `GOOGLE_MAPS_API_KEY`
-   - **Secret**: `AIzaSyC38bq2BSboTu92dGtKx5Vp3t35pJRu-mY` (your current API key from config.js)
+   - **Secret**: `YOUR_GOOGLE_MAPS_API_KEY_HERE` (get this from your local config.js file)
 6. Click **Add secret**
 
 ### Step 2: Enable GitHub Pages with GitHub Actions
