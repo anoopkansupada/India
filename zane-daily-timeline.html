@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zane's Daily Adventure Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .timeline {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 25px;
+            margin-bottom: 35px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .day-number {
+            background: white;
+            color: #667eea;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .day-title {
+            color: white;
+            flex-grow: 1;
+        }
+
+        .day-title h2 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .day-title p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .day-content {
+            padding: 30px;
+        }
+
+        .hero-photo {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .activities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .activity {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .activity-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .activity-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .activity-desc {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .special-note {
+            background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.4em;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .sleep-note {
+            background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .birthday-day {
+            border: 8px solid #ff6b6b;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 15px 60px rgba(255, 107, 107, 0.8); }
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .day-card {
+                page-break-inside: avoid;
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .day-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .day-title h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📅 Zane's Daily Adventure Timeline!</h1>
+        <p>What We'll Do Each Day in India</p>
+        <p style="font-size: 1.3em; margin-top: 10px;">December 17-25, 2025</p>
+    </div>
+
+    <div class="timeline">
+
+        <!-- DAY 1: December 17 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">1</div>
+                <div class="day-title">
+                    <h2>Wednesday, December 17</h2>
+                    <p>✈️ Flying to India & Arriving in Udaipur</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80" alt="Airplane" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">✈️</div>
+                        <div class="activity-title">Morning: Take Off!</div>
+                        <div class="activity-desc">We fly from Mumbai to Udaipur on a big airplane!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏰</div>
+                        <div class="activity-title">Afternoon: Check In</div>
+                        <div class="activity-desc">Arrive at the beautiful Oberoi Udaivilas palace hotel!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">⛵</div>
+                        <div class="activity-title">Evening: Boat Dinner</div>
+                        <div class="activity-desc">Boat ride to dinner at Upre restaurant on the lake!</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80" alt="Udaivilas">
+                    <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=600&q=80" alt="Lake">
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at beautiful Oberoi Udaivilas palace! Good night!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 2: December 18 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">2</div>
+                <div class="day-title">
+                    <h2>Thursday, December 18</h2>
+                    <p>🏛️ Exploring Udaipur - The City of Lakes</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=1200&q=80" alt="Udaipur" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🕌</div>
+                        <div class="activity-title">Morning: City Palace Tour</div>
+                        <div class="activity-desc">Visit a huge palace with beautiful rooms and views! (10:00 AM)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍽️</div>
+                        <div class="activity-title">Lunch: By the Lake</div>
+                        <div class="activity-desc">Eat lunch at Ambrai restaurant with lake views!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🎨</div>
+                        <div class="activity-title">Afternoon: Art Time</div>
+                        <div class="activity-desc">Miniature painting workshop - make your own art!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🌅</div>
+                        <div class="activity-title">Evening: Pool Time</div>
+                        <div class="activity-desc">Swim at the hotel pool and relax!</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1582735689249-bea52b390440?w=600&q=80" alt="Palace">
+                    <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?w=600&q=80" alt="Pool">
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Oberoi Udaivilas again! Sweet dreams!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 3: December 19 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">3</div>
+                <div class="day-title">
+                    <h2>Friday, December 19</h2>
+                    <p>✈️🚗 Flying to Delhi, Then Driving to Agra</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=80" alt="Taj Mahal" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">✈️</div>
+                        <div class="activity-title">Morning: Another Airplane!</div>
+                        <div class="activity-desc">Fly from Udaipur to Delhi (short flight!)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🚗</div>
+                        <div class="activity-title">Afternoon: Road Trip</div>
+                        <div class="activity-desc">Drive in a comfortable car from Delhi to Agra (3.5 hours)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏰</div>
+                        <div class="activity-title">Evening: Check In</div>
+                        <div class="activity-desc">Arrive at Oberoi Amarvilas with TAJ MAHAL views!</div>
+                    </div>
+                </div>
+
+                <div class="special-note">
+                    🌟 You can see the Taj Mahal from your hotel room! 🌟
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Oberoi Amarvilas! The Taj Mahal is right outside!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 4: December 20 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">4</div>
+                <div class="day-title">
+                    <h2>Saturday, December 20</h2>
+                    <p>🕌 TAJ MAHAL Day! Then Safari Time!</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80" alt="Taj Mahal" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🌅</div>
+                        <div class="activity-title">EARLY Morning: Taj Visit</div>
+                        <div class="activity-desc">Wake up early to see the beautiful Taj Mahal at sunrise! (6:00 AM)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍳</div>
+                        <div class="activity-title">Morning: Breakfast</div>
+                        <div class="activity-desc">Special breakfast boxes to eat on the way!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🚗</div>
+                        <div class="activity-title">Day: Big Road Trip</div>
+                        <div class="activity-desc">Drive to Ranthambore for tiger safari! (5 hours - you can nap!)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏨</div>
+                        <div class="activity-title">Evening: Safari Hotel</div>
+                        <div class="activity-desc">Check in at Oberoi Vanyavilas jungle hotel!</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80" alt="Taj reflection">
+                    <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80" alt="Tiger">
+                </div>
+
+                <div class="special-note">
+                    🐅 Tomorrow we look for TIGERS! 🐅
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Oberoi Vanyavilas jungle hotel! Tigers nearby!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 5: December 21 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">5</div>
+                <div class="day-title">
+                    <h2>Sunday, December 21</h2>
+                    <p>🐅 TIGER SAFARI DAY!</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=1200&q=80" alt="Tiger" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🌅</div>
+                        <div class="activity-title">EARLY Morning Safari</div>
+                        <div class="activity-desc">Wake up when the sun rises to find tigers! (6:00 AM)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🐅</div>
+                        <div class="activity-title">Safari Adventure</div>
+                        <div class="activity-desc">Ride in a special jeep to look for tigers, monkeys, and deer!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏊</div>
+                        <div class="activity-title">Afternoon: Rest & Play</div>
+                        <div class="activity-desc">Relax at the pool after the exciting morning!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍽️</div>
+                        <div class="activity-title">Evening: Special Dinner</div>
+                        <div class="activity-desc">Dinner at the jungle hotel!</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80" alt="Monkeys">
+                    <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=600&q=80" alt="Safari jeep">
+                </div>
+
+                <div class="special-note">
+                    🐒 We might see tigers, monkeys, deer, and peacocks! 🦌
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Oberoi Vanyavilas! Rest after the big adventure!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 6: December 22 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">6</div>
+                <div class="day-title">
+                    <h2>Monday, December 22</h2>
+                    <p>🚗 Driving to Jaipur - The Pink City!</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=1200&q=80" alt="Jaipur" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🚗</div>
+                        <div class="activity-title">Morning: Road Trip</div>
+                        <div class="activity-desc">Drive to Jaipur (3.5 hours - maybe take a nap!)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏰</div>
+                        <div class="activity-title">Afternoon: Pink Palace</div>
+                        <div class="activity-desc">Check in at Taj Jai Mahal Palace - everything is PINK!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍽️</div>
+                        <div class="activity-title">Evening: Italian Dinner</div>
+                        <div class="activity-desc">Dinner at Giardino restaurant (6:00 PM)</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80" alt="Hawa Mahal">
+                    <img src="https://images.unsplash.com/photo-1609416921044-3a8f7f36c462?w=600&q=80" alt="Amber Fort">
+                </div>
+
+                <div class="special-note">
+                    💕 Jaipur is called the "Pink City" because the buildings are pink! 💕
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Taj Jai Mahal Palace! Pink dreams!
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 7: December 23 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">7</div>
+                <div class="day-title">
+                    <h2>Tuesday, December 23</h2>
+                    <p>🏛️ Exploring Jaipur & Moving to Birthday Hotel!</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1609416921044-3a8f7f36c462?w=1200&q=80" alt="Amber Fort" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🏰</div>
+                        <div class="activity-title">Morning: Amber Fort</div>
+                        <div class="activity-desc">Visit a huge fort on a hill! (9:30 AM)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍽️</div>
+                        <div class="activity-title">Lunch: Fancy Restaurant</div>
+                        <div class="activity-desc">Lunch at The Verandah at Rambagh Palace!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏨</div>
+                        <div class="activity-title">Afternoon: Birthday Hotel!</div>
+                        <div class="activity-desc">Check in at Oberoi Rajvilas - YOUR BIRTHDAY HOTEL!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🍽️</div>
+                        <div class="activity-title">Evening: Dinner</div>
+                        <div class="activity-desc">Dinner at Wink restaurant (6:00 PM)</div>
+                    </div>
+                </div>
+
+                <div class="special-note">
+                    🎉 TONIGHT they'll decorate your room with ELEPHANT BALLOONS while you sleep! 🎈
+                </div>
+
+                <div class="sleep-note">
+                    😴 Sleep at Oberoi Rajvilas! When you wake up... IT'S YOUR BIRTHDAY!!! 🎂
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 8: December 24 - BIRTHDAY! -->
+        <div class="day-card birthday-day">
+            <div class="day-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);">
+                <div class="day-number" style="color: #ff6b6b;">🎂</div>
+                <div class="day-title">
+                    <h2>🎉 Wednesday, December 24 🎉</h2>
+                    <p>🎂 ZANE'S 3RD BIRTHDAY!!! 🎂</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80" alt="Birthday celebration" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);">
+                        <div class="activity-icon">🎈</div>
+                        <div class="activity-title">WAKE UP - SURPRISE!</div>
+                        <div class="activity-desc">Your room is full of ELEPHANT BALLOONS and BANNERS! HAPPY BIRTHDAY!</div>
+                    </div>
+                    <div class="activity" style="background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);">
+                        <div class="activity-icon">🐘</div>
+                        <div class="activity-title">Morning: ELEPHANT TIME!</div>
+                        <div class="activity-desc">THE BIG SURPRISE - Meet real elephants! (9:30 AM)</div>
+                    </div>
+                    <div class="activity" style="background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);">
+                        <div class="activity-icon">🎂</div>
+                        <div class="activity-title">Birthday Lunch</div>
+                        <div class="activity-desc">Special birthday lunch at the hotel! (1:00 PM)</div>
+                    </div>
+                    <div class="activity" style="background: linear-gradient(135deg, #ee5a6f 0%, #f29263 100%);">
+                        <div class="activity-icon">🎁</div>
+                        <div class="activity-title">Birthday Dinner & Cake!</div>
+                        <div class="activity-desc">Birthday dinner at Surya Mahal with CAKE and PRESENTS!</div>
+                    </div>
+                </div>
+
+                <div class="photo-gallery">
+                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&q=80" alt="Elephant">
+                    <img src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=600&q=80" alt="Birthday cake">
+                    <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600&q=80" alt="Presents">
+                </div>
+
+                <div class="special-note" style="font-size: 1.8em; padding: 30px;">
+                    🎊 THIS IS YOUR SPECIAL DAY, ZANE! 🎊<br>
+                    You're 3 years old and celebrating in INDIA!<br>
+                    🐘 ELEPHANT BIRTHDAY! 🐘
+                </div>
+
+                <div class="sleep-note" style="background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);">
+                    😴 Sleep at Oberoi Rajvilas! Best birthday EVER! 🎉
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 9: December 25 -->
+        <div class="day-card">
+            <div class="day-header">
+                <div class="day-number">9</div>
+                <div class="day-title">
+                    <h2>Thursday, December 25</h2>
+                    <p>✈️ Flying Home with Amazing Memories!</p>
+                </div>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=1200&q=80" alt="Airplane sunset" class="hero-photo">
+
+                <div class="activities">
+                    <div class="activity">
+                        <div class="activity-icon">🌅</div>
+                        <div class="activity-title">Morning: Last Breakfast</div>
+                        <div class="activity-desc">Enjoy one more breakfast at the beautiful hotel!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🏊</div>
+                        <div class="activity-title">Late Morning: Play Time</div>
+                        <div class="activity-desc">Last chance to play at the pool or gardens!</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">🚗</div>
+                        <div class="activity-title">Afternoon: To Airport</div>
+                        <div class="activity-desc">Drive to Jaipur airport (5:30 PM)</div>
+                    </div>
+                    <div class="activity">
+                        <div class="activity-icon">✈️</div>
+                        <div class="activity-title">Evening: Flying Home!</div>
+                        <div class="activity-desc">Fly back to Mumbai! (7:55 PM flight)</div>
+                    </div>
+                </div>
+
+                <div class="special-note" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    📸 You saw tigers, elephants, the Taj Mahal, and had your 3rd birthday in India!<br>
+                    SO MANY STORIES TO TELL! 📚
+                </div>
+
+                <div class="sleep-note" style="background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);">
+                    😴 Sleep at home! Back in your own bed with amazing memories! ❤️
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Card -->
+        <div class="day-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="day-content" style="color: white; text-align: center;">
+                <h2 style="font-size: 3em; margin-bottom: 30px; color: white;">
+                    ⭐ 9 Amazing Days! ⭐
+                </h2>
+                <div style="font-size: 1.6em; line-height: 2.5; padding: 20px;">
+                    Day 1-2: Udaipur Palace & Lakes 🏰<br>
+                    Day 3: Flying & Driving to Agra ✈️<br>
+                    Day 4: TAJ MAHAL! 🕌<br>
+                    Day 5: TIGER SAFARI! 🐅<br>
+                    Day 6: Pink City Jaipur! 💕<br>
+                    Day 7: Exploring Palaces 🏛️<br>
+                    Day 8: YOUR BIRTHDAY!!! 🎂🐘<br>
+                    Day 9: Flying Home! ✈️<br>
+                </div>
+                <div style="margin-top: 40px; font-size: 2.5em; font-weight: bold;">
+                    You're Going to Have the BEST Time, Zane! 🎉
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

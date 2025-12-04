@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places Zane Will Visit in India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .city-section {
+            background: white;
+            border-radius: 30px;
+            padding: 0;
+            margin-bottom: 50px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .city-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .city-name {
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+        }
+
+        .city-subtitle {
+            font-size: 1.8em;
+            color: white;
+            opacity: 0.95;
+        }
+
+        .city-content {
+            padding: 40px;
+        }
+
+        .hero-photo {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .intro-text {
+            font-size: 1.7em;
+            line-height: 2;
+            color: #444;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            border-left: 6px solid #ff6b6b;
+        }
+
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 35px 0;
+        }
+
+        .place-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .place-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .place-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .place-info {
+            padding: 25px;
+        }
+
+        .place-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .place-name {
+            font-size: 2em;
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .place-description {
+            font-size: 1.3em;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .hotel-section {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 4px solid #fbc02d;
+        }
+
+        .hotel-section h3 {
+            font-size: 2.3em;
+            color: #f57c00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hotel-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .hotel-feature {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .fun-facts {
+            background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .fun-facts h3 {
+            font-size: 2.2em;
+            color: #4a148c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .fun-facts ul {
+            list-style: none;
+            font-size: 1.4em;
+            line-height: 2.2;
+            color: #4a148c;
+        }
+
+        .fun-facts li {
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .fun-facts li:before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .places-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🗺️ Zane's India Journey!</h1>
+        <p>The Actual Places You'll Visit</p>
+    </div>
+
+    <div class="container">
+
+        <!-- UDAIPUR -->
+        <div class="city-section">
+            <div class="city-header" style="background: linear-gradient(135deg, #4fc3f7 0%, #0288d1 100%);">
+                <div class="city-name">🏰 UDAIPUR 🏰</div>
+                <div class="city-subtitle">The City of Lakes • December 17-19</div>
+            </div>
+            <div class="city-content">
+                <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=1200&q=80" alt="Udaipur Lake Pichola" class="hero-photo">
+
+                <div class="intro-text">
+                    Udaipur is our FIRST stop! It's called the "City of Lakes" because it has beautiful big lakes with palaces around them. We'll stay at a palace hotel right by the water!
+                </div>
+
+                <div class="hotel-section">
+                    <h3>🏨 Where You'll Sleep: Oberoi Udaivilas</h3>
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1000&q=80" alt="Oberoi Udaivilas" style="width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.4em; text-align: center; margin-bottom: 20px;">This hotel looks like a REAL palace! It has fountains, gardens, peacocks, and swimming pools!</p>
+                    <div class="hotel-features">
+                        <div class="hotel-feature">🏊 Swimming Pool</div>
+                        <div class="hotel-feature">🦚 Peacocks in Garden</div>
+                        <div class="hotel-feature">⛲ Beautiful Fountains</div>
+                        <div class="hotel-feature">🌺 Flower Gardens</div>
+                        <div class="hotel-feature">⛵ Private Boat</div>
+                        <div class="hotel-feature">🌅 Lake Views</div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 2.5em; margin: 30px 0 20px; color: #0288d1; text-align: center;">Places We'll Visit in Udaipur:</h2>
+
+                <div class="places-grid">
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1619106638301-f5d4ea1e59c9?w=600&q=80" alt="Lake Pichola boat">
+                        <div class="place-info">
+                            <div class="place-icon">⛵</div>
+                            <div class="place-name">Lake Pichola Boat Ride</div>
+                            <div class="place-description">
+                                We'll ride in a BOAT to go to dinner! The boat floats on the water and you can see palaces all around you!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1582735689249-bea52b390440?w=600&q=80" alt="City Palace Udaipur">
+                        <div class="place-info">
+                            <div class="place-icon">🏛️</div>
+                            <div class="place-name">City Palace</div>
+                            <div class="place-description">
+                                A HUGE palace with tons of rooms! It's like a maze with beautiful decorations, mirrors, and amazing views of the lake!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=600&q=80" alt="Lake Palace">
+                        <div class="place-info">
+                            <div class="place-icon">🏰</div>
+                            <div class="place-name">Lake Palace</div>
+                            <div class="place-description">
+                                A white palace that looks like it's FLOATING on the water! It's right in the middle of Lake Pichola!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=600&q=80" alt="Art workshop">
+                        <div class="place-info">
+                            <div class="place-icon">🎨</div>
+                            <div class="place-name">Miniature Painting Workshop</div>
+                            <div class="place-description">
+                                You get to make your OWN art! An artist will show you how to paint tiny, detailed pictures on paper!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fun-facts">
+                    <h3>🌟 Fun Facts About Udaipur:</h3>
+                    <ul>
+                        <li>Udaipur has been around for over 500 years!</li>
+                        <li>The City Palace is so big, it would take hours to see everything!</li>
+                        <li>Lake Pichola was made by people - it's not a natural lake!</li>
+                        <li>You might see peacocks at your hotel - they roam free!</li>
+                        <li>Many Bollywood movies are filmed here because it's so beautiful!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- AGRA -->
+        <div class="city-section">
+            <div class="city-header" style="background: linear-gradient(135deg, #ffb74d 0%, #ff9800 100%);">
+                <div class="city-name">🕌 AGRA 🕌</div>
+                <div class="city-subtitle">Home of the Taj Mahal • December 19-20</div>
+            </div>
+            <div class="city-content">
+                <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80" alt="Taj Mahal" class="hero-photo">
+
+                <div class="intro-text">
+                    Agra is where the TAJ MAHAL is! It's the most famous building in India - a giant white palace that sparkles in the sun!
+                </div>
+
+                <div class="hotel-section">
+                    <h3>🏨 Where You'll Sleep: Oberoi Amarvilas</h3>
+                    <img src="https://images.unsplash.com/photo-1596178060810-097207baade4?w=1000&q=80" alt="Hotel with Taj view" style="width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.4em; text-align: center; margin-bottom: 20px;">This hotel is SUPER special - you can see the TAJ MAHAL from your room! You wake up and there it is!</p>
+                    <div class="hotel-features">
+                        <div class="hotel-feature">🕌 Taj Mahal Views!</div>
+                        <div class="hotel-feature">🏊 Beautiful Pool</div>
+                        <div class="hotel-feature">🌳 Gardens</div>
+                        <div class="hotel-feature">🍽️ Amazing Food</div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 2.5em; margin: 30px 0 20px; color: #ff9800; text-align: center;">What We'll See in Agra:</h2>
+
+                <div class="places-grid">
+                    <div class="place-card" style="background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%); border: 4px solid #fbc02d;">
+                        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80" alt="Taj Mahal reflection">
+                        <div class="place-info">
+                            <div class="place-icon">🕌</div>
+                            <div class="place-name">THE TAJ MAHAL!</div>
+                            <div class="place-description">
+                                We'll visit at SUNRISE (super early!) when the sky is pink and orange. The Taj Mahal is made of WHITE MARBLE and it's HUGE! It took 20,000 people 20 years to build!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80" alt="Taj gardens">
+                        <div class="place-info">
+                            <div class="place-icon">🌳</div>
+                            <div class="place-name">Taj Gardens</div>
+                            <div class="place-description">
+                                Beautiful gardens with fountains, trees, and walking paths! There's a long pool that reflects the Taj Mahal like a mirror!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fun-facts">
+                    <h3>🌟 Fun Facts About the Taj Mahal:</h3>
+                    <ul>
+                        <li>The Taj Mahal changes colors! It looks pink in the morning, white in the day, and golden at sunset!</li>
+                        <li>It was built over 370 years ago (that's 1653!)!</li>
+                        <li>The main dome is as tall as a 24-story building!</li>
+                        <li>Over 8 million people visit it every year!</li>
+                        <li>It's one of the "Seven Wonders of the World"!</li>
+                        <li>You can see it from your hotel room window!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- RANTHAMBORE -->
+        <div class="city-section">
+            <div class="city-header" style="background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);">
+                <div class="city-name">🐅 RANTHAMBORE 🐅</div>
+                <div class="city-subtitle">Tiger Safari Adventure! • December 20-22</div>
+            </div>
+            <div class="city-content">
+                <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=1200&q=80" alt="Tiger in Ranthambore" class="hero-photo">
+
+                <div class="intro-text">
+                    Ranthambore is a JUNGLE where REAL WILD TIGERS live! We'll go on a safari in a special jeep to try to see them!
+                </div>
+
+                <div class="hotel-section" style="background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-color: #43a047;">
+                    <h3>🏨 Where You'll Sleep: Oberoi Vanyavilas</h3>
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1000&q=80" alt="Safari tent luxury" style="width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.4em; text-align: center; margin-bottom: 20px;">This is a JUNGLE hotel! It has fancy tents (but they're like hotel rooms inside!) and you might hear animals at night!</p>
+                    <div class="hotel-features">
+                        <div class="hotel-feature">⛺ Luxury Tents</div>
+                        <div class="hotel-feature">🦚 Wildlife Around</div>
+                        <div class="hotel-feature">🏊 Pool</div>
+                        <div class="hotel-feature">🔥 Campfire</div>
+                        <div class="hotel-feature">🌳 In the Forest</div>
+                        <div class="hotel-feature">🐅 Near Tigers!</div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 2.5em; margin: 30px 0 20px; color: #43a047; text-align: center;">Safari Adventure:</h2>
+
+                <div class="places-grid">
+                    <div class="place-card" style="background: linear-gradient(135deg, #fff59d 0%, #ffee58 100%); border: 4px solid #f9a825;">
+                        <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&q=80" alt="Bengal tiger">
+                        <div class="place-info">
+                            <div class="place-icon">🐅</div>
+                            <div class="place-name">TIGER SAFARI!</div>
+                            <div class="place-description">
+                                We wake up at 6:00 AM when the sun rises to ride in a special JEEP through the jungle! Zone 3 and Zone 4 are the BEST places to see tigers - they come to drink water from the lakes!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80" alt="Monkeys">
+                        <div class="place-info">
+                            <div class="place-icon">🐒</div>
+                            <div class="place-name">Other Animals</div>
+                            <div class="place-description">
+                                Even if we don't see tigers, we'll see MONKEYS, DEER, PEACOCKS, colorful birds, and maybe even leopards or sloth bears!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=600&q=80" alt="Safari jeep">
+                        <div class="place-info">
+                            <div class="place-icon">🚙</div>
+                            <div class="place-name">Safari Jeep</div>
+                            <div class="place-description">
+                                We ride in an open-top jeep with a guide who knows where the animals are! You can bring binoculars to see far away!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card">
+                        <img src="https://images.unsplash.com/photo-1609198092357-e0c2b3e6e30f?w=600&q=80" alt="Ranthambore fort">
+                        <div class="place-info">
+                            <div class="place-icon">🏰</div>
+                            <div class="place-name">Ranthambore Fort</div>
+                            <div class="place-description">
+                                There's an old fort in the jungle from 1,000 years ago! Sometimes tigers sleep there in the shade!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fun-facts">
+                    <h3>🌟 Fun Facts About Ranthambore:</h3>
+                    <ul>
+                        <li>There are about 75-80 tigers living in Ranthambore!</li>
+                        <li>Famous tigers like Krishna (T-19) and Sitara (T-28) live in Zone 3!</li>
+                        <li>Tigers are most active early morning and late afternoon!</li>
+                        <li>The park has over 270 species of birds!</li>
+                        <li>It used to be the hunting grounds for maharajas (kings)!</li>
+                        <li>We'll bring breakfast boxes to eat after the safari!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- JAIPUR -->
+        <div class="city-section">
+            <div class="city-header" style="background: linear-gradient(135deg, #f06292 0%, #ec407a 100%);">
+                <div class="city-name">💕 JAIPUR 💕</div>
+                <div class="city-subtitle">The Pink City & YOUR BIRTHDAY! • December 22-25</div>
+            </div>
+            <div class="city-content">
+                <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=1200&q=80" alt="Jaipur Pink City" class="hero-photo">
+
+                <div class="intro-text">
+                    Jaipur is called the "PINK CITY" because all the buildings are painted pink! This is where we'll celebrate YOUR 3RD BIRTHDAY!
+                </div>
+
+                <div class="hotel-section" style="background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%); border-color: #ec407a;">
+                    <h3>🎂 Where You'll Sleep for Your BIRTHDAY: Oberoi Rajvilas</h3>
+                    <img src="https://images.unsplash.com/photo-1596178060810-097207baade4?w=1000&q=80" alt="Oberoi Rajvilas" style="width: 100%; height: 300px; object-fit: cover; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.6em; text-align: center; margin-bottom: 20px; color: #c2185b; font-weight: bold;">🎉 This is your BIRTHDAY HOTEL! They'll decorate your room with ELEPHANT BALLOONS while you sleep! 🎉</p>
+                    <div class="hotel-features">
+                        <div class="hotel-feature">🐘 Elephant Experience</div>
+                        <div class="hotel-feature">🎂 Birthday Party</div>
+                        <div class="hotel-feature">🏊 Huge Pool</div>
+                        <div class="hotel-feature">🏰 Like a Palace</div>
+                        <div class="hotel-feature">🌺 Beautiful Gardens</div>
+                        <div class="hotel-feature">⛲ Fountains</div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 2.5em; margin: 30px 0 20px; color: #ec407a; text-align: center;">Places We'll Visit in Jaipur:</h2>
+
+                <div class="places-grid">
+                    <div class="place-card" style="background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);">
+                        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80" alt="Hawa Mahal">
+                        <div class="place-info">
+                            <div class="place-icon">🏰</div>
+                            <div class="place-name">Hawa Mahal (Wind Palace)</div>
+                            <div class="place-description">
+                                This palace looks like a HONEYCOMB! It has 953 tiny windows! It's pink like everything in Jaipur and looks really cool!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card" style="background: linear-gradient(135deg: #ffcdd2 0%, #ef9a9a 100%);">
+                        <img src="https://images.unsplash.com/photo-1609416921044-3a8f7f36c462?w=600&q=80" alt="Amber Fort">
+                        <div class="place-info">
+                            <div class="place-icon">🏛️</div>
+                            <div class="place-name">Amber Fort</div>
+                            <div class="place-description">
+                                A MASSIVE fort on a hill! It has huge courtyards, mirror rooms that sparkle, and amazing views! We'll go up on December 23!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card" style="background: linear-gradient(135d, #fff59d 0%, #ffee58 100%); border: 5px solid #f9a825;">
+                        <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&q=80" alt="Elephants">
+                        <div class="place-info">
+                            <div class="place-icon">🐘</div>
+                            <div class="place-name">BIRTHDAY ELEPHANTS!</div>
+                            <div class="place-description">
+                                On YOUR BIRTHDAY (Dec 24), we visit REAL ELEPHANTS! You can see them up close, learn about them, and maybe even help paint them!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-card" style="background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);">
+                        <img src="https://images.unsplash.com/photo-1582735689249-bea52b390440?w=600&q=80" alt="City Palace Jaipur">
+                        <div class="place-info">
+                            <div class="place-icon">👑</div>
+                            <div class="place-name">City Palace Jaipur</div>
+                            <div class="place-description">
+                                Where the royal family still lives! It has museums, courtyards, and beautiful pink buildings!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fun-facts">
+                    <h3>🌟 Fun Facts About Jaipur:</h3>
+                    <ul>
+                        <li>The whole city was painted pink in 1876 to welcome a prince!</li>
+                        <li>Jaipur is part of the "Golden Triangle" tourist route!</li>
+                        <li>The Hawa Mahal was built so royal ladies could watch street festivals without being seen!</li>
+                        <li>Amber Fort has a "Mirror Palace" room covered in thousands of tiny mirrors!</li>
+                        <li>Jaipur is famous for jewelry, textiles, and colorful crafts!</li>
+                        <li>YOU'RE TURNING 3 HERE! 🎂</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="city-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="city-content" style="text-align: center;">
+                <h2 style="font-size: 3.5em; color: white; margin-bottom: 30px;">🎉 Zane's Complete Journey! 🎉</h2>
+                <div style="font-size: 1.8em; line-height: 2.5;">
+                    <p><strong>4 Cities • 9 Days • 1 Amazing Adventure!</strong></p>
+                    <p style="margin: 30px 0;">
+                        🏰 Udaipur: Palaces & Lakes<br>
+                        🕌 Agra: The Taj Mahal<br>
+                        🐅 Ranthambore: Tiger Safari<br>
+                        💕 Jaipur: Pink City & YOUR BIRTHDAY!
+                    </p>
+                    <p style="font-size: 1.3em; margin-top: 40px; background: rgba(255,255,255,0.2); padding: 30px; border-radius: 20px;">
+                        Every single place is REAL and we're going there!<br>
+                        You're going to have the BEST time, Zane! 🌟
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

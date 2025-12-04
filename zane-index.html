@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zane's India Trip - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero .subtitle {
+            font-size: 2em;
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+
+        .hero .dates {
+            font-size: 1.8em;
+            color: #f5576c;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 30px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .intro-text {
+            font-size: 1.5em;
+            line-height: 1.8;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .guide-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .guide-icon {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            text-align: center;
+            font-size: 5em;
+        }
+
+        .guide-content {
+            padding: 30px;
+        }
+
+        .guide-title {
+            font-size: 2em;
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .guide-description {
+            font-size: 1.3em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .guide-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .guide-card:hover .guide-button {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .special-card {
+            border: 6px solid #ff6b6b;
+        }
+
+        .special-card .guide-icon {
+            background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .section-header {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-header h2 {
+            font-size: 2.5em;
+            color: #667eea;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .instructions h2 {
+            font-size: 2.5em;
+            color: #764ba2;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .instruction-item {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid #e17055;
+        }
+
+        .instruction-item h3 {
+            font-size: 1.8em;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .instruction-item p {
+            font-size: 1.3em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .guide-card {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🌟 Zane's BIG India Adventure! 🌟</h1>
+            <p class="subtitle">Complete Trip Guide for a 3-Year-Old</p>
+            <p class="dates">December 17-25, 2025</p>
+
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80" alt="India landscape" class="hero-image">
+
+            <p class="intro-text">
+                Hi Zane! You're going on an AMAZING adventure to India!<br>
+                This special guide will help you know what to expect.<br>
+                Click on each guide below to learn more!
+            </p>
+        </div>
+
+        <!-- Instructions for Parents & Teachers -->
+        <div class="instructions">
+            <h2>👩‍🏫 For Parents & Teachers</h2>
+            <p style="font-size: 1.4em; text-align: center; margin-bottom: 30px; color: #555;">
+                These guides are designed to help Zane understand and prepare for his India trip.
+                Here's how to use them:
+            </p>
+
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <h3>📱 View on Screen</h3>
+                    <p>Open each guide on a tablet or computer with Zane. Point to pictures and talk about what he'll see.</p>
+                </div>
+
+                <div class="instruction-item">
+                    <h3>🖨️ Print Them</h3>
+                    <p>All guides are print-friendly. Print them out to review at school or at home.</p>
+                </div>
+
+                <div class="instruction-item">
+                    <h3>📅 Daily Review</h3>
+                    <p>Review one guide each day leading up to the trip to build familiarity and excitement.</p>
+                </div>
+
+                <div class="instruction-item">
+                    <h3>💬 Ask Questions</h3>
+                    <p>Encourage Zane to ask questions. Answer simply and reassuringly.</p>
+                </div>
+
+                <div class="instruction-item">
+                    <h3>🎯 Practice Routine</h3>
+                    <p>Walk through the airport guide several times so he knows what to expect.</p>
+                </div>
+
+                <div class="instruction-item">
+                    <h3>🌟 Build Excitement</h3>
+                    <p>Use these guides to create positive anticipation for the trip, especially the birthday!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Guides Section -->
+        <div class="section-header">
+            <h2>📚 Choose Your Guide Below!</h2>
+        </div>
+
+        <div class="guides-grid">
+
+            <!-- Guide 1: Main Trip Overview -->
+            <a href="zane-trip-guide.html" class="guide-card">
+                <div class="guide-icon">🐘</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">1. Trip Overview</h3>
+                    <p class="guide-description">
+                        See all the amazing things you'll do! Tigers, elephants, palaces, and MORE!
+                    </p>
+                    <div class="guide-button">Start Here! 👉</div>
+                </div>
+            </a>
+
+            <!-- Guide 2: Daily Timeline -->
+            <a href="zane-daily-timeline.html" class="guide-card">
+                <div class="guide-icon">📅</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">2. Day-by-Day Timeline</h3>
+                    <p class="guide-description">
+                        What we'll do EACH DAY from Dec 17-25! See the whole plan!
+                    </p>
+                    <div class="guide-button">See Each Day 📆</div>
+                </div>
+            </a>
+
+            <!-- Guide 3: Detailed Places - NEW -->
+            <a href="zane-detailed-places.html" class="guide-card" style="border: 5px solid #fbc02d;">
+                <div class="guide-icon" style="background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);">🗺️</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">3. Real Places You'll Visit!</h3>
+                    <p class="guide-description">
+                        See the ACTUAL places - Oberoi hotels, Taj Mahal, Hawa Mahal, tiger zones, and more!
+                    </p>
+                    <div class="guide-button" style="background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);">
+                        See Real Places! 🏰
+                    </div>
+                </div>
+            </a>
+
+            <!-- Guide 4: Airport Guide -->
+            <a href="zane-airport-guide.html" class="guide-card">
+                <div class="guide-icon">✈️</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">4. Airport & Flying</h3>
+                    <p class="guide-description">
+                        Step-by-step guide to the airport and flying on the airplane!
+                    </p>
+                    <div class="guide-button">Learn About Flying ✈️</div>
+                </div>
+            </a>
+
+            <!-- Guide 5: Packing Guide -->
+            <a href="zane-packing-guide.html" class="guide-card">
+                <div class="guide-icon">🎒</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">5. What to Pack</h3>
+                    <p class="guide-description">
+                        See all the clothes, toys, and things we're bringing to India!
+                    </p>
+                    <div class="guide-button">See What's Coming 👕</div>
+                </div>
+            </a>
+
+            <!-- Guide 6: Flashcards - SPECIAL -->
+            <a href="zane-flashcards.html" class="guide-card special-card">
+                <div class="guide-icon">📇</div>
+                <div class="guide-content">
+                    <h3 class="guide-title">6. Picture Flashcards</h3>
+                    <p class="guide-description">
+                        Simple picture cards to practice with your teachers! Print and review daily!
+                    </p>
+                    <div class="guide-button" style="background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);">
+                        For Teachers! 👩‍🏫
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Quick Facts -->
+        <div class="hero">
+            <h2 style="font-size: 3em; color: #667eea; margin-bottom: 30px;">
+                ⭐ Quick Trip Facts! ⭐
+            </h2>
+            <div style="font-size: 1.6em; line-height: 2.5; text-align: left; max-width: 700px; margin: 0 auto;">
+                <p>📅 <strong>When:</strong> December 17-25, 2025 (9 days!)</p>
+                <p>✈️ <strong>Where:</strong> India - Udaipur, Agra, Ranthambore, Jaipur</p>
+                <p>👨‍👩‍👧‍👦 <strong>Who:</strong> Whole family - 10 people total!</p>
+                <p>🏰 <strong>Hotels:</strong> Beautiful Oberoi palace hotels!</p>
+                <p>🐅 <strong>Animals:</strong> Tigers, elephants, monkeys, peacocks!</p>
+                <p>🕌 <strong>Special Place:</strong> The Taj Mahal!</p>
+                <p style="font-size: 1.3em; color: #ff6b6b; margin-top: 30px;">
+                    🎂 <strong>BEST PART: Your 3rd BIRTHDAY on December 24th!</strong> 🎂
+                </p>
+            </div>
+        </div>
+
+        <!-- Countdown Section -->
+        <div class="hero" style="background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%); color: white;">
+            <h2 style="color: white; font-size: 3em; margin-bottom: 20px;">
+                ⏰ Getting Ready! ⏰
+            </h2>
+            <p style="font-size: 2em; line-height: 2;">
+                Look at these guides with Mom, Dad, or your teachers!<br>
+                The more you know, the more fun it will be!<br>
+                <br>
+                <strong style="font-size: 1.3em;">This is going to be the BEST adventure EVER! 🎉</strong>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; color: white; margin-top: 50px; font-size: 1.3em;">
+            <p>Made with ❤️ for Zane's Big India Adventure</p>
+            <p style="margin-top: 15px;">December 17-25, 2025</p>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Zane Needs to Bring to India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 1.2em;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .item {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 3px solid #f5a623;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .item-desc {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            margin: 30px 0;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .checklist {
+            background: #e8f8f5;
+            border-left: 6px solid #16a085;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .checklist h3 {
+            font-size: 2em;
+            color: #16a085;
+            margin-bottom: 15px;
+        }
+
+        .checklist-item {
+            font-size: 1.4em;
+            padding: 10px;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #2d3436;
+            font-weight: bold;
+            border-left: 6px solid #00b894;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎒 Zane's Packing Guide!</h1>
+        <p>What to Bring to India</p>
+    </div>
+
+    <div class="container">
+
+        <!-- Important Note -->
+        <div class="important-note">
+            👕 Don't worry! Mom and Dad will pack everything!<br>
+            This is just to show you what's coming with us! 👕
+        </div>
+
+        <!-- Clothes Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">👕</span>
+                Clothes to Wear
+                <span class="section-icon">👕</span>
+            </h2>
+
+            <div class="items-grid">
+                <div class="item">
+                    <div class="item-icon">👕</div>
+                    <div class="item-name">T-Shirts</div>
+                    <div class="item-desc">Comfy shirts for playing!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🩳</div>
+                    <div class="item-name">Shorts & Pants</div>
+                    <div class="item-desc">For running and exploring!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🩱</div>
+                    <div class="item-name">Swimsuit</div>
+                    <div class="item-desc">For swimming in the pools!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">👟</div>
+                    <div class="item-name">Comfy Shoes</div>
+                    <div class="item-desc">Sneakers for walking!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🩴</div>
+                    <div class="item-name">Sandals</div>
+                    <div class="item-desc">Easy shoes for the hotel!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🧢</div>
+                    <div class="item-name">Sun Hat</div>
+                    <div class="item-desc">To keep the sun off your face!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🧥</div>
+                    <div class="item-name">Light Jacket</div>
+                    <div class="item-desc">For early morning safari!</div>
+                </div>
+
+                <div class="item" style="background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%); border-color: #ff6b6b;">
+                    <div class="item-icon">👔</div>
+                    <div class="item-name">Birthday Outfit</div>
+                    <div class="item-desc">Special clothes for your birthday dinner!</div>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                ⭐ FUN FACT: India can be warm during the day but cool in the morning, so we bring different clothes!
+            </div>
+        </div>
+
+        <!-- Comfort Items Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🧸</span>
+                Comfort & Fun Things
+                <span class="section-icon">🧸</span>
+            </h2>
+
+            <div class="items-grid">
+                <div class="item">
+                    <div class="item-icon">🧸</div>
+                    <div class="item-name">Favorite Toy</div>
+                    <div class="item-desc">A special friend for bedtime!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">📚</div>
+                    <div class="item-name">Books</div>
+                    <div class="item-desc">Stories to read before bed!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🎨</div>
+                    <div class="item-name">Coloring Stuff</div>
+                    <div class="item-desc">Crayons and paper for drawing!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🎧</div>
+                    <div class="item-name">Headphones</div>
+                    <div class="item-desc">For movies on the plane!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">📱</div>
+                    <div class="item-name">Tablet</div>
+                    <div class="item-desc">For games and videos!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🛏️</div>
+                    <div class="item-name">Small Blanket</div>
+                    <div class="item-desc">Your cozy blanket for the plane!</div>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                ⭐ FUN FACT: Bringing familiar things helps you feel at home even when you're far away!
+            </div>
+        </div>
+
+        <!-- Important Things Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🎒</span>
+                Important Things
+                <span class="section-icon">🎒</span>
+            </h2>
+
+            <div class="items-grid">
+                <div class="item">
+                    <div class="item-icon">🕶️</div>
+                    <div class="item-name">Sunglasses</div>
+                    <div class="item-desc">Cool shades for the bright sun!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🧴</div>
+                    <div class="item-name">Sunscreen</div>
+                    <div class="item-desc">To protect your skin!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🪥</div>
+                    <div class="item-name">Toothbrush</div>
+                    <div class="item-desc">To brush your teeth!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🎒</div>
+                    <div class="item-name">Small Backpack</div>
+                    <div class="item-desc">To carry your stuff!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">💧</div>
+                    <div class="item-name">Water Bottle</div>
+                    <div class="item-desc">To stay hydrated!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🩹</div>
+                    <div class="item-name">Band-Aids</div>
+                    <div class="item-desc">Just in case you get a boo-boo!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">💊</div>
+                    <div class="item-name">Medicine</div>
+                    <div class="item-desc">If you need it (Mom will carry it!)</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🍪</div>
+                    <div class="item-name">Snacks</div>
+                    <div class="item-desc">Your favorite snacks for the plane!</div>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                ⭐ FUN FACT: It's VERY sunny in India, so sunscreen and a hat are super important!
+            </div>
+        </div>
+
+        <!-- Safari Special Items -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🐅</span>
+                Special Safari Items
+                <span class="section-icon">🐅</span>
+            </h2>
+
+            <div class="items-grid">
+                <div class="item">
+                    <div class="item-icon">🔭</div>
+                    <div class="item-name">Binoculars</div>
+                    <div class="item-desc">To see animals far away!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">📷</div>
+                    <div class="item-name">Camera</div>
+                    <div class="item-desc">To take pictures of tigers!</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-icon">🧥</div>
+                    <div class="item-name">Warm Layer</div>
+                    <div class="item-desc">It's cold early in the morning!</div>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                ⭐ FUN FACT: We wake up SUPER early for the safari (6:00 AM) when it's still a bit cold!
+            </div>
+        </div>
+
+        <!-- Parent Checklist -->
+        <div class="section">
+            <div class="checklist">
+                <h3>✅ Parent Checklist (Before We Leave):</h3>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check1">
+                    <label for="check1">Pack all clothes and shoes</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check2">
+                    <label for="check2">Pack comfort items (favorite toy, blanket, books)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check3">
+                    <label for="check3">Pack toiletries (toothbrush, sunscreen, etc.)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check4">
+                    <label for="check4">Pack entertainment for plane (tablet, headphones, snacks)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check5">
+                    <label for="check5">Pack safari gear (warm jacket, binoculars, camera)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check6">
+                    <label for="check6">Pack special birthday outfit</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check7">
+                    <label for="check7">Pack medicine and first aid supplies</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check8">
+                    <label for="check8">Print this guide and trip materials for Zane's teachers</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- What NOT to Worry About -->
+        <div class="section" style="background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%);">
+            <h2 class="section-title" style="color: white;">
+                <span class="section-icon">😊</span>
+                What You DON'T Need to Worry About
+                <span class="section-icon">😊</span>
+            </h2>
+            <div style="font-size: 1.5em; line-height: 2.2; padding: 20px; color: white; text-align: center;">
+                ✅ The hotels have towels and soap<br>
+                ✅ The hotels have pools with floaties<br>
+                ✅ There will be yummy food you like<br>
+                ✅ Mom and Dad will be with you the WHOLE time<br>
+                ✅ Everyone will help you have fun<br>
+                ✅ You'll make AMAZING memories!<br>
+            </div>
+        </div>
+
+        <!-- Final Message -->
+        <div class="important-note" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 2em;">
+            🎉 You're All Set for Your BIG Adventure, Zane! 🎉
+        </div>
+
+    </div>
+</body>
+</html>

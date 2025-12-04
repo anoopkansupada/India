@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zane's Airport & Flying Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-section {
+            background: white;
+            border-radius: 25px;
+            padding: 0;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .step-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .step-number {
+            background: white;
+            color: #f5576c;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            color: white;
+            flex-grow: 1;
+        }
+
+        .step-title h2 {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .step-title p {
+            font-size: 1.4em;
+            opacity: 0.95;
+        }
+
+        .step-content {
+            padding: 35px;
+        }
+
+        .step-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .step-description {
+            font-size: 1.6em;
+            line-height: 1.9;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .what-to-expect {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 6px solid #ff6b6b;
+        }
+
+        .what-to-expect h3 {
+            font-size: 1.8em;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .what-to-expect p {
+            font-size: 1.3em;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.4em;
+            color: #2d3436;
+            font-weight: bold;
+            border-left: 6px solid #00b894;
+            margin-top: 20px;
+        }
+
+        .phase-divider {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            border-radius: 25px;
+            margin: 50px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .phase-divider h2 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .step-section {
+                page-break-inside: avoid;
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .step-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .step-title h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>✈️ Zane's Airport & Flying Guide!</h1>
+        <p>What Happens Step by Step</p>
+    </div>
+
+    <div class="container">
+
+        <div class="phase-divider">
+            <h2>📍 PART 1: Going to the Airport & Getting on the Plane</h2>
+        </div>
+
+        <!-- Step 1: Packing and Leaving Home -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    <h2>Packing & Leaving Home</h2>
+                    <p>Getting Ready for the Big Trip!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?w=1200&q=80" alt="Packing suitcase" class="step-image">
+
+                <p class="step-description">
+                    First, we pack all our clothes and toys into big suitcases!
+                    Then we get in the car and drive to the airport. It's the start of our adventure!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ Mom and Dad packing suitcases<br>
+                       ✅ Your special backpack with your toys<br>
+                       ✅ The car ride to the airport</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: Bring your favorite toy in your backpack so you have it on the plane!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Arriving at the Airport -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    <h2>Arriving at the Airport</h2>
+                    <p>A Big Building with Lots of People!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=1200&q=80" alt="Airport exterior" class="step-image">
+
+                <p class="step-description">
+                    The airport is a HUGE building with lots of people going on trips!
+                    There are signs, lights, and lots of things to see. Don't worry - Mom and Dad know where to go!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ A very big building<br>
+                       ✅ Lots of people with suitcases<br>
+                       ✅ Cars and buses outside<br>
+                       ✅ Big screens with flight information</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: Hold Mom or Dad's hand because there are lots of people!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Check-In Counter -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    <h2>Check-In Counter</h2>
+                    <p>Saying Goodbye to Our Big Suitcases!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=1200&q=80" alt="Check-in counter" class="step-image">
+
+                <p class="step-description">
+                    We go to a special desk where nice people take our BIG suitcases.
+                    They put them on the airplane for us! We get to keep our small backpacks.
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ A long counter with airline workers<br>
+                       ✅ Our suitcases going on a moving belt<br>
+                       ✅ Mom and Dad getting boarding passes (special tickets)<br>
+                       ✅ We keep our small bags with us</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: This is where our big bags go on the plane. We'll see them again in India!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Security Check -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">
+                    <h2>Security Check</h2>
+                    <p>Walking Through a Special Door!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=1200&q=80" alt="Airport security" class="step-image">
+
+                <p class="step-description">
+                    We walk through a special doorway that makes sure everyone is safe on the airplane.
+                    Our backpacks go through an X-ray machine (like when you go to the doctor, but for bags!).
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ A line of people waiting<br>
+                       ✅ Trays for our bags and shoes<br>
+                       ✅ A doorway to walk through<br>
+                       ✅ Nice security people helping us</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: We might need to take off our shoes and put them in a tray. It's quick and easy!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Waiting at the Gate -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">
+                    <h2>Waiting at the Gate</h2>
+                    <p>Fun Time Before We Board!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80" alt="Airport gate" class="step-image">
+
+                <p class="step-description">
+                    Now we wait in a special area called a "gate." There are chairs to sit in,
+                    windows to look out at the planes, and sometimes there are shops and restaurants!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ Lots of seats for waiting<br>
+                       ✅ Big windows showing airplanes<br>
+                       ✅ Other families waiting too<br>
+                       ✅ Announcements telling us when to board</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: This is a great time to use the bathroom, have a snack, or play on your tablet!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Boarding the Plane -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">
+                    <h2>Boarding the Plane</h2>
+                    <p>Time to Get On the Airplane!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=1200&q=80" alt="Boarding plane" class="step-image">
+
+                <p class="step-description">
+                    When they call our row number, we line up and walk down a special hallway (called a jet bridge)
+                    that connects to the airplane! Flight attendants (nice people who work on the plane) say hello!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ A line of people boarding<br>
+                       ✅ A tunnel-like hallway to the plane<br>
+                       ✅ The airplane door<br>
+                       ✅ Friendly flight attendants welcoming you</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: We show our boarding passes and then walk onto the plane. It's exciting!
+                </div>
+            </div>
+        </div>
+
+        <div class="phase-divider">
+            <h2>✈️ PART 2: On the Airplane</h2>
+        </div>
+
+        <!-- Step 7: Finding Our Seats -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <div class="step-title">
+                    <h2>Finding Our Seats</h2>
+                    <p>Our Special Spot on the Plane!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1484186139897-d5fc6b908812?w=1200&q=80" alt="Airplane seats" class="step-image">
+
+                <p class="step-description">
+                    We walk down the aisle (the middle part between seats) and find our seat numbers.
+                    You'll have your own seat with a seatbelt, just like in a car but cooler!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ Rows and rows of comfy seats<br>
+                       ✅ Your seat number above your seat<br>
+                       ✅ A little tray table that folds down<br>
+                       ✅ A TV screen in front of you (for movies!)</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: You'll sit next to Mom or Dad the whole time! You're safe and cozy!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 8: Takeoff! -->
+        <div class="step-section">
+            <div class="step-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);">
+                <div class="step-number">8</div>
+                <div class="step-title">
+                    <h2>TAKEOFF - We're Flying!</h2>
+                    <p>The Most Exciting Part!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&q=80" alt="Airplane taking off" class="step-image">
+
+                <p class="step-description">
+                    The plane starts moving down the runway, going FASTER and FASTER...
+                    and then we lift off into the sky! Your ears might feel funny - that's normal!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll Feel:</h3>
+                    <p>✅ The plane moving forward<br>
+                       ✅ A feeling like going up in an elevator<br>
+                       ✅ Your ears might "pop" (chew gum or yawn!)<br>
+                       ✅ Looking out the window - everything gets smaller!</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: If your ears feel funny, swallow, yawn, or have a snack. It helps! This is totally normal!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 9: During the Flight -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <div class="step-title">
+                    <h2>During the Flight</h2>
+                    <p>Flying High in the Sky!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1200&q=80" alt="Inside airplane" class="step-image">
+
+                <p class="step-description">
+                    Now we're cruising through the clouds! You can watch movies, play games,
+                    eat meals, take a nap, or look out the window. Flight attendants bring food and drinks!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You Can Do:</h3>
+                    <p>✅ Watch movies or TV shows<br>
+                       ✅ Play games on your tablet<br>
+                       ✅ Color in your coloring book<br>
+                       ✅ Eat snacks and meals<br>
+                       ✅ Take a nap with your blanket<br>
+                       ✅ Look at the clouds outside!</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: The flight takes a few hours, so bring things to do. The time goes by fast!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 10: Landing -->
+        <div class="step-section">
+            <div class="step-header" style="background: linear-gradient(135deg, #a8e6cf 0%, #3eecac 100%);">
+                <div class="step-number">10</div>
+                <div class="step-title">
+                    <h2>Landing in India!</h2>
+                    <p>We Made It!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1523830222360-770b1f9e8176?w=1200&q=80" alt="Airplane landing" class="step-image">
+
+                <p class="step-description">
+                    The pilot announces we're getting ready to land. The plane goes down slowly and smoothly,
+                    and then we touch the ground with a little bump. We're in INDIA!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll Feel:</h3>
+                    <p>✅ The plane descending (going down)<br>
+                       ✅ Your ears might pop again<br>
+                       ✅ A gentle bump when we touch the ground<br>
+                       ✅ The plane slowing down on the runway</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: We have to stay in our seats until the plane stops completely. Then our adventure begins!
+                </div>
+            </div>
+        </div>
+
+        <div class="phase-divider">
+            <h2>🎒 PART 3: After Landing</h2>
+        </div>
+
+        <!-- Step 11: Getting Off the Plane -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">11</div>
+                <div class="step-title">
+                    <h2>Getting Off the Plane</h2>
+                    <p>Walking Into the Airport!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=1200&q=80" alt="Exiting plane" class="step-image">
+
+                <p class="step-description">
+                    We gather our things and walk off the plane into the India airport.
+                    We follow signs and our family knows where to go!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ Everyone standing up and getting their bags<br>
+                       ✅ Walking through the jet bridge again<br>
+                       ✅ Entering a new airport (in India!)<br>
+                       ✅ Signs in different languages</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: Bring your backpack and hold Mom or Dad's hand!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 12: Immigration -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">12</div>
+                <div class="step-title">
+                    <h2>Immigration Check</h2>
+                    <p>Showing Our Passports!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1562840142-0c4e4b5e364b?w=1200&q=80" alt="Airport immigration" class="step-image">
+
+                <p class="step-description">
+                    We stand in a line and show our passports (special books with our photos)
+                    to nice officers. They stamp them and say "Welcome to India!"
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ Lines of people waiting<br>
+                       ✅ Officers at desks<br>
+                       ✅ Mom and Dad showing passports<br>
+                       ✅ A stamp in the passport (like a sticker!)</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: This might take a little time, but it's okay! We're almost done!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 13: Baggage Claim -->
+        <div class="step-section">
+            <div class="step-header">
+                <div class="step-number">13</div>
+                <div class="step-title">
+                    <h2>Getting Our Suitcases</h2>
+                    <p>Finding Our Bags!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1579762593819-da5bb70e80a1?w=1200&q=80" alt="Baggage claim" class="step-image">
+
+                <p class="step-description">
+                    Remember our big suitcases from the beginning? Now we pick them up!
+                    They come out on a moving belt (like a slow carousel) and we grab them!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ A big room with moving belts<br>
+                       ✅ Suitcases coming out on the belt<br>
+                       ✅ People watching for their bags<br>
+                       ✅ Our suitcases! We made it!</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: Help look for our suitcases! They'll come around on the belt!
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 14: Exiting Airport -->
+        <div class="step-section">
+            <div class="step-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="step-number">14</div>
+                <div class="step-title">
+                    <h2>Leaving the Airport</h2>
+                    <p>Our Adventure Begins!</p>
+                </div>
+            </div>
+            <div class="step-content">
+                <img src="https://images.unsplash.com/photo-1594901028303-29ca31a62a53?w=1200&q=80" alt="Airport arrival" class="step-image">
+
+                <p class="step-description">
+                    We walk through the exit doors and WOW - we're in India!
+                    There's a car waiting to take us to our beautiful palace hotel!
+                </p>
+
+                <div class="what-to-expect">
+                    <h3>What You'll See:</h3>
+                    <p>✅ The exit doors opening<br>
+                       ✅ Warm Indian air<br>
+                       ✅ Our driver with a sign<br>
+                       ✅ A nice car to take us to the hotel!</p>
+                </div>
+
+                <div class="tip-box">
+                    💡 TIP: The hard part is over! Now the FUN begins!
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="step-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="step-content" style="text-align: center;">
+                <h2 style="font-size: 3em; color: white; margin-bottom: 30px;">
+                    🎉 You Did It, Zane! 🎉
+                </h2>
+                <p style="font-size: 1.8em; line-height: 2.2;">
+                    That's the whole airport process!<br>
+                    It might seem like a lot of steps, but Mom and Dad<br>
+                    will be with you THE WHOLE TIME!<br><br>
+                    And remember: This is how we get to India<br>
+                    to see tigers, elephants, the Taj Mahal,<br>
+                    and celebrate YOUR BIRTHDAY!<br><br>
+                    <strong style="font-size: 1.3em;">It's going to be AMAZING! ✈️🐘🐅🎂</strong>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

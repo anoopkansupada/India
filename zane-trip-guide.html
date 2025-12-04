@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zane's India Adventure!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: bounce 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-15px); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 0;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            position: relative;
+        }
+
+        .card-number {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 70px;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 2.5em;
+            color: white;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-text {
+            font-size: 1.5em;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffd89b 0%, #ff6b6b 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .birthday-special {
+            border: 8px solid #f5576c;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe5eb 100%);
+        }
+
+        .birthday-special .card-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 6px solid #e17055;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3436;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .card {
+                page-break-inside: avoid;
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5em;
+            }
+            .card-title {
+                font-size: 2em;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">✈️ Zane's BIG India Adventure! 🐘</h1>
+        <p class="subtitle">A Special Trip with Your Whole Family!</p>
+        <p class="subtitle" style="font-size: 1.3em;">December 17-25, 2025</p>
+
+        <!-- Card 1: Going on a Plane -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <h2 class="card-title">✈️ We're Flying on a Big Airplane!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80" alt="Airplane flying" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    We're going to fly HIGH in the sky to a magical place called <span class="highlight">India</span>!
+                    You'll sit in a comfy seat, look out the window, and see clouds everywhere!
+                </p>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: Airplanes fly higher than the clouds! You can watch movies and have snacks on the plane!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Beautiful Palace Hotels -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <h2 class="card-title">🏰 We're Staying in REAL Palaces!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=80" alt="Oberoi Udaivilas Palace" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    Our hotels look like <span class="highlight">PALACES</span> where princes and princesses lived!
+                    They have beautiful gardens, swimming pools, and fancy fountains!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?w=600&q=80" alt="Palace pool">
+                    <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80" alt="Palace architecture">
+                    <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&q=80" alt="Luxury hotel room">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: Some palaces have PEACOCKS walking around! They have beautiful, colorful feathers!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Tiger Safari -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <h2 class="card-title">🐅 We're Going to See REAL Tigers!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=1200&q=80" alt="Bengal Tiger" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    We're going on a <span class="highlight">TIGER SAFARI</span> in Ranthambore!
+                    We'll ride in a special jeep and look for tigers, monkeys, deer, and other animals!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600&q=80" alt="Tiger in nature">
+                    <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&q=80" alt="Monkeys">
+                    <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=600&q=80" alt="Safari jeep">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: We wake up SUPER early when the sun comes up to find the tigers! They're most active in the morning!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Elephants! -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <h2 class="card-title">🐘 We Get to Meet ELEPHANTS!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=1200&q=80" alt="Elephant in Jaipur" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    At the Oberoi Rajvilas in Jaipur, we'll visit <span class="highlight">REAL ELEPHANTS</span>!
+                    Elephants are HUGE - bigger than a car! You can see them up close and learn all about them!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1536164261511-3a17e671d380?w=600&q=80" alt="Elephant close up">
+                    <img src="https://images.unsplash.com/photo-1543046293-1c57ea9d95a8?w=600&q=80" alt="Indian elephant">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: Elephants are super smart! They can remember things for their whole life! And they're gentle giants!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: Taj Mahal -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <h2 class="card-title">🕌 The TAJ MAHAL - Most Beautiful Building!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80" alt="Taj Mahal front view" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    We're going to see the <span class="highlight">TAJ MAHAL</span> in Agra!
+                    It's a HUGE white building that sparkles in the sun! It's one of the most beautiful buildings in the WHOLE WORLD!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80" alt="Taj Mahal reflection">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80" alt="Taj Mahal gardens">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: The Taj Mahal was built over 300 years ago! It took 20,000 people to build it!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6: Boat Rides -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <h2 class="card-title">⛵ Boat Rides on the Beautiful Lake!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=1200&q=80" alt="Lake Pichola sunset" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    In Udaipur, we'll ride in <span class="highlight">BOATS on Lake Pichola</span>!
+                    We'll see palaces by the water, watch the sunset, and feed fish! It's so peaceful and pretty!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1587135941948-670b381f08ce?w=600&q=80" alt="Udaipur palace on lake">
+                    <img src="https://images.unsplash.com/photo-1619106638301-f5d4ea1e59c9?w=600&q=80" alt="Boat on lake">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: Some palaces are built RIGHT IN THE MIDDLE of the lake! They look like they're floating!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 7: Colorful Indian Food -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <h2 class="card-title">🍽️ Yummy Indian Food!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1200&q=80" alt="Indian food" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    We'll eat at fancy restaurants with <span class="highlight">LOTS of colorful, yummy food</span>!
+                    There's rice, bread (called naan), chicken, and LOTS of other things! Don't worry - we'll find food you LOVE!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80" alt="Colorful thali">
+                    <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" alt="Indian sweets">
+                    <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600&q=80" alt="Indian restaurant">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: Indian food uses LOTS of colorful spices! That's what makes it smell so good!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 8: BIRTHDAY! -->
+        <div class="card birthday-special page-break">
+            <div class="card-header">
+                <div class="card-number">🎂</div>
+                <h2 class="card-title">🎉 YOUR 3RD BIRTHDAY IN INDIA! 🎉</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80" alt="Birthday celebration" class="hero-image">
+            <div class="card-content">
+                <p class="card-text" style="color: #d63031; font-weight: bold; font-size: 1.8em;">
+                    The BEST PART: We're celebrating <span class="highlight">YOUR BIRTHDAY</span> on December 24th!
+                </p>
+                <p class="card-text">
+                    When you wake up, your room will be decorated with <span class="highlight">ELEPHANT balloons, banners, and decorations</span>!
+                </p>
+                <p class="card-text">
+                    We'll have a special birthday lunch AND dinner at the beautiful Oberoi Rajvilas palace hotel!
+                    There will be cake, presents, and all your favorite people!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1464349153735-7db50ed83c84?w=600&q=80" alt="Birthday balloons">
+                    <img src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=600&q=80" alt="Birthday cake">
+                    <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600&q=80" alt="Presents">
+                </div>
+                <div class="fun-fact" style="background: linear-gradient(135deg, #ffafcc 0%, #ff87ab 100%); color: white; border-color: #d63031;">
+                    ⭐ SUPER SPECIAL: This birthday will be ELEPHANT-THEMED because we're in India! How cool is that?!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 9: City Palace and Colorful Streets -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <h2 class="card-title">🏛️ Beautiful Palaces and Colorful Cities!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=1200&q=80" alt="Jaipur Pink City" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    We'll visit amazing palaces with <span class="highlight">colorful walls, gardens, and rooms</span>!
+                    The buildings in Jaipur are PINK! That's why it's called the "Pink City"!
+                </p>
+                <div class="photo-grid">
+                    <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80" alt="Hawa Mahal">
+                    <img src="https://images.unsplash.com/photo-1609416921044-3a8f7f36c462?w=600&q=80" alt="Amber Fort">
+                    <img src="https://images.unsplash.com/photo-1582735689249-bea52b390440?w=600&q=80" alt="City Palace">
+                </div>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: There's a palace called "Hawa Mahal" that looks like a honeycomb! It has 953 tiny windows!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 10: All Together -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">10</div>
+                <h2 class="card-title">👨‍👩‍👧‍👦 Your Whole Family is Coming!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200&q=80" alt="Happy family" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    <span class="highlight">Mom, Dad, Samara, YOU, Grandma, Grandpa, and everyone else</span> - all 10 people!
+                    We're ALL going on this adventure TOGETHER! It's going to be SO MUCH FUN!
+                </p>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: All 10 of us get to share this amazing adventure! You'll have so many people to play with!
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 11: Then We Come Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">11</div>
+                <h2 class="card-title">🏠 Then We Fly Home!</h2>
+            </div>
+            <img src="https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=1200&q=80" alt="Sunset plane" class="hero-image">
+            <div class="card-content">
+                <p class="card-text">
+                    After all our adventures, on December 25th we'll fly back home!
+                    You'll have <span class="highlight">SO MANY STORIES</span> to tell your teachers and friends!
+                </p>
+                <p class="card-text">
+                    You can tell them about the tigers, elephants, palaces, your birthday party, and all the fun things we did!
+                </p>
+                <div class="fun-fact">
+                    ⭐ FUN FACT: We'll bring home pictures and maybe some special toys to remember our trip!
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Card -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="card-content">
+                <h2 style="color: white; text-align: center; font-size: 3em; margin-bottom: 30px;">
+                    ⭐ What We're Going to Do! ⭐
+                </h2>
+                <div style="font-size: 1.6em; line-height: 2.2; padding: 20px;">
+                    ✅ Fly on a BIG airplane to India<br>
+                    ✅ Stay in beautiful PALACE hotels<br>
+                    ✅ Go on a TIGER SAFARI<br>
+                    ✅ Meet real ELEPHANTS<br>
+                    ✅ See the amazing TAJ MAHAL<br>
+                    ✅ Ride in BOATS on the lake<br>
+                    ✅ Eat yummy colorful food<br>
+                    ✅ CELEBRATE YOUR 3RD BIRTHDAY! 🎂<br>
+                    ✅ Visit pink palaces in Jaipur<br>
+                    ✅ Have fun with your WHOLE FAMILY<br>
+                    ✅ Come home with amazing stories!<br>
+                </div>
+                <div style="text-align: center; margin-top: 40px; font-size: 2em; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    🎉 This is going to be the BEST ADVENTURE EVER, Zane! 🎉
+                </div>
+                <div style="text-align: center; margin-top: 20px; font-size: 1.5em;">
+                    December 17-25, 2025
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
