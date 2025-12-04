@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="config.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Instagram Widget Component -->
+    <script src="https://cdn.jsdelivr.net/npm/@ptkdev/webcomponent-instagram-widget@latest/dist/lib/en/instagram-widget.min.js"></script>
 
     <style>
         body {
@@ -72,6 +74,13 @@
                 From Mumbai's cult jewelry boutiques to Jaipur's heritage markets, discover the best shopping destinations
                 along your journey. Filter by city or category to find exactly what you're looking for.
             </p>
+        </div>
+
+        <!-- INSTAGRAM WIDGET TEST -->
+        <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <h3 class="text-lg font-bold serif-font text-gray-800 mb-3">📷 Design Preview Test - Lune</h3>
+            <p class="text-sm text-gray-600 mb-4">Testing Instagram integration to help you discover boutiques by their design aesthetic</p>
+            <instagram-widget username="shoplune" grid="3x3" items-limit="9"></instagram-widget>
         </div>
 
         <!-- MAP -->
